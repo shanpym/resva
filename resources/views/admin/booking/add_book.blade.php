@@ -111,7 +111,7 @@
             </div>
             <div class="row p-2  mt-3">
               <div class="col-lg-9">
-                <span class="text-muted" id="summary-room">Room 101</span>
+                <span class="text-muted" id="summary-room"></span>
                 <input type="hidden" name="room_type" id="input_room_type" value="Single Bed">
               </div>
               <div class="col-lg-3">
@@ -305,16 +305,18 @@
         $('#no_adult').val(increment);
         $('#invoice-adult').text(increment);
         $('#summary-adult').text(increment);
+        $('#adult').text(increment);
         checkDateAvailability();
       })
       $('#dec-adult').on('click', function(){
         var decrement = parseInt($('#no_adult').val())-1;
-        if(decrement < 0) {
-          decrement = 0;
+        if(decrement < 1) {
+          decrement = 1;
         }
         $('#no_adult').val(decrement);
         $('#invoice-adult').text(decrement)
         $('#summary-adult').text(decrement);
+        $('#adult').text(decrement);
         checkDateAvailability();
       })
 
@@ -324,6 +326,7 @@
         $('#no_children').val(increment);
         $('#invoice-children').text(increment)
         $('#summary-children').text(increment);
+        $('#children').text(increment);
         checkDateAvailability();
       })
       $('#dec-children').on('click', function(){
@@ -335,6 +338,7 @@
         $('#no_children').val(decrement)
         $('#invoice-children').text(decrement)
         $('#summary-children').text(decrement);
+        $('#children').text(decrement);
         checkDateAvailability();
       })
 
@@ -490,11 +494,22 @@
                                   var col_md4 = $('<div class="col-md-4">'); 
                                     var img = $('<img class="img-fluid rounded-start">')
                                   .attr("src", "{{ asset('storage/img/') }}" + "/" + room_type.image)
-                                  .css({ 'height': '200px', 'width': '1000px' });
+                                  .css({ 'height': '230px', 'width': '1000px' });
                                   var col_md8 = $('<div class="col-md-8">');     
                                   var card_body = $('<div class="card-body">');
                                   var title = $('<h5 class="card-title">').text(room_type.name);
-                                  var text = $('<p class="card-text">');
+                                  var hasWifi = room_type.wifi === '1' ? 'YES' : 'NO';
+                                  var hasAC = room_type.ac === '1' ? 'YES' : 'NO';
+                                  var sleeps = $('<p class="card-text">').html(
+                                    '<i class="bi bi-person-fill" style="font-size: 16px;"></i> ' + room_type.total_sleeps 
+                                    + ' | <i class="ri-hotel-bed-fill" style="font-size: 16px;"></i> ' + room_type.bed
+                                    + ' | <i class="ri-showers-fill" style="font-size: 16px;"></i> ' + room_type.restroom
+                                    + ' | <i class="ri-signal-wifi-fill" style="font-size: 16px;"></i> ' + hasWifi
+                                    + ' | <i class="bi bi-wind" style="font-size: 16px;"></i> ' + hasAC
+                                  );
+                                  var description = $('<p class="card-text">').text(room_type.description);
+                                  var price = $('<h5 class="card-title text-end">').text('PHP' + room_type.price);
+
                                   var colRad = $('<div class="col-1">').css({
                                       'display': 'none',
                                   });
@@ -516,8 +531,11 @@
 
                                   colRad.append(radioBtn);
                                   colRad.append(label2);
-                                  card_body.append(text);
+                                 
                                   card_body.append(title);
+                                  card_body.append(sleeps);
+                                  card_body.append(description);
+                                  card_body.append(price);
                                   col_md8.append(card_body);
                                   col_md4.append(img);
                                   row_g0.append(col_md4);

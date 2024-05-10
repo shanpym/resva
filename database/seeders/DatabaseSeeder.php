@@ -18,18 +18,25 @@ class DatabaseSeeder extends Seeder
 
         User::create([
             'firstname' => 'Test User',
-            'email' => 'user@gmail.com',
-            'password' => 'password',
-        ]);
-        Admin::create([
-            'firstname' => 'Test User',
             'email' => 'admin@gmail.com',
             'password' => 'password',
+            'level' => '1',
         ]);
-        Employee::create([
+        
+        User::create([
             'firstname' => 'Test User',
             'email' => 'employee@gmail.com',
             'password' => 'password',
+            'level' => '2',
         ]);
+
+        User::create([
+            'firstname' => 'Test User',
+            'email' => 'user@gmail.com',
+            'password' => 'password',
+            'level' => '3',
+        ]);
+     
+        
     }
 }

@@ -19,64 +19,18 @@ return new class extends Migration
             $table->string('surname')->nullable();
             $table->date('birthdate')->nullable();
             $table->string('phone_no')->nullable();
+            $table->string('about')->nullable();
             $table->string('address')->nullable();
             $table->string('email')->unique()->nullable();
+            $table->enum('gender', ['1', '2'])->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->enum('level', ['1', '2', '3'])->nullable();
             $table->enum('status', ['1', '2', '3'])->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
 
-        Schema::create('guests', function (Blueprint $table) {
-            $table->id();
-            $table->string('firstname')->nullable();
-            $table->string('middlename')->nullable();
-            $table->string('surname')->nullable();
-            $table->string('phone_no')->nullable();
-            $table->date('birthdate')->nullable();
-            $table->string('address')->nullable();
-            $table->string('email')->unique()->nullable();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->enum('status', ['1', '2', '3'])->nullable();
-            $table->rememberToken();
-            $table->timestamps();
-        });
-
-        Schema::create('admins', function (Blueprint $table) {
-            $table->id();
-            $table->string('username')->nullable();
-            $table->string('firstname')->nullable();
-            $table->string('middlename')->nullable();
-            $table->string('surname')->nullable();
-            $table->string('phone_no')->nullable();
-            $table->date('birthdate')->nullable();
-            $table->string('address')->nullable();
-            $table->string('email')->unique()->nullable();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->enum('status', ['1', '2', '3'])->nullable();
-            $table->rememberToken();
-            $table->timestamps();
-        });
-
-        Schema::create('employee', function (Blueprint $table) {
-            $table->id();
-            $table->string('username')->nullable();
-            $table->string('firstname')->nullable();
-            $table->string('middlename')->nullable();
-            $table->string('surname')->nullable();
-            $table->date('birthdate')->nullable();
-            $table->string('phone_no')->nullable();
-            $table->string('address')->nullable();
-            $table->string('email')->unique()->nullable();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->enum('status', ['1', '2', '3'])->nullable();
-            $table->rememberToken();
-            $table->timestamps();
-        });
 
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

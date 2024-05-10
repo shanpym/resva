@@ -14,35 +14,39 @@ use Session;
 
 class AuthController extends Controller
 {
-    function login(){
-        // if(Auth::check()){
-        //     return redirect()->intended(route('home'));
-        // }
-        return view('user-admin-login.login');
-    }
+    // function login(){
+
+    //     // if(Auth::check()){
+    //     //     return redirect()->intended(route('home'));
+    //     // }
+    //     return view('user-admin-login.login');
+    // }
     
 
   
     function loginPost(Request $request){
-        
         $credentials = $request->validate([
             'email' => 'required',
             'password' => 'required'
         ],[
             'required' => 'Fill out all the fields',
         ]);
-
-
-        if (Auth::guard('web')->attempt($credentials)) {
-            // Authentication passed...
-            return redirect(route('home'));
-        } elseif (Auth::guard('employee')->attempt($credentials)) {
-            // Authentication passed...
-            return redirect(route('employee'));
-        } elseif (Auth::guard('admins')->attempt($credentials)) {
-            // Authentication passed...
-            return redirect(route('admin'));
+    
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            
+            if ($user->level == '1') {
+                // Authentication passed...
+                return redirect(route('admin'));
+            } elseif ($user->level == '2') {
+                // Authentication passed...
+                return redirect(route('employee'));
+            } elseif ($user->level == '3') {
+                // Authentication passed...
+                return redirect(route('home'));
+            }
         }
+    
         return redirect(route('login'))->with("error", "Login details are invalid.");
     }
 

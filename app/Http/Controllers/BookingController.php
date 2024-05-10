@@ -17,6 +17,10 @@ use App\Models\Booking;
 use App\Models\Invoice;
 use App\Models\Transaction;
 
+
+use Mail;
+use App\Mail\ResvaMail;
+
 class BookingController extends Controller
 {
     public function view(): View{
@@ -191,6 +195,8 @@ class BookingController extends Controller
             'created_at'  => Carbon::now()
         ]);
 
+        $email = $request->email;
+        Mail::to($email)->send(new ResvaMail($bookingID, $invoicesID));
         return redirect()->back()->with("success", "Booking has been submitted");
     }
 
@@ -282,6 +288,103 @@ class BookingController extends Controller
         return redirect()->back()->with("success", "Booking has been updated");
         
         }
+
+
+        public function guestaddBooking(Request $request){
+            $validator = Validator::make($request->all(), [       
+                'surname' => 'required',
+                'firstname' => 'required',
+                'email' => 'required',
+                'address' => 'required',
+                'phone_no' => 'required|min:11',
+        
+                'no_adult' => 'required',
+                'no_children' => 'required',
+                'start_date' => 'required',
+                'end_date' => 'required',
+    
+                'room_type' => 'required',
+                'requests' => 'nullable',
+        
+                'payment_type'  => 'required',  
+                'resv_type'  => 'required',
+    
+               
+                'inputs.*.items' => 'nullable',
+                'inputs.*.qty' => 'nullable',  
+                'inputs.*.price' => 'nullable',  
+                'meals.*' => 'nullable|string',
+                'price.*' => 'nullable|string',
+            ]
+            // ,[
+            //     'required' => 'Please fill out each field',
+            // ]
+        );
+        
+            if($validator->fails()){
+                return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+            };
+        
+            $bookingID = DB::table('booking')->insertGetId([
+                'surname' => $request->surname,
+                'firstname' => $request->firstname,
+                'middlename' => $request->middlename,
+                'email' => $request->email,
+                'address' => $request->address,
+                'phone_no' => $request->phone_no,
+        
+                'no_adult' => $request->no_adult,
+                'no_children' => $request->no_children,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
+                'room_type' => $request->room_type,
+                'room_name' => $request->room_name,
+                'requests' => $request->requests,
+        
+                'status' => '1',
+                'resv_type'  => $request->resv_type,    
+                'created_at'  => Carbon::now()
+            ]);
+        
+            //  // Insert add-ons
+            //  foreach ($request->inputs as $input) {
+            //     $addOnData = [
+            //         'items' => Str::upper($input['items']),
+            //         'qty' => $input['qty'],
+            //         'price' => $input['price'],
+            //         'booking_id' => $bookingID, // Link the add-on to the booking
+            //         'created_at' => Carbon::now(),
+            //     ];
+            //     $addOn = Add_ons::create($addOnData);
+            // }
+    
+    
+            $invoicesID = DB::table('invoice')->insertGetId([
+                'booking_id' => $bookingID,
+                'status' => '1',
+                
+                'remaining_balance' => '0',
+                'total_amount' => $request->total_amount,
+                'payment_type' => $request->payment_type,
+                'created_at'  => Carbon::now()
+            ]);
+        
+            $transactionID = DB::table('transaction')->insertGetId([
+                'booking_id' => $bookingID,
+                'invoice_id' => $invoicesID,
+                'amount_paid' => '0',
+                'status' => '1',
+                'created_at'  => Carbon::now()
+            ]);
+    
+            $email = $request->email;
+            Mail::to($email)->send(new ResvaMail($bookingID, $invoicesID));
+            return redirect()->back()->with("success", "Booking has been submitted");
+        }
+    
 
         
 }

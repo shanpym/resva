@@ -252,7 +252,7 @@ form{
                     if ($itemsAddOns->isNotEmpty()) {
                     $itemsOptions = $itemsAddOns->toArray();
                     } else {
-                        $itemsOptions = [];
+                        $mealOptions = [];
                     }
 
                   ?>

@@ -21,6 +21,12 @@ use App\Models\Booking;
 
 class PDFController extends Controller
 {
+    // function bookingPDF(int $id)
+    // {
+    //     $bookings = DB::table('booking')->where('id', $id)->get();
+
+    //     return view('admin.booking.pdf', compact('bookings'));
+    // }
 
     function bookingPDF(int $id)
     {

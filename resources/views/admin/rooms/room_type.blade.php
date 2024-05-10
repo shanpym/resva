@@ -78,7 +78,14 @@
                     @endif
                   </td>
                   <td>{{$room_type->name}}</td>
-                  <td>2</td>
+                  
+                  <?php 
+                  $rooms = DB::table('rooms')->where('room_type', $room_type->name)->get();
+                  ?>
+                  
+                  <td>
+                    {{$rooms->count()}}
+                  </td>
                   <td>PHP{{$room_type->price}}</td>
                   <td style="padding-top: 10px !important;">
                     <a href="{{url('/rooms/update/' . $room_type->id)}}" class="btn btn-sm btn-outline-info" type="button"><i class="bi bi-pencil-square"  style="font-size: 20px"></i></a>

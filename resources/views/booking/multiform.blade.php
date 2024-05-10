@@ -54,25 +54,27 @@
               </div>
             </div>
             <hr>
-            @include('admin.booking.roomcard')
+            @include('booking.roomcard')
             <hr>
-            @include('admin.booking.addons')
-            <hr>
-            @include('admin.booking.extra_charges')
+            @include('booking.addons')
+            {{-- <hr>
+            @include('booking.extra_charges') --}}
             
         </div>
       </div>
     
     </div>
-  @include('admin.booking.guest_form')
+  @include('booking.guest_form')
 
     <div class="tab-pane fade" id="bordered-justified-summary" role="tabpanel" aria-labelledby="summary-tab">
       <h5 class="card-title"><small class="text-muted">Step 3:</small> Invoice Details</h5>
-      @include('admin.booking.invoice')
+      @include('booking.invoice')
     </div>
     
   </div><!-- End Bordered Tabs Justified -->
-  <div class="card-footer d-flex justify-content-end">
+  <hr>
+  <div class="d-flex justify-content-end mt-3">
       <button class="btn btn-light" type="button" id="backButton"  style="margin-right: 8px;">Back</button>
       <button class="btn btn-primary" type="button" id="nextButton" >Next Part</button>
   </div>
+  

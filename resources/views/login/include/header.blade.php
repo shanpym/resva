@@ -5,17 +5,35 @@
         <div class="col-12">
           <nav class="main-nav">
             <!-- ***** Logo Start ***** -->
+            <style>
+              .home-title{
+                font-family: 'Poppins', sans-serif;
+                font-size: 24px;
+                font-weight: 700;
+                text-transform: uppercase;
+                color: #03a4ed;
+              }
+              .span-title{
+                font-family: 'Poppins', sans-serif !important;
+                color: #0275d8 !important;
+              }
+            </style>
             <a href="{{route('home')}}" class="logo">
-              <h4>Res<span>va</span></h4>
+              <h4 class="home-title">Res<span class="span-title">va</span></h4>
             </a>
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
             <ul class="nav">
               @auth
-              @if(Auth::guard('web')->check())
-                  <li class="scroll-to-section"><a href="">Hi, <span>{{auth()->user()->firstname}}</span></a></li>
-              @else
-                  <li class="scroll-to-section"><a href="">Hi, <span>{{auth()->user()->firstname}}</span></a></li>
+              <?php 
+              $user = Auth::user();
+              ?>
+              @if($user->level == '1')
+                  <li class="scroll-to-section"><a href="{{route('admin')}}">Hi, <span>{{auth()->user()->firstname}} (ADMIN)</span></a></li>
+              @elseif($user->level == '2')
+              <li class="scroll-to-section"><a href="{{route('employee')}}">Hi, <span>{{auth()->user()->firstname}} (STAFF)</span></a></li>
+              @elseif($user->level == '3')
+              <li class="scroll-to-section"><a href="{{route('home')}}">Hi, <span>{{auth()->user()->firstname}}</span></a></li>
               @endif  
               <li class="scroll-to-section"><a href="{{route('logout')}}">Log Out</a></li> 
               @else  

@@ -103,7 +103,7 @@
             @method('PUT')
             @csrf
             
-          <input type="text" name="status" id="" value="{{$booking->status}}">
+          <input type="hidden" name="status" id="" value="{{$booking->status}}">
           @include('admin.edit_booking.multiform')
           @endforeach
         </div>

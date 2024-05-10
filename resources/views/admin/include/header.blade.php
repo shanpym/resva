@@ -3,9 +3,21 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
-        <img src="assets/img/logo.png" alt="">
-        <span class="d-none d-lg-block">CCST | RESVA</span>
+      <style>
+        .home-title{
+          font-family: 'Poppins', sans-serif;
+          font-size: 24px;
+          font-weight: 700;
+          text-transform: uppercase;
+          color: #03a4ed;
+        }
+        .span-title{
+          font-family: 'Poppins', sans-serif !important;
+          color: #0275d8 !important;
+        }
+      </style>
+      <a href="{{route('home')}}" class="logo">
+        <h4 class="home-title">Res<span class="span-title">va</span></h4>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -29,12 +41,12 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::guard('admins')->user()->firstname }} {{ Auth::guard('admins')->user()->surname }}</span>
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->firstname }} {{ Auth::user()->surname }}</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>{{ Auth::guard('admins')->user()->firstname }} {{ Auth::guard('admins')->user()->surname }}</h6>
+              <h6>{{ Auth::user()->firstname }} {{ Auth::user()->surname }}</h6>
               <span>Web Designer</span>
             </li>
             <li>
