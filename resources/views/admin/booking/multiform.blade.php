@@ -48,23 +48,35 @@
             <div class="col-md-8">
               <label for="" class="form-label text-muted"><span style="color: #d9534f">*</span> Choose your date</label>
               <div class="input-group mb-3">
-                <input type="text" name="start_date" class="form-control @error('start_date') is-invalid @enderror" id="start_date" placeholder="" value="{{old('start_date')}}">
+                <input type="text" name="start_date" class="form-control @error('start_date') is-invalid @enderror" id="start_date" placeholder="" value="">
                 <span class="input-group-text">to</span>
-                <input type="text" name="end_date" class="form-control @error('end_date') is-invalid @enderror" id="end_date" placeholder="" value="{{old('end_date')}}">
+                <input type="text" name="end_date" class="form-control @error('end_date') is-invalid @enderror" id="end_date" placeholder="" value="">
               </div>
             </div>
             <hr>
             @include('admin.booking.roomcard')
             <hr>
             @include('admin.booking.addons')
+            @if(Auth::user()->level == '3')
+            <div style="display: none">
+              @include('admin.booking.extra_charges')
+            </div>
+            @else
             <hr>
             @include('admin.booking.extra_charges')
+            @endif
+           
             
         </div>
       </div>
     
     </div>
-  @include('admin.booking.guest_form')
+    @if(Auth::user()->level == '3')
+    @include('user.booking.guest_form')
+    @else
+    @include('admin.booking.guest_form')
+    @endif
+
 
     <div class="tab-pane fade" id="bordered-justified-summary" role="tabpanel" aria-labelledby="summary-tab">
       <h5 class="card-title"><small class="text-muted">Step 3:</small> Invoice Details</h5>

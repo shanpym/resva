@@ -45,9 +45,11 @@ class AuthController extends Controller
                 // Authentication passed...
                 return redirect(route('home'));
             }
+        }else{
+            return redirect()->back()->with("error", "Login details are invalid.");
         }
     
-        return redirect(route('login'))->with("error", "Login details are invalid.");
+       
     }
 
     
@@ -77,16 +79,6 @@ class AuthController extends Controller
             ->withErrors($validator)
             ->withInput();
         };
-        // $usersExists = User::where('username', $request->username)->first();
-        // $userFound = '';
-        // if($usersExists){
-        //     $userFound = $usersExists->username;
-        //     return redirect()
-        //     ->back()
-        //     ->withInput()
-        //     ->withErrors($validator)
-        //     ->with("errorName", "Username already existed" );
-        // }
 
         $surname = Str::ucfirst($request->surname);
         $firstname = Str::ucfirst($request->firstname);
@@ -101,6 +93,7 @@ class AuthController extends Controller
             'birthdate' => $request->birthdate,
             'password' => Hash::make($request->password),
             'phone_no' => $request->phone_no,
+            'level' => '3',
         ]);  
 
         return redirect()->back()->with("success", "Registration Success");

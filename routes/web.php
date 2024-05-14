@@ -61,20 +61,20 @@ Route::get('delete/addons/{id}', [BookingController::class, ('deleteAddons')])->
 //ADD BOOKING
 Route::get('/admin/booking/add_book', function () {
     return view('admin.booking.add_book');
-})->name('admin.add_book')->middleware(RoleMiddleware::class)->middleware(RoleMiddleware::class);
+})->name('admin.add_book')->middleware(RoleMiddleware::class);
 Route::post('/admin/booking/add_book', [BookingController::class, 'addBooking'])->name('admin.add_book.post');
 
 //PENDING BOOKING
-Route::get('/check/room/{id}', [PendingController::class, ('checkRoomsAvailability')])->name('admin.check_room')->middleware(RoleMiddleware::class);
-Route::get('/admin/confirm_booking/pending', [PendingController::class, 'view'])->name('admin.pending')->middleware(RoleMiddleware::class);
-Route::post('payment/{id}', [PendingController::class, ('payment')])->name('admin.payment')->middleware(RoleMiddleware::class);
-Route::post('reject/{id}', [PendingController::class, ('reject')])->name('admin.reject')->middleware(RoleMiddleware::class);
+Route::get('/check/room/{id}', [PendingController::class, ('checkRoomsAvailability')])->name('admin.check_room');
+Route::get('/admin/confirm_booking/pending', [PendingController::class, 'view'])->name('admin.pending');
+Route::post('payment/{id}', [PendingController::class, ('payment')])->name('admin.payment');
+Route::post('reject/{id}', [PendingController::class, ('reject')])->name('admin.reject');
 
 //EDIT BOOKING
-Route::get('edit_booking/{id}', [BookingController::class, 'editView'])->name('admin.edit_book')->middleware(RoleMiddleware::class);
+Route::get('edit_booking/{id}', [BookingController::class, 'editView'])->name('admin.edit_book');
 
-Route::put('pending.update/{id}', [BookingController::class, 'pendingUpdate'])->name('admin.update')->middleware(RoleMiddleware::class);
-Route::get('confirmed.update/{id}', [BookingController::class, 'editView'])->name('admin.edit_book')->middleware(RoleMiddleware::class);
+Route::put('pending.update/{id}', [BookingController::class, 'pendingUpdate'])->name('admin.update');
+Route::get('confirmed.update/{id}', [BookingController::class, 'editView'])->name('admin.edit_book');
 
 //BOOKING VALIDATION
 
@@ -139,8 +139,8 @@ Route::get('/admin/accounts/admin_account/add_account', function () {
 Route::get('/admin/accounts/admin_account/list', [AdminController::class, ('view')])->name('admin_account.list')->middleware(RoleMiddleware::class);
 Route::post('/admin/accounts/admin_account/post', [AdminController::class, ('accountPost')])->name('admin_account.post')->middleware(RoleMiddleware::class);
 Route::get('/admin/accounts/admin_account/{id}', [AdminController::class, ('editView')])->name('admin_account.edit')->middleware(RoleMiddleware::class);
-Route::put('update/{id}', [AdminController::class, ('update')])->name('admin_account.update')->middleware(RoleMiddleware::class);
-Route::put('password/{id}', [AdminController::class, ('password')])->name('admin_account.password')->middleware(RoleMiddleware::class);
+Route::put('update/{id}', [AdminController::class, ('update')])->name('admin_account.update');
+Route::put('password/{id}', [AdminController::class, ('password')])->name('admin_account.password');
 
 //USER - ACCOUNTS ---------------------------------------------------------------------------
 Route::get('/admin/accounts/user_account/add_account', function () {
@@ -151,8 +151,18 @@ Route::get('/admin/accounts/user_account/list', function () {
     return view('admin.accounts.user_account.list');
 })->name('user_account.list');
 
+//USER - BOOKING 
+Route::get('/user/profile', [UserController::class, 'editView'])->name('user');
+Route::get('/user/booking/list', [BookingController::class, 'view'])->name('user.list');
 
+//ADD BOOKING
+Route::get('/user/booking/add_book', function () {
+    return view('user.booking.add_book');
+})->name('user.add_book');
+Route::post('/user/booking/add_book', [BookingController::class, 'addBooking'])->name('user.add_book.post');
 
+//PENDING BOOKING
+Route::get('/user/confirm_booking/pending', [PendingController::class, 'view'])->name('user.pending');
 
 //EMPLOYEE - ACCOUNTS ---------------------------------------------------------------------------
 Route::get('/admin/accounts/employee_account/add_account', function () {

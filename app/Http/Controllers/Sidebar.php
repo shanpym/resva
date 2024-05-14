@@ -21,20 +21,32 @@ class Sidebar extends Controller
 {
     public function notifications()
     {
-        $notifications = DB::table('booking')->where('confirm', '1')->get();
-        $dateToday = date('Y-m-d'); 
-        $toarrive = DB::table('booking')
-        ->where('start_date', $dateToday)
-        ->where('confirm', '2')
-        ->get();
-        $todepart = DB::table('booking')
-        ->where('end_date', $dateToday)
-        ->where('confirm', '5')
-        ->get();
-        return view('admin.include.sidebar')->with([
-            'notifications' => $notifications,
-            'toarrive' => $toarrive,
-            'todepart' => $todepart
-        ]);
+
+        if(Auth::user()->level =='3'){
+            $notifications = DB::table('booking')
+            ->where('confirm', '1')
+            ->where('user_id', Auth::user()->level == '3')
+            ->get();
+            return view('user.include.sidebar')->with([
+                'notifications' => $notifications,
+            ]);
+        }else{
+            $notifications = DB::table('booking')->where('confirm', '1')->get();
+            $dateToday = date('Y-m-d'); 
+            $toarrive = DB::table('booking')
+            ->where('start_date', $dateToday)
+            ->where('confirm', '2')
+            ->get();
+            $todepart = DB::table('booking')
+            ->where('end_date', $dateToday)
+            ->where('confirm', '5')
+            ->get();
+            return view('admin.include.sidebar')->with([
+                'notifications' => $notifications,
+                'toarrive' => $toarrive,
+                'todepart' => $todepart
+            ]);
+        }
+        
     }
 }

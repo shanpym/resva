@@ -35,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrap();
-        View::composer('admin.include.sidebar', function ($view) {
+        View::composer(['admin.include.sidebar'], function ($view) {
             $notifications = DB::table('booking')->where('status', '1')->get();
             $dateToday = date('Y-m-d'); 
             $toarrive = DB::table('booking')
@@ -54,9 +54,12 @@ class AppServiceProvider extends ServiceProvider
         });
 
         View::composer('user.include.sidebar', function ($view) {
-            $user = Auth::user();
+            $notifications = DB::table('booking')
+            ->where('status', '1')
+            ->where('user_id', Auth::user()->id)
+            ->get();
             $view->with([
-                'user' => $user,
+                'notifications' => $notifications,
             ]);
         });
     }

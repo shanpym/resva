@@ -25,9 +25,14 @@ use App\Mail\UpdateMail;
 class PendingController extends Controller
 {
     public function view(): View{
-       
+       if(Auth::user()->level == '3'){
+        $bookings = Booking::where('user_id', Auth::user()->id)->whereIn('status' , ['1', '6'])->orderBy('id', 'desc')->get();
+        return view('user.confirm_booking.pending', compact('bookings'));
+       }else{
         $bookings = Booking::whereIn('status' , ['1', '6'])->orderBy('id', 'desc')->get();
         return view('admin.confirm_booking.pending', compact('bookings'));
+       }
+        
     }
 
     public function checkRoomsAvailability(Request $request, int $id){

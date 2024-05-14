@@ -48,17 +48,18 @@
             <div class="col-md-8">
               <label for="" class="form-label text-muted"><span style="color: #d9534f">*</span> Choose your date</label>
               <div class="input-group mb-3">
-                <input type="text" name="start_date" class="form-control @error('start_date') is-invalid @enderror" id="start_date" placeholder="" value="{{old('start_date')}}">
+                <input type="text" name="start_date" class="form-control @error('start_date') is-invalid @enderror" id="start_date" placeholder="" value="">
                 <span class="input-group-text">to</span>
-                <input type="text" name="end_date" class="form-control @error('end_date') is-invalid @enderror" id="end_date" placeholder="" value="{{old('end_date')}}">
+                <input type="text" name="end_date" class="form-control @error('end_date') is-invalid @enderror" id="end_date" placeholder="" value="">
               </div>
             </div>
             <hr>
             @include('booking.roomcard')
             <hr>
             @include('booking.addons')
-            {{-- <hr>
-            @include('booking.extra_charges') --}}
+            <div style="display: none">
+              @include('admin.booking.extra_charges')
+            </div>
             
         </div>
       </div>

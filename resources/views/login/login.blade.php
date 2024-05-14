@@ -14,19 +14,23 @@
           </div>
         </div>
         <div class="col-lg-6 wow fadeInRight" data-wow-duration="0.5s" data-wow-delay="0.25s">
-          <div class="">
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    {{ $errors->all()[0] }}
-                </div>
-            @endif
-  
-            @if(session()->has('success'))
-              <div class="alert alert-success"><i class="far fa-check-circle" ></i> {{session('success')}}</div>
-            @endif
-          </div>
+         
           <form id="contact" action="{{route('login.post')}}" method="post">
             @csrf
+            <div class="">
+              @if ($errors->any())
+                  <div class="alert alert-danger">
+                      {{ $errors->all()[0] }}
+                  </div>
+              @endif
+              @if(session()->has('error'))
+              <div class="alert alert-danger">{{session('error')}}</div>
+              @endif
+  
+              @if(session()->has('success'))
+                <div class="alert alert-success">{{session('success')}}</div>
+              @endif
+            </div>
             <div class="row">
               <div class="col-lg-12">
                 <fieldset>
@@ -44,7 +48,7 @@
                 </fieldset>
               </div>
               <div class="col-lg-12 mt-2"  >
-                <a href="{{route('login')}}"  style="float: right;"> Don't have an account? Sign Up</a>
+                <a href="{{route('signup')}}"  style="float: right;"> Don't have an account? Sign Up</a>
               </div>
             </div>
             <div class="contact-dec">

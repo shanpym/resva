@@ -32,7 +32,7 @@
       @endif
       @if(session()->has('success'))
       <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <img src="{{asset('dashboard/assets/img/success-3.gif')}}"alt="" srcset="" width="25px" style="margin-right: 10px">{{session('success')}}. <a href="{{route('admin.list')}}" type="button"> View</a>
+        <img src="{{asset('dashboard/assets/img/success-3.gif')}}"alt="" srcset="" width="25px" style="margin-right: 10px">{{session('success')}}. <a href="{{route('user.list')}}" type="button"> View</a>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
       @endif
@@ -118,7 +118,7 @@
                           </div>
                           
                           <div class="card-footer d-flex justify-content-end">
-                              <button type="submit" class="btn btn-danger" style="margin-right: 10px !important" data-bs-toggle="modal" data-bs-target="#reject{{$booking->id}}">Reject</button>
+                              <button type="submit" class="btn btn-danger" style="margin-right: 10px !important" data-bs-toggle="modal" data-bs-target="#reject{{$booking->id}}">Cancel</button>
                               <div class="modal fade" id="reject{{$booking->id}}" tabindex="-1">
                                 <div class="modal-dialog modal-dialog-scrollable modal-lg">
                                   <div class="modal-content">
@@ -164,7 +164,7 @@
                                       <div class="room_options" style="display: none" >
                                       </div>
                                     </div>
-                                    <div class="modal-footer d-flex justify-content-between">
+                                    <div class="modal-footer d-flex justify-content-end">
                                       @if(Auth::user()->level == '3')
                                       @else
                                       <button type="button" class="btn btn-outline-primary mr-auto checkbtn" id="checkbtn">Check Rooms</button>

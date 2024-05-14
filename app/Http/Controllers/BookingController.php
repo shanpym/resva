@@ -25,8 +25,15 @@ class BookingController extends Controller
 {
     public function view(): View{
        
-        $bookings = Booking::orderBy('id', 'desc')->get();
-        return view('admin.booking.list', compact('bookings'));
+        if(Auth::user()->level == '3'){
+            $bookings = Booking::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
+            return view('user.booking.list', compact('bookings'));
+        }
+        else{
+            $bookings = Booking::orderBy('id', 'desc')->get();
+            return view('admin.booking.list', compact('bookings'));
+        }
+        
     }
 
     function deleteAddons($id){
@@ -131,9 +138,10 @@ class BookingController extends Controller
             'meals.*' => 'nullable|string',
             'price.*' => 'nullable|string',
         ]
-        // ,[
-        //     'required' => 'Please fill out each field',
-        // ]
+        ,[
+            'required' => 'Please fill out each field',
+            'room_type.required' => 'Please select a room',
+        ]
     );
     
         if($validator->fails()){
@@ -142,8 +150,13 @@ class BookingController extends Controller
             ->withErrors($validator)
             ->withInput();
         };
+
     
         $bookingID = DB::table('booking')->insertGetId([
+            'user_id' => $request->user_id,
+            'employee_id' => $request->employee_id,
+            'admin_id' => $request->admin_id,
+
             'surname' => $request->surname,
             'firstname' => $request->firstname,
             'middlename' => $request->middlename,
@@ -316,9 +329,10 @@ class BookingController extends Controller
                 'meals.*' => 'nullable|string',
                 'price.*' => 'nullable|string',
             ]
-            // ,[
-            //     'required' => 'Please fill out each field',
-            // ]
+            ,[
+                'required' => 'Please fill out each field',
+                'room_type.required' => 'Please select a room',
+            ]
         );
         
             if($validator->fails()){
@@ -327,8 +341,10 @@ class BookingController extends Controller
                 ->withErrors($validator)
                 ->withInput();
             };
-        
+
             $bookingID = DB::table('booking')->insertGetId([
+               
+
                 'surname' => $request->surname,
                 'firstname' => $request->firstname,
                 'middlename' => $request->middlename,

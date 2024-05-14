@@ -49,10 +49,10 @@
           </div>
             <div class="card-body">
                 <div class="row m-auto justify-content-center mb-5 ">
-                    <img src="{{asset('dashboard/assets/img/pending.gif')}}" alt="" srcset="" style="width: 50%">
+                    <img src="{{asset('dashboard/assets/img/success-2.gif')}}" alt="" srcset="" style="width: 50%">
                 </div>
                 <div class="row mt-3">
-                  <i class="fa fa-check mr-2 " ></i> <strong class="text-alert text-center">{{session('success')}}</strong>
+                  <i class="fa fa-check mr-2 " ></i> <strong class="text-success text-center">{{session('success')}}</strong>
               </div>
                 <div class="row">
                     <i class="fa fa-check mr-2 " ></i> <small class="text-secondary text-center">View your booking <a href="{{route('admin.pending')}}" type="button"> here</a>.</small>
@@ -112,7 +112,7 @@
             <div class="row p-2  mt-3">
               <div class="col-lg-9">
                 <span class="text-muted" id="summary-room"></span>
-                <input type="hidden" name="room_type" id="input_room_type" value="Single Bed">
+                <input type="hidden" name="room_type" id="input_room_type" value="">
               </div>
               <div class="col-lg-3">
                 <span class="text-muted" id="summary-subtotal"></span><br>
@@ -154,9 +154,13 @@
                 
                 
                 <input type="hidden" name="room_name" id="input_room_name" value="">
-
-                <input type="hidden" name="employee_id" id="input_employee_id">
-                <input type="hidden" name="admin_id" id="input_admin_id">
+                @if(Auth::user()->level == '1')
+                <input type="hidden" name="admin_id" id="input_employee_id" value="{{Auth::user()->id}}">
+                @elseif(Auth::user()->level == '2')
+                <input type="hidden" name="employee_id" id="input_admin_id" value="{{Auth::user()->id}}">
+                @elseif(Auth::user()->level == '3')
+                <input type="hidden" name="user_id" id="" value="{{Auth::user()->id}}">
+                @endif
 
               
               </div>
@@ -573,6 +577,7 @@
                             $.each(response, function(index, room_type) {
                                 roomsPrice = room_type.price;
                                 $('#summary-room').text(room_type.name);
+                                $('#input_room_type').val(room_type.name);
                                 $('.card').css('border-color', 'transparent');
                                   $('#card_' + room_type.id).css('border', '1px solid #007bff');
                                 $.each(response.meals, function(index, meal) {

@@ -15,7 +15,6 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-  -------
 
   <!-- Favicons -->
   <link href="{{asset('dashboard/assets/img/favicon.png')}}" rel="icon">
@@ -40,10 +39,18 @@
 
 <body>
 
+  @if(Auth::user()->level == '3')
+    @include('user.include.header')
+    @include('user.include.sidebar')
+    @yield('content')
+    @include('user.include.footer')
+  
+  @else
     @include('admin.include.header')
     @include('admin.include.sidebar')
     @yield('content')
     @include('admin.include.footer')
+  @endif
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->

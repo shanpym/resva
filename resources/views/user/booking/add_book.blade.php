@@ -1,8 +1,8 @@
-@extends('booking.layout')
+@extends('admin.layout')
 @section('title', 'CCST | Resva')
 @section('content')
     
-<main id="main" class="main m-auto" style="margin-top: 100px !important; width: 80%">
+<main id="main" class="main">
 
     <div class="pagetitle">
       <h1>Add Booking</h1>
@@ -52,17 +52,16 @@
                     <img src="{{asset('dashboard/assets/img/success-2.gif')}}" alt="" srcset="" style="width: 50%">
                 </div>
                 <div class="row mt-3">
-                  <strong class="text-success text-center">{{session('success')}}</strong>
+                  <i class="fa fa-check mr-2 " ></i> <strong class="text-success text-center">{{session('success')}}</strong>
               </div>
                 <div class="row">
-                    <small class="text-secondary text-center">Kindly check your email for <br>confirmation details</small>
+                    <i class="fa fa-check mr-2 " ></i> <small class="text-secondary text-center">View your booking <a href="{{route('admin.pending')}}" type="button"> here</a>.</small>
                 </div>
             </div>
         </div>
       </div>
       @endif
     </div>
- 
 <section class="section">
   <div class="row">
     <div class="col-lg-8">
@@ -71,7 +70,7 @@
           <form action="{{route('admin.add_book.post')}}" method="post">
             @csrf
           
-          @include('booking.multiform')
+          @include('admin.booking.multiform')
         </div>
       </div>
 
@@ -121,18 +120,6 @@
                 <small class="text-muted" style="font-size: 12px" id="summary-calc"></small>
               </div>
             </div>
-            {{-- <div class="row p-2">
-              <div class="col-lg-9">
-                <span class="text-muted">Meal Options</span>
-              </div>
-              <div class="col-lg-3">
-                <span class="text-muted" id="summary-meals"></span><br>
-                <input type="hidden" name="input-meals" id="input-meals" value="0">
-                <div id="meals-container">
-
-                </div>
-              </div>
-            </div> --}}
             <div class="row p-2">
               <div class="col-lg-9">
                 <span class="text-muted">Add ons</span>
@@ -152,8 +139,16 @@
               <div class="col-lg-3">
                 <strong class="text-muted" id="summary-total-amount"></strong><br>
                 <input type="hidden" name="total_amount" id="input-total-amount" value="0">
+                
+                
                 <input type="hidden" name="room_name" id="input_room_name" value="">
-              
+                @if(Auth::user()->level == '1')
+                <input type="hidden" name="admin_id" id="input_employee_id" value="{{Auth::user()->id}}">
+                @elseif(Auth::user()->level == '2')
+                <input type="hidden" name="employee_id" id="input_admin_id" value="{{Auth::user()->id}}">
+                @elseif(Auth::user()->level == '3')
+                <input type="hidden" name="user_id" id="" value="{{Auth::user()->id}}">
+                @endif
 
               
               </div>
@@ -450,7 +445,7 @@
                   // Hide the room-card content
                   $('#card-container').hide();
                   // Show the preloader inside room-card
-                  $('#card-container').html('<img src="{{asset('dashboard/assets/img/spinner3.gif')}}" style="display: block; margin: auto; height: 100px !important; width:94px !important">').show();
+                  $('#card-container').html('<img src="{{asset('dashboard/assets/img/spinner3.gif')}}" height="100" width="94" style="display: block; margin: auto;">').show();
       
                   $('#selectOption').removeClass('is-valid');
                   var start_date = $('#start_date').val();

@@ -24,24 +24,34 @@
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
             <ul class="nav">
-              @auth
               <?php 
               $user = Auth::user();
               ?>
-              @if($user->level == '1')
-                  <li class="scroll-to-section"><a href="{{route('admin')}}">Hi, <span>{{auth()->user()->firstname}} (ADMIN)</span></a></li>
-              @elseif($user->level == '2')
-              <li class="scroll-to-section"><a href="{{route('employee')}}">Hi, <span>{{auth()->user()->firstname}} (STAFF)</span></a></li>
-              @elseif($user->level == '3')
-              <li class="scroll-to-section"><a href="{{route('home')}}">Hi, <span>{{auth()->user()->firstname}}</span></a></li>
-              @endif  
-              <li class="scroll-to-section"><a href="{{route('logout')}}">Log Out</a></li> 
+              @auth
+                  @if($user->level == '1')
+                      <li class="scroll-to-section"><a href="{{route('admin')}}">Hi, <span>{{auth()->user()->firstname}} (ADMIN)</span></a></li>
+                  @elseif($user->level == '2')
+                      <li class="scroll-to-section"><a href="{{route('employee')}}">Hi, <span>{{auth()->user()->firstname}} (STAFF)</span></a></li>
+                  @elseif($user->level == '3')
+                      <li class="scroll-to-section"><a href="{{route('user')}}">Hi, <span>{{auth()->user()->firstname}}</span></a></li>
+                  @endif  
+                  <li class="scroll-to-section"><a href="{{route('logout')}}">Log Out</a></li> 
               @else  
-              <li class="scroll-to-section"><a href="{{route('login')}}">Log In</a></li>
-              <li class="scroll-to-section"><a href="{{route('signup')}}">Sign Up</a></li> 
+                  <li class="scroll-to-section"><a href="{{route('login')}}">Log In</a></li>
+                  <li class="scroll-to-section"><a href="{{route('signup')}}">Sign Up</a></li> 
               @endauth
-              <li class="scroll-to-section"><div class="main-red-button"><a href="{{route('add_book')}}">Book Now</a></div></li> 
-            </ul>        
+          
+              @auth
+                  @if ($user->level == '3')
+                      <li class="scroll-to-section"><div class="main-red-button"><a href="{{route('user.add_book')}}">Book Now</a></div></li> 
+                  @elseif ($user->level == '1')
+                      <li class="scroll-to-section"><div class="main-red-button"><a href="{{route('admin.add_book')}}">Book Now</a></div></li> 
+                  @endif
+              @else
+                      <li class="scroll-to-section"><div class="main-red-button"><a href="{{route('add_book')}}">Book Now</a></div></li> 
+              @endauth
+          </ul>
+          
             <a class='menu-trigger'>
                 <span>Menu</span>
             </a>

@@ -65,17 +65,23 @@
           <div class="col-md-8">
             <label for="" class="form-label text-muted">Choose your date</label>
             <div class="input-group mb-3">
-              <input type="text" name="start_date" class="form-control @error('start_date') is-invalid @enderror" id="start_date" placeholder="" value="{{$booking->start_date}}">
+              <input type="text" name="start_date" class="form-control @error('start_date') is-invalid @enderror" id="start_date" placeholder="" value="">
               <span class="input-group-text">to</span>
-              <input type="text" name="end_date" class="form-control @error('end_date') is-invalid @enderror" id="end_date" placeholder="" value="{{$booking->end_date}}">
+              <input type="text" name="end_date" class="form-control @error('end_date') is-invalid @enderror" id="end_date" placeholder="" value="">
             </div>
           </div>
           <hr>
           @include('admin.edit_booking.roomcard')
           <hr>
           @include('admin.edit_booking.addons')
+          @if(Auth::user()->level == '3')
+          <div style="display: none">
+            @include('admin.booking.extra_charges')
+          </div>
+          @else
           <hr>
           @include('admin.booking.extra_charges')
+          @endif
          
         </div>
         @endif
