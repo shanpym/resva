@@ -98,6 +98,9 @@ class PendingController extends Controller
                 'status' => '2', 
                 'confirmed_at'  => Carbon::now()
             ]);
+
+            $email = $booking->email;
+            Mail::to($email)->send(new UpdateMail($id));
             return redirect(route('admin.pending'))->with("success", "Booking has been approved");
         };
         

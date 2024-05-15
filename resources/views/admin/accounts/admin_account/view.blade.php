@@ -1,3 +1,9 @@
+@if ($user->status == '3')
+    <div class="alert alert-danger"> <strong>This account is deactivated due to ( {{$user->remarks}} ) </strong>
+    </div>
+    
+@endif
+
 <section class="section profile">
     <div class="row">
       <div class="col-xl-4">

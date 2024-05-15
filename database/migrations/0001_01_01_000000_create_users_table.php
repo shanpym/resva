@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('password');
             $table->enum('level', ['1', '2', '3'])->nullable();
             $table->enum('status', ['1', '2', '3'])->nullable();
+            $table->string('remarks')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

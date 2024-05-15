@@ -584,6 +584,7 @@
                             $.each(response, function(index, room_type) {
                                 roomsPrice = room_type.price;
                                 $('#summary-room').text(room_type.name);
+                                $('#input_room_type').val(room_type.name);
                                 $('.card').css('border-color', 'transparent');
                                   $('#card_' + room_type.id).css('border', '1px solid #007bff');
                                 $.each(response.meals, function(index, meal) {
@@ -986,11 +987,22 @@
                                   var col_md4 = $('<div class="col-md-4">'); 
                                     var img = $('<img class="img-fluid rounded-start">')
                                   .attr("src", "{{ asset('storage/img/') }}" + "/" + room_type.image)
-                                  .css({ 'height': '200px', 'width': '1000px' });
+                                  .css({ 'height': '230px', 'width': '1000px' });
                                   var col_md8 = $('<div class="col-md-8">');     
                                   var card_body = $('<div class="card-body">');
                                   var title = $('<h5 class="card-title">').text(room_type.name);
-                                  var text = $('<p class="card-text">');
+                                  var hasWifi = room_type.wifi === '1' ? 'YES' : 'NO';
+                                  var hasAC = room_type.ac === '1' ? 'YES' : 'NO';
+                                  var sleeps = $('<p class="card-text">').html(
+                                    '<i class="bi bi-person-fill" style="font-size: 16px;"></i> ' + room_type.total_sleeps 
+                                    + ' | <i class="ri-hotel-bed-fill" style="font-size: 16px;"></i> ' + room_type.bed
+                                    + ' | <i class="ri-showers-fill" style="font-size: 16px;"></i> ' + room_type.restroom
+                                    + ' | <i class="ri-signal-wifi-fill" style="font-size: 16px;"></i> ' + hasWifi
+                                    + ' | <i class="bi bi-wind" style="font-size: 16px;"></i> ' + hasAC
+                                  );
+                                  var description = $('<p class="card-text">').text(room_type.description);
+                                  var price = $('<h5 class="card-title text-end">').text('PHP' + room_type.price);
+
                                   var colRad = $('<div class="col-1">').css({
                                       'display': 'none',
                                   });
@@ -1012,8 +1024,11 @@
 
                                   colRad.append(radioBtn);
                                   colRad.append(label2);
-                                  card_body.append(text);
+                                 
                                   card_body.append(title);
+                                  card_body.append(sleeps);
+                                  card_body.append(description);
+                                  card_body.append(price);
                                   col_md8.append(card_body);
                                   col_md4.append(img);
                                   row_g0.append(col_md4);
@@ -1051,6 +1066,7 @@
                             $.each(response, function(index, room_type) {
                                 $('#input-roomprice').val(room_type.price);
                                 $('#summary-room').text(room_type.name);
+                                $('#input_room_type').val(room_type.name);
                                 $('.card').css('border-color', 'transparent');
                                   $('#card_' + room_type.id).css('border', '1px solid #007bff');
                                 $.each(response.meals, function(index, meal) {

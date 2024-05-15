@@ -136,11 +136,16 @@ Route::get('/admin/accounts/admin_account/add_account', function () {
     return view('admin.accounts.admin_account.add_account');
 })->name('admin_account.add_account');
 
+Route::get('/admin/profile', [AdminController::class, 'profileView'])->name('admin.profile');
+
 Route::get('/admin/accounts/admin_account/list', [AdminController::class, ('view')])->name('admin_account.list')->middleware(RoleMiddleware::class);
 Route::post('/admin/accounts/admin_account/post', [AdminController::class, ('accountPost')])->name('admin_account.post')->middleware(RoleMiddleware::class);
 Route::get('/admin/accounts/admin_account/{id}', [AdminController::class, ('editView')])->name('admin_account.edit')->middleware(RoleMiddleware::class);
 Route::put('update/{id}', [AdminController::class, ('update')])->name('admin_account.update');
 Route::put('password/{id}', [AdminController::class, ('password')])->name('admin_account.password');
+
+Route::post('deactivate/{id}', [AdminController::class, ('deactivate')])->name('admin_account.deactivate');
+Route::post('activate/{id}', [AdminController::class, ('activate')])->name('admin_account.activate');
 
 //USER - ACCOUNTS ---------------------------------------------------------------------------
 Route::get('/admin/accounts/user_account/add_account', function () {
@@ -163,6 +168,11 @@ Route::post('/user/booking/add_book', [BookingController::class, 'addBooking'])-
 
 //PENDING BOOKING
 Route::get('/user/confirm_booking/pending', [PendingController::class, 'view'])->name('user.pending');
+
+//SUPPORT
+Route::get('/user/support/compose', function () {
+    return view('user.support.compose');
+})->name('user.compose');
 
 //EMPLOYEE - ACCOUNTS ---------------------------------------------------------------------------
 Route::get('/admin/accounts/employee_account/add_account', function () {

@@ -64,46 +64,11 @@
       </li><!-- End Rooms Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed {{ Request::is('admin/reports/*') ? 'active' : '' }}" data-bs-target="#reports-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-bar-chart"></i><span>Support</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link collapsed {{ Request::routeIs('user.compose') ? 'active' : '' }}" href="{{route('user.compose')}}">
+          <i class="bi bi-bar-chart"></i><span>Support</span>
         </a>
-        <ul id="reports-nav" class="nav-content collapse {{ Request::is('admin/reports/*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="{{route('reports.list')}}" class="{{ Request::routeIs('reports.list') ? 'active' : '' }}">
-              <i class="bi bi-circle"></i><span>Compose</span>
-            </a>
-          </li>
-          <li>
-            <a href="{{route('reports.booking')}}" class="{{ Request::routeIs('reports.booking') ? 'active' : '' }}">
-              <i class="bi bi-circle"></i><span>Your Inbox</span>
-            </a>
-          </li>
-          </li><!-- End Components Nav -->
-
-        </ul>
+      
       </li><!-- End Reports Nav -->
 
-      {{-- <li class="nav-item">
-        <a class="nav-link collapsed {{ Request::is('admin/accounts/*') ? 'active' : '' }}" data-bs-target="#accounts-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>Accounts</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="accounts-nav" class="nav-content collapse {{ Request::is('admin/accounts/*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="{{route('admin_account.list')}}" class="{{ Request::routeIs('admin_account.list') ? 'active' : '' }}">
-              <i class="bi bi-circle"></i><span>Admin</span>
-            </a>
-          </li>
-          <li>
-            <a href="{{route('employee_account.list')}}" class="{{ Request::routeIs('employee_account.list') ? 'active' : '' }}">
-              <i class="bi bi-circle"></i><span>Front Office</span>
-            </a>
-          </li>
-          <li>
-            <a href="{{route('user_account.list')}}" class="{{ Request::routeIs('user_account.list') ? 'active' : '' }}">
-              <i class="bi bi-circle"></i><span>Users</span>
-            </a>
-          </li>
-        </ul>
-      </li> --}}
     </ul>
   </aside><!-- End Sidebar-->

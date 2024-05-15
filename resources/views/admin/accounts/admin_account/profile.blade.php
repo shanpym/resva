@@ -1,3 +1,6 @@
+
+
+
 <section class="section profile">
     <div class="row">
       <div class="col-xl-4">
@@ -162,11 +165,33 @@
 
 
                   <div class="d-flex justify-content-between">
-                    <button type="button" class="btn btn-outline-danger">Deactivate Account</button>
+                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#reject{{$user->id}}">Deactivate Account</button>
+                  
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                   </div>
                 </form><!-- End Profile Edit Form -->
-
+                <div class="modal fade" id="reject{{$user->id}}" tabindex="-1">
+                  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" style="color: #dc3545">Remarks</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                        <div class="modal-body">
+                          <form action="{{ url('deactivate/'. $user->id) }}" method="POST">
+                            @csrf
+                            <div class="form-group mt-3">
+                                <p>Input the reason of the cancellation</p>
+                                <textarea class="form-control" name="remarks" rows="3" placeholder="Enter ..." style="width: 100%"></textarea>
+                            </div>  
+                        </div>
+                        <div class="modal-footer d-flex justify-content-end">
+                          <button type="submit" class="btn btn-danger">Deactivate</button>
+                        </div>
+                        </form>
+                    </div>
+                  </div>
+                </div><!-- End Vertically centered Modal-->
               </div>
 
               <div class="tab-pane fade pt-3" id="profile-change-password">

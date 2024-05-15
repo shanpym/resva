@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class Employee extends Authenticatable
 {
     use HasFactory, Notifiable;
 
@@ -18,7 +18,7 @@ class User extends Authenticatable
      */
     public $timestamps = true;
 
-    protected $table = 'users';
+    protected $table = 'employee';
     protected $fillable = [
         'surname',
         'middlename',
@@ -29,11 +29,8 @@ class User extends Authenticatable
         'phone_no',
         'status',
         'address',
-        'level',
         'about',
-        'birthdate',
-        'remarks',
-        'gender'
+        'birthdate'
     ];
 
     /**

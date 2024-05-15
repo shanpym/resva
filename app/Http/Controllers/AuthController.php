@@ -35,15 +35,21 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             
-            if ($user->level == '1') {
+            if ($user->level == '1' && $user->status == '1') {
                 // Authentication passed...
                 return redirect(route('admin'));
-            } elseif ($user->level == '2') {
+            } elseif ($user->level == '2' && $user->status == '1') {
                 // Authentication passed...
                 return redirect(route('employee'));
-            } elseif ($user->level == '3') {
+            } elseif ($user->level == '3' && $user->status == '1') {
                 // Authentication passed...
                 return redirect(route('home'));
+            }
+
+
+            if ($user->status == '3') {
+                Auth::logout();
+                return redirect()->back()->with("error", "Your account is deactivated. We advise you to contact support for further assistance");
             }
         }else{
             return redirect()->back()->with("error", "Login details are invalid.");
@@ -94,6 +100,7 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
             'phone_no' => $request->phone_no,
             'level' => '3',
+            'status' => '1',
         ]);  
 
         return redirect()->back()->with("success", "Registration Success");

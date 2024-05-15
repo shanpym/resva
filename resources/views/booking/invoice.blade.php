@@ -59,7 +59,7 @@
 
                 <div class="row">
                     <div class="col-lg-3 col-md-4 label">Total Person/s</div>
-                    <div class="col-lg-9 col-md-8"><span id="invoice-adult">2</span> Adult - <span id="invoice-children">2</span> Children</div>
+                    <div class="col-lg-9 col-md-8"><span id="invoice-adult">2</span> Adult - <span id="invoice-children">0</span> Children</div>
                 </div>
 
                 <div class="row">

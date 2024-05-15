@@ -3,6 +3,24 @@
   <div class="tab-pane fade show active" id="bordered-justified-reservation" role="tabpanel" aria-labelledby="reservation-tab">
     <h5 class="card-title"><small class="text-muted">Step 1:</small> Reservation Details</h5>
       <div class="card-body">
+        @if ($booking->status == '2' || $booking->status == '5')
+        <div class="col-md-4 mb-5" style="display: none">
+          <h5 class="card-title"><small class="text-muted">Type of Resevervation</small></h5>
+          <select id="resv_type" class="form-select @error('resv_type') is-invalid @enderror" name="resv_type">
+            @if($booking->resv_type == '1')
+            <option value="1" selected>Online</option>
+                      @elseif($booking->resv_type == '2')
+                      <option value="2" selected>On-call</option>
+                      @elseif($booking->resv_type == '3')
+                      <option value="3" selected>Walk-in</option>
+                      @endif
+            <option disabled >Choose...</option>
+            <option value="1">Online</option>
+            <option value="2">On-call</option>
+            <option value="3">Walk-in</option>
+          </select>
+        </div>
+        @else
         <div class="col-md-4 mb-5">
           <h5 class="card-title"><small class="text-muted">Type of Resevervation</small></h5>
           <select id="resv_type" class="form-select @error('resv_type') is-invalid @enderror" name="resv_type">
@@ -20,10 +38,12 @@
           </select>
         </div>
         <hr>
+        
+        @endif
         @if ($booking->status == '2' || $booking->status == '5')
-        @include('admin.edit_booking.addons')
-        <hr>
+      
         @include('admin.booking.extra_charges')
+        <input type="hidden" name="requests" id="requests" value="{{$booking->requests}}" style="width: 40%; text-align:center">
         <input type="hidden" name="no_adult" id="no_adult" value="{{$booking->no_adult}}" style="width: 40%; text-align:center">
         <input type="hidden" name="no_children" id="no_children" value="{{$booking->no_children}}" style="width: 40%; text-align:center">
         <input type="hidden" name="start_date" class="form-control @error('start_date') is-invalid @enderror" id="start_date" placeholder="" value="{{$booking->start_date}}">
@@ -65,9 +85,9 @@
           <div class="col-md-8">
             <label for="" class="form-label text-muted">Choose your date</label>
             <div class="input-group mb-3">
-              <input type="text" name="start_date" class="form-control @error('start_date') is-invalid @enderror" id="start_date" placeholder="" value="">
+              <input type="text" name="start_date" class="form-control @error('start_date') is-invalid @enderror" id="start_date" placeholder="" value="{{$booking->start_date}}">
               <span class="input-group-text">to</span>
-              <input type="text" name="end_date" class="form-control @error('end_date') is-invalid @enderror" id="end_date" placeholder="" value="">
+              <input type="text" name="end_date" class="form-control @error('end_date') is-invalid @enderror" id="end_date" placeholder="" value="{{$booking->end_date}}">
             </div>
           </div>
           <hr>

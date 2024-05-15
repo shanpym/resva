@@ -1,5 +1,7 @@
-<div class="tab-pane fade" id="bordered-justified-details" role="tabpanel" aria-labelledby="details-tab">
-    <h5 class="card-title"><small class="text-muted">Step 2:</small> Guest Information</h5>
+<div class="tab-pane fade p-3" id="bordered-justified-details" role="tabpanel" aria-labelledby="details-tab" style="border: 1px solid #e9eeee">
+    <h5 class="card-title  text-center">
+      Guest Information
+    </h5>
     <div class="card-body">
       <!-- Multi Columns Form -->
       <div class="row g-3">

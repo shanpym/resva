@@ -26,6 +26,11 @@ class AdminController extends Controller
         return view('admin.accounts.admin_account.edit_account', compact('users'));
     }
 
+    public function profileView(){
+        $users = User::where('id', Auth::user()->id)->first();
+        return view('admin.profile.profile', compact('users'));
+    }
+
     public function accountPost(Request $request){
         $validator = Validator::make($request->all(), [       
             'surname' => 'required',
@@ -56,7 +61,7 @@ class AdminController extends Controller
         $firstname = Str::upper($request->firstname);
         $surname = Str::upper($request->surname);
         $accounts = User::create([
-            'level' => '1',
+            
             'surname' =>$surname ,
             'firstname'=> $firstname ,
             'email'=> $request->email ,
@@ -66,6 +71,7 @@ class AdminController extends Controller
             'about' => $request->about,
             'gender' => $request->gender,
             'status' => '1',
+            'level' => '1',
             'password' => $request->password
         ]);
 
@@ -156,5 +162,36 @@ class AdminController extends Controller
         }else{
             return redirect()->back()->with("error", "Current Password does not match");
         }
+    }
+
+    public function deactivate(Request $request, int $id){
+        $users = User::where('id', $id)->first();
+        if (Auth::user()) {
+            $users->update([
+                'status'=> '3',
+                'remarks'=> $request->remarks
+            ]);
+            Auth::logout();
+            return redirect(route('home'));
+        }else{
+            $users->update([
+                'status'=> '3',
+                'remarks'=> $request->remarks
+    
+            ]);
+            return redirect(route('admin_account.list'))->with("error", "Account has been deactivated");
+        }
+    }
+
+    public function activate(Request $request, int $id){
+        $users = User::where('id', $id)
+        ->where('status', '3')
+        ->first();
+        $users->update([
+            'status'=> '1',
+            'remarks'=> $request->remarks
+
+        ]);
+        return redirect()->back()->with("success", "Account has been re-activated");
     }
 }
