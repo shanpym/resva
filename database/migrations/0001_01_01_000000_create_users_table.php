@@ -20,7 +20,13 @@ return new class extends Migration
             $table->date('birthdate')->nullable();
             $table->string('phone_no')->nullable();
             $table->string('about')->nullable();
-            $table->string('address')->nullable();
+
+            $table->string('region_text')->nullable();
+            $table->string('province_text')->nullable();
+            $table->string('city_text')->nullable();
+            $table->string('barangay_text')->nullable();
+            $table->string('street_text')->nullable();
+
             $table->string('email')->unique()->nullable();
             $table->enum('gender', ['1', '2'])->nullable();
             $table->timestamp('email_verified_at')->nullable();

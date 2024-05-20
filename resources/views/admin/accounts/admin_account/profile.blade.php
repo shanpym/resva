@@ -117,10 +117,38 @@
                     </div>
                   </div>
 
+                  <div class="row mb-3 mt-5">
+                    <label for="Address" class="col-md-4 col-lg-3 col-form-label"><span style="color: #d9534f">*</span> Address</label>
+                    <div class="col-md-5">
+                      <select name="region" class="form-control form-control-md @error('region_text') is-invalid @enderror" id="region"></select>
+                      <input type="hidden" class="form-control form-control-md" name="region_text" id="region-text" required>
+                    </div>
+                    <div class="col-md-4">
+                      <select name="province" class="form-control form-control-md @error('province_text') is-invalid @enderror" id="province" disabled>
+                        <option value="" selected disabled>Choose State/Province</option>
+                      </select>
+                    <input type="hidden" class="form-control form-control-md" name="province_text" id="province-text" required>
+                    </div>
+                  </div>
                   <div class="row mb-3">
-                    <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
+                    <label for="Address" class="col-md-4 col-lg-3 col-form-label"></label>
+                    <div class="col-md-5">
+                      <select name="city" class="form-control form-control-md @error('city_text') is-invalid @enderror" id="city" disabled>
+                        <option value="" selected disabled>Choose City/Municipality</option>
+                      </select>
+                      <input type="hidden" class="form-control form-control-md" name="city_text" id="city-text" required>
+                    </div>
+                    <div class="col-md-4">
+                      <select name="barangay" class="form-control form-control-md @error('barangay_text') is-invalid @enderror" id="barangay" disabled>
+                        <option value="" selected disabled>Choose Barangay</option>
+                      </select>
+                      <input type="hidden" class="form-control form-control-md" name="barangay_text" id="barangay-text" required>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label for="Address" class="col-md-4 col-lg-3 col-form-label"><span style="color: #d9534f">*</span> House No.</label>
                     <div class="col-md-8 col-lg-9">
-                      <input name="address" type="text" class="form-control" id="Address" value="{{$user->address}}">
+                      <input type="text" class="form-control form-control-md @error('street_text') is-invalid @enderror" name="street_text" id="street-text">
                     </div>
                   </div>
 

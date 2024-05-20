@@ -28,7 +28,15 @@ class User extends Authenticatable
         'password',
         'phone_no',
         'status',
-        'address',
+        
+
+        'region_text',
+        'province_text',
+        'city_text',
+        'barangay_text',
+        'street_text',
+
+            
         'level',
         'about',
         'birthdate',

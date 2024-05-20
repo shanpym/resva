@@ -36,12 +36,16 @@ class AdminController extends Controller
             'surname' => 'required',
             'firstname' => 'required',
             'email' => 'required|unique:users',
-            'about' => 'required',
-            'address' => 'required',
-            'gender' => 'required',
-            
-            'phone_no' => 'required|min:11',
 
+            'region_text' => 'required',
+            'province_text' => 'required',
+            'city_text' => 'required',
+            'barangay_text' => 'required',
+            'street_text' => 'required',
+
+
+            'gender' => 'required',
+            'phone_no' => 'required|min:11',
             'password' => 'required| confirmed'
         ]
         ,[
@@ -65,13 +69,20 @@ class AdminController extends Controller
             'surname' =>$surname ,
             'firstname'=> $firstname ,
             'email'=> $request->email ,
-            'address'=> $request->address ,
+            
+
+            'region_text'=> $request->region_text,
+            'province_text'=> $request->province_text,
+            'city_text'=> $request->city_text,
+            'barangay_text'=> $request->barangay_text,
+            'street_text'=> $request->street_text,
+
             'phone_no' => $request->phone_no,
             'birthdate' => $request->birthdate,
             'about' => $request->about,
             'gender' => $request->gender,
             'status' => '1',
-            'level' => '1',
+            'level' => $request->level,
             'password' => $request->password
         ]);
 
@@ -79,25 +90,25 @@ class AdminController extends Controller
     }
 
     public function update(Request $request, int $id){
-        $validator = Validator::make($request->all(), [       
-            'surname' => 'required',
-            'firstname' => 'required',
-            'email' => 'required',
-            'about' => 'required',
-            'address' => 'required',
-            'phone_no' => 'required|min:11',
-        ]
-        ,[
-            'required' => 'Please fill out each field',
-        ]
-        );
+        // $validator = Validator::make($request->all(), [       
+        //     'surname' => 'required',
+        //     'firstname' => 'required',
+        //     'email' => 'required',
+        //     'about' => 'required',
+        //     'address' => 'required',
+        //     'phone_no' => 'required|min:11',
+        // ]
+        // ,[
+        //     'required' => 'Please fill out each field',
+        // ]
+        // );
     
-        if($validator->fails()){
-            return redirect()
-            ->back()
-            ->withErrors($validator)
-            ->withInput();
-        };
+        // if($validator->fails()){
+        //     return redirect()
+        //     ->back()
+        //     ->withErrors($validator)
+        //     ->withInput();
+        // };
 
         $matchName = User::where('id', $id)->first();
 
@@ -123,8 +134,14 @@ class AdminController extends Controller
             'surname' =>$surname ,
             'firstname'=> $firstname ,
             'email'=> $email ,
-            'about'=> $request->about ,
-            'address'=> $request->address ,
+            'about'=> $request->about,
+
+            'region_text'=> $request->region_text,
+            'province_text'=> $request->province_text,
+            'city_text'=> $request->city_text,
+            'barangay_text'=> $request->barangay_text,
+            'street_text'=> $request->street_text,
+
             'phone_no' => $request->phone_no,
             'birthdate' => $request->birthdate,
             'gender' => $request->gender,
