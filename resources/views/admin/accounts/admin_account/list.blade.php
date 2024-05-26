@@ -108,16 +108,19 @@
                           <div class="modal-body">
                             @include('admin.accounts.admin_account.view')
                           </div>
-                          <form action="{{ url('activate/'. $user->id) }}" method="POST">
-                            @csrf
-                          <div class="modal-footer d-flex justify-content-between">
-                           
-                              <button type="submit" class="btn btn-outline-primary">Activate Account</button>
                           
-                            <a href="{{url('pdf/' . $user->id)}}" type="button" class="btn btn-secondary">PDF</a>
-                            {{-- <button type="button" class="btn btn-primary">Pay Now</button> --}}
-                          </div>
-                        </form>
+                          
+                            <form action="{{ url('activate/'. $user->id) }}" method="POST">
+                              @csrf
+                            <div class="modal-footer d-flex justify-content-end">
+                              @if($user->status == '3')
+                                <button type="submit" class="btn btn-outline-primary">Activate Account</button>
+                              @endif
+                              <a href="{{url('pdf/' . $user->id)}}" type="button" class="btn btn-secondary">PDF</a>
+                              {{-- <button type="button" class="btn btn-primary">Pay Now</button> --}}
+                            </div>
+                            </form>
+                         
                         </div>
                       </div>
                     </div><!-- End Vertically centered Modal-->

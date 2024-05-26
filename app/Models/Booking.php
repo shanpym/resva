@@ -18,10 +18,15 @@ class Booking extends Model
 
         'firstname',
         'surname',
-        'address',
         'email',
         'phone_no',
         
+        'region_text',
+        'province_text',
+        'city_text',
+        'barangay_text',
+        'street_text',
+
         'no_adult',
         'no_children',
         'start_date',

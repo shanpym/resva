@@ -72,11 +72,11 @@
           <i class="bi bi-bar-chart"></i><span>Reports</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="reports-nav" class="nav-content collapse {{ Request::is('admin/reports/*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
-          <li>
+          {{-- <li>
             <a href="{{route('reports.list')}}" class="{{ Request::routeIs('reports.list') ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>All Reports</span>
             </a>
-          </li>
+          </li> --}}
           <li>
             <a href="{{route('reports.booking')}}" class="{{ Request::routeIs('reports.booking') ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>Booking</span>

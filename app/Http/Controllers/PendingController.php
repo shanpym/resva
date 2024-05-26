@@ -93,7 +93,9 @@ class PendingController extends Controller
                 'room_name' => $request->room_name,
             ]);
 
-            $transactions->update([
+            $transactions->create([
+                'booking_id' => $booking->id,
+                'invoice' => $invoice->id,
                 'amount_paid' => $request->amount_paid,
                 'status' => '2', 
                 'confirmed_at'  => Carbon::now()

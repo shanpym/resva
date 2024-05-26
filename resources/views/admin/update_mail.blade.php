@@ -135,7 +135,21 @@
               
                 <u>Guest Information</u>  <br>
                 Full Name: {{$booking->firstname}} {{$booking->surname}}<br>
-                Address: {{$booking->address}}<br>
+                Address: @if($booking->street_text)
+                {{$booking->street_text}},
+                @endif
+                @if($booking->barangay_text)
+                {{$booking->barangay_text}},
+                @endif
+                @if($booking->city_text)
+                {{$booking->city_text}},
+                @endif
+                @if($booking->province_text)
+                {{$booking->province_text}},
+                @endif
+                @if($booking->region_text)
+                {{$booking->region_text}}
+                @endif<br>
                 Email: {{$booking->email}}<br>
                 Phone No: {{$booking->phone_no}}<br>
 

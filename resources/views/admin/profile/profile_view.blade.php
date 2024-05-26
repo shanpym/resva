@@ -58,7 +58,23 @@
 
                 <div class="row">
                   <div class="col-lg-3 col-md-4 label">Address</div>
-                  <div class="col-lg-9 col-md-8">{{$users->address}}</div>
+                  <div class="col-lg-9 col-md-8">
+                    @if($users->street_text)
+                        {{$users->street_text}},
+                        @endif
+                        @if($users->barangay_text)
+                        {{$users->barangay_text}},
+                        @endif
+                        @if($users->city_text)
+                        {{$users->city_text}},
+                        @endif
+                        @if($users->province_text)
+                        {{$users->province_text}},
+                        @endif
+                        @if($users->region_text)
+                        {{$users->region_text}}
+                        @endif
+                  </div>
                 </div>
 
                 <div class="row">
@@ -114,11 +130,77 @@
                     </div>
                   </div>
 
-                  <div class="row mb-3">
-                    <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
-                    <div class="col-md-8 col-lg-9">
-                      <input name="address" type="text" class="form-control" id="Address" value="{{$users->address}}">
+                  <div  id="text-address">
+                    <div class="row mb-3 mt-5" >
+                      <label for="Address" class="col-md-4 col-lg-3 col-form-label"><span style="color: #d9534f">*</span> Address</label>
+                      <div class="col-md-4">
+                        @if($users->street_text)
+                        {{$users->street_text}},
+                        @endif
+                        @if($users->barangay_text)
+                        {{$users->barangay_text}},
+                        @endif
+                        @if($users->city_text)
+                        {{$users->city_text}},
+                        @endif
+                        @if($users->province_text)
+                        {{$users->province_text}},
+                        @endif
+                        @if($users->region_text)
+                        {{$users->region_text}}
+                        @endif
+                      </div>
+                      <div class="col-md-2">
+                        <button class="btn btn-outline-secondary" type="button" id="edit-btn"> <i class="bi bi-pencil"></i> </button>
+                      </div>
                     </div>
+                  </div>
+                  <div id="edit-address" style="display: none">
+                    <div class="row mb-3 mt-5">
+                      <label for="Address" class="col-md-4 col-lg-3 col-form-label"><span style="color: #d9534f">*</span> Address</label>
+                      <div class="col-md-5">
+                        <select name="region" class="form-control form-control-md @error('region_text') is-invalid @enderror" id="region"></select>
+                        <input type="hidden" class="form-control form-control-md" name="region_text" id="region-text" value="{{$users->region_text}}" required>
+                      </div>
+  
+                      <div class="col-md-4">
+                        <select name="province" class="form-control form-control-md @error('province_text') is-invalid @enderror" id="province" disabled>
+                          <option value="" selected disabled>Choose State/Province</option>
+                        </select>
+                      <input type="hidden" class="form-control form-control-md" name="province_text" id="province-text" value="{{$users->province_text}}" required>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="Address" class="col-md-4 col-lg-3 col-form-label"></label>
+                      <div class="col-md-5">
+                        <select name="city" class="form-control form-control-md @error('city_text') is-invalid @enderror" id="city" disabled>
+                          <option value="" selected disabled>Choose City/Municipality</option>
+                        </select>
+                        <input type="hidden" class="form-control form-control-md" name="city_text" id="city-text" value="{{$users->city_text}}" required>
+                      </div>
+
+                      <div class="col-md-4">
+                        <select name="barangay" class="form-control form-control-md @error('barangay_text') is-invalid @enderror" id="barangay" disabled>
+                          <option value="" selected disabled>Choose Barangay</option>
+                        </select>
+                        <input type="hidden" class="form-control form-control-md" name="barangay_text" id="barangay-text" value="{{$users->barangay_text}}" required>
+                      </div>
+                    </div>
+                    
+                      <div class="row mb-3">
+                        <label for="Address" class="col-md-4 col-lg-3 col-form-label"><span style="color: #d9534f">*</span> House No.</label>
+                        <div class="col-md-8 col-lg-9">
+                          <input type="text" class="form-control form-control-md @error('street_text') is-invalid @enderror" name="street_text" id="street-text" value="{{$users->street_text}}"> 
+                        </div>
+                      </div>
+
+                      <div class="row mb-3 d-flex justify-content-end">
+                        <div class="col-md-2 col-lg-9 text-end">
+                          <button class="btn btn-outline-secondary" type="button" id="edit-btn-2"> <i class="bi bi-pencil"></i> </button>
+                        </div>
+                        
+                      </div>
                   </div>
 
                   <div class="row mb-3">
@@ -192,7 +274,7 @@
 
               <div class="tab-pane fade pt-3" id="profile-change-password">
                 <!-- Change Password Form -->
-                <form action="{{url('password/' .$users->id)}}" method="POST">
+                <form action="{{url('profile/password/' .$users->id)}}" method="POST">
                   @csrf
                   @method('PUT')
                   <div class="row mb-3">

@@ -46,7 +46,6 @@ class AdminController extends Controller
 
             'gender' => 'required',
             'phone_no' => 'required|min:11',
-            'password' => 'required| confirmed'
         ]
         ,[
             'required' => 'Please fill out each field',
@@ -64,6 +63,14 @@ class AdminController extends Controller
 
         $firstname = Str::upper($request->firstname);
         $surname = Str::upper($request->surname);
+
+        $birthdate = $request->birthdate;
+
+        $birthdate = str_replace('-', '', $birthdate);
+        $birthdate = substr($birthdate, 4);
+
+        $password = $firstname . $surname . $birthdate;
+
         $accounts = User::create([
             
             'surname' =>$surname ,
@@ -83,7 +90,7 @@ class AdminController extends Controller
             'gender' => $request->gender,
             'status' => '1',
             'level' => $request->level,
-            'password' => $request->password
+            'password' => $password
         ]);
 
         return redirect(route('admin_account.list'))->with("success", "Account has been added successfully");
@@ -151,7 +158,7 @@ class AdminController extends Controller
         return redirect()->back()->with("success", "Account has been updated successfully");
     }
 
-    public function password(Request $request, int $id){
+    public function profilePassword(Request $request, int $id){
         $validator = Validator::make($request->all(), [       
             'newpassword' => 'required | confirmed',
         ]
@@ -163,8 +170,6 @@ class AdminController extends Controller
             ->withErrors($validator)
             ->withInput();
         };
-
-
 
         $users = User::where('id', $id)->first();
         $checkPassword = Hash::check($request->password, $users->password);
@@ -179,6 +184,25 @@ class AdminController extends Controller
         }else{
             return redirect()->back()->with("error", "Current Password does not match");
         }
+    }
+
+    public function password(Request $request, int $id){
+        $validator = Validator::make($request->all(), [       
+            'newpassword' => 'required | confirmed',
+        ]
+        );
+    
+        if($validator->fails()){
+            return redirect()
+            ->back()
+            ->withErrors($validator)
+            ->withInput();
+        };
+        $accounts = User::find($id);
+        $accounts->update([
+            'password' => Hash::make($request->newpassword),
+        ]);
+        return redirect()->back()->with("success", "Password has been updated successfully");
     }
 
     public function deactivate(Request $request, int $id){

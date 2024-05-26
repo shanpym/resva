@@ -49,4 +49,15 @@
     </section>
 
   </main><!-- End #main -->
+  <script>
+    $('#edit-btn').on('click', function(){
+      $('#text-address').css("display", "none");
+      $('#edit-address').css("display", "block")
+    })
+
+    $('#edit-btn-2').on('click', function(){
+      $('#text-address').css("display", "block");
+      $('#edit-address').css("display", "none")
+    })
+  </script>
 @endsection

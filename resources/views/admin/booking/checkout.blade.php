@@ -57,6 +57,10 @@
                             <div class="col-lg-3 col-md-8"><span id="invoice-total-amount">PHP{{$invoice->total_amount}}</span></div>
                           </div>
                           <div class="row">
+                            <div class="col-lg-9 col-md-4 label" style="text-align: right">Amount Paid</div>
+                            <div class="col-lg-3 col-md-8"><span id="invoice-total-amount">PHP{{$totalAmountPaid}}</span></div>
+                          </div>
+                          <div class="row">
                             <div class="col-lg-9 col-md-4 label" style="text-align: right">Remaining Balance</div>
                             <div class="col-lg-3 col-md-8"><span id="invoice-total-amount">PHP{{$remaining_balance}}</span></div>
                           </div>

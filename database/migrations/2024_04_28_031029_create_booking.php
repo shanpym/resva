@@ -20,9 +20,14 @@ return new class extends Migration
             $table->string('firstname')->nullable();
             $table->string('surname')->nullable();
             $table->string('middlename')->nullable();
-            $table->string('address')->nullable();
             $table->string('email')->nullable();
             $table->string('phone_no')->nullable();
+
+            $table->string('region_text')->nullable();
+            $table->string('province_text')->nullable();
+            $table->string('city_text')->nullable();
+            $table->string('barangay_text')->nullable();
+            $table->string('street_text')->nullable();
 
             $table->string('room_type')->nullable();
             $table->string('room_name')->nullable();
@@ -58,7 +63,6 @@ return new class extends Migration
             $table->string('total_amount')->nullable();
             
             $table->string('remaining_balance')->nullable();
-            $table->enum('status', ['1', '2', '3']);
             // status , 1 - unpaid, 2 - partial, 3 - fully paid
             $table->enum('payment_type', ['1', '2']);
             // payment_type , 1 - online, 2 - cash

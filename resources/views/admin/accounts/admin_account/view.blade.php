@@ -65,7 +65,23 @@
                 </div>
                 <div class="row">
                   <div class="col-lg-3 col-md-4 label">Address</div>
-                  <div class="col-lg-9 col-md-8">{{$user->address}}</div>
+                  <div class="col-lg-9 col-md-8">
+                    @if($user->street_text)
+                    {{$user->street_text}},
+                    @endif
+                    @if($user->barangay_text)
+                    {{$user->barangay_text}},
+                    @endif
+                    @if($user->city_text)
+                    {{$user->city_text}},
+                    @endif
+                    @if($user->province_text)
+                    {{$user->province_text}},
+                    @endif
+                    @if($user->region_text)
+                    {{$user->region_text}}
+                    @endif
+                  </div>
                 </div>
 
                 <div class="row">

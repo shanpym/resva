@@ -61,7 +61,24 @@
 
                 <div class="row">
                   <div class="col-lg-3 col-md-4 label">Address</div>
-                  <div class="col-lg-9 col-md-8">{{$user->address}}</div>
+                  <div class="col-lg-9 col-md-8">
+                  @if($user->street_text)
+                  {{$user->street_text}},
+                  @endif
+                  @if($user->barangay_text)
+                  {{$user->barangay_text}},
+                  @endif
+                  @if($user->city_text)
+                  {{$user->city_text}},
+                  @endif
+                  @if($user->province_text)
+                  {{$user->province_text}},
+                  @endif
+                  @if($user->region_text)
+                  {{$user->region_text}}
+                  @endif
+                  
+                  </div>
                 </div>
 
                 <div class="row">
@@ -98,59 +115,99 @@
                 <form action="{{url('update/' .$user->id)}}" method="POST">
                   @csrf
                   @method('PUT')
-                  <div class="row mb-3">
-                    <label for="" class="col-md-4 col-lg-3 col-form-label">Firstname</label>
-                    <div class="col-md-8 col-lg-9">
-                      <input name="firstname" type="text" class="form-control" value="{{$user->firstname}}">
+                    <div class="row mb-3">
+                      <label for="" class="col-md-4 col-lg-3 col-form-label">Firstname</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="firstname" type="text" class="form-control" value="{{$user->firstname}}">
+                      </div>
                     </div>
-                  </div>
-                  <div class="row mb-3">
-                    <label for="" class="col-md-4 col-lg-3 col-form-label">Surname</label>
-                    <div class="col-md-8 col-lg-9">
-                      <input name="surname" type="text" class="form-control" value="{{$user->surname}}">
+                    <div class="row mb-3">
+                      <label for="" class="col-md-4 col-lg-3 col-form-label">Surname</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="surname" type="text" class="form-control" value="{{$user->surname}}">
+                      </div>
                     </div>
-                  </div>
-                  <div class="row mb-3">
-                    <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
-                    <div class="col-md-8 col-lg-9">
-                      <textarea name="about" class="form-control" id="about" style="height: 100px">{{$user->about}}</textarea>
+                    <div class="row mb-3">
+                      <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
+                      <div class="col-md-8 col-lg-9">
+                        <textarea name="about" class="form-control" id="about" style="height: 100px">{{$user->about}}</textarea>
+                      </div>
                     </div>
-                  </div>
+                    
+                    <div  id="text-address">
+                      <div class="row mb-3 mt-5" >
+                        <label for="Address" class="col-md-4 col-lg-3 col-form-label"><span style="color: #d9534f">*</span> Address</label>
+                        <div class="col-md-4">
+                          @if($user->street_text)
+                          {{$user->street_text}},
+                          @endif
+                          @if($user->barangay_text)
+                          {{$user->barangay_text}},
+                          @endif
+                          @if($user->city_text)
+                          {{$user->city_text}},
+                          @endif
+                          @if($user->province_text)
+                          {{$user->province_text}},
+                          @endif
+                          @if($user->region_text)
+                          {{$user->region_text}}
+                          @endif
+                        </div>
+                        <div class="col-md-2">
+                          <button class="btn btn-outline-secondary" type="button" id="edit-btn"> <i class="bi bi-pencil"></i> </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="edit-address" style="display: none">
+                      <div class="row mb-3 mt-5">
+                        <label for="Address" class="col-md-4 col-lg-3 col-form-label"><span style="color: #d9534f">*</span> Address</label>
+                        <div class="col-md-5">
+                          <select name="region" class="form-control form-control-md @error('region_text') is-invalid @enderror" id="region"></select>
+                          <input type="hidden" class="form-control form-control-md" name="region_text" id="region-text" value="{{$user->region_text}}" required>
+                        </div>
+    
+                        <div class="col-md-4">
+                          <select name="province" class="form-control form-control-md @error('province_text') is-invalid @enderror" id="province" disabled>
+                            <option value="" selected disabled>Choose State/Province</option>
+                          </select>
+                        <input type="hidden" class="form-control form-control-md" name="province_text" id="province-text" value="{{$user->province_text}}" required>
+                        </div>
+                      </div>
 
-                  <div class="row mb-3 mt-5">
-                    <label for="Address" class="col-md-4 col-lg-3 col-form-label"><span style="color: #d9534f">*</span> Address</label>
-                    <div class="col-md-5">
-                      <select name="region" class="form-control form-control-md @error('region_text') is-invalid @enderror" id="region"></select>
-                      <input type="hidden" class="form-control form-control-md" name="region_text" id="region-text" required>
+                      <div class="row mb-3">
+                        <label for="Address" class="col-md-4 col-lg-3 col-form-label"></label>
+                        <div class="col-md-5">
+                          <select name="city" class="form-control form-control-md @error('city_text') is-invalid @enderror" id="city" disabled>
+                            <option value="" selected disabled>Choose City/Municipality</option>
+                          </select>
+                          <input type="hidden" class="form-control form-control-md" name="city_text" id="city-text" value="{{$user->city_text}}" required>
+                        </div>
+
+                        <div class="col-md-4">
+                          <select name="barangay" class="form-control form-control-md @error('barangay_text') is-invalid @enderror" id="barangay" disabled>
+                            <option value="" selected disabled>Choose Barangay</option>
+                          </select>
+                          <input type="hidden" class="form-control form-control-md" name="barangay_text" id="barangay-text" value="{{$user->barangay_text}}" required>
+                        </div>
+                      </div>
+                      
+                        <div class="row mb-3">
+                          <label for="Address" class="col-md-4 col-lg-3 col-form-label"><span style="color: #d9534f">*</span> House No.</label>
+                          <div class="col-md-8 col-lg-9">
+                            <input type="text" class="form-control form-control-md @error('street_text') is-invalid @enderror" name="street_text" id="street-text" value="{{$user->street_text}}"> 
+                          </div>
+                        </div>
+
+                        <div class="row mb-3 d-flex justify-content-end">
+                          <div class="col-md-2 col-lg-9 text-end">
+                            <button class="btn btn-outline-secondary" type="button" id="edit-btn-2"> <i class="bi bi-pencil"></i> </button>
+                          </div>
+                          
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                      <select name="province" class="form-control form-control-md @error('province_text') is-invalid @enderror" id="province" disabled>
-                        <option value="" selected disabled>Choose State/Province</option>
-                      </select>
-                    <input type="hidden" class="form-control form-control-md" name="province_text" id="province-text" required>
-                    </div>
-                  </div>
-                  <div class="row mb-3">
-                    <label for="Address" class="col-md-4 col-lg-3 col-form-label"></label>
-                    <div class="col-md-5">
-                      <select name="city" class="form-control form-control-md @error('city_text') is-invalid @enderror" id="city" disabled>
-                        <option value="" selected disabled>Choose City/Municipality</option>
-                      </select>
-                      <input type="hidden" class="form-control form-control-md" name="city_text" id="city-text" required>
-                    </div>
-                    <div class="col-md-4">
-                      <select name="barangay" class="form-control form-control-md @error('barangay_text') is-invalid @enderror" id="barangay" disabled>
-                        <option value="" selected disabled>Choose Barangay</option>
-                      </select>
-                      <input type="hidden" class="form-control form-control-md" name="barangay_text" id="barangay-text" required>
-                    </div>
-                  </div>
-                  <div class="row mb-3">
-                    <label for="Address" class="col-md-4 col-lg-3 col-form-label"><span style="color: #d9534f">*</span> House No.</label>
-                    <div class="col-md-8 col-lg-9">
-                      <input type="text" class="form-control form-control-md @error('street_text') is-invalid @enderror" name="street_text" id="street-text">
-                    </div>
-                  </div>
+
+                  
 
                   <div class="row mb-3">
                     <label for="" class="col-md-4 col-lg-3 col-form-label">Birthdate</label>
@@ -227,12 +284,12 @@
                 <form action="{{url('password/' .$user->id)}}" method="POST">
                   @csrf
                   @method('PUT')
-                  <div class="row mb-3">
+                  {{-- <div class="row mb-3">
                     <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
                     <div class="col-md-8 col-lg-9">
                       <input name="password" type="password" class="form-control" id="currentPassword">
                     </div>
-                  </div>
+                  </div> --}}
 
                   <div class="row mb-3">
                     <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
@@ -248,7 +305,7 @@
                     </div>
                   </div>
 
-                  <div class="text-center">
+                  <div class="text-end">
                     <button type="submit" class="btn btn-primary">Change Password</button>
                   </div>
                 </form><!-- End Change Password Form -->

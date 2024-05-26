@@ -70,7 +70,7 @@
         <div class="card-body">
           <form action="{{route('admin.add_book.post')}}" method="post">
             @csrf
-          
+            @include('user.booking.progress_bar')
           @include('booking.multiform')
         </div>
       </div>
@@ -170,61 +170,67 @@
 {{-- Multiform JS --}}
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    const nextPartButton = document.getElementById('nextButton');
-    const backButton = document.getElementById('backButton');
-    const tabContent = document.getElementById('borderedTabJustifiedContent');
-    const tabPanes = tabContent.querySelectorAll('.tab-pane');
-    let currentTab = 0;
+     const nextPartButton = document.getElementById('nextButton');
+     const backButton = document.getElementById('backButton');
+     const tabContent = document.getElementById('borderedTabJustifiedContent');
+     const tabPanes = tabContent.querySelectorAll('.tab-pane');
+     const steps = document.querySelectorAll('.step');
+     let currentTab = 0;
 
-    // Function to switch to the next tab
-    function switchToNextTab() {
-      // If there's a next tab
-      if (currentTab < tabPanes.length - 1) {
-        // Hide the current tab
-        tabPanes[currentTab].classList.remove('show', 'active');
-        // Increment the current tab index
-        currentTab++;
-        // Show the next tab
-        tabPanes[currentTab].classList.add('show', 'active');
-        // If the next tab is the last one, change the button text to "Submit"
-        if (currentTab === tabPanes.length - 1) {
-          nextPartButton.textContent = "Submit";
-        }
-      }
-    }
+     // Function to update progress bar
+     function updateProgressBar() {
+       steps.forEach((step, index) => {
+         if (index <= currentTab) {
+           step.classList.add('active');
+         } else {
+           step.classList.remove('active');
+         }
+       });
+     }
 
-    // Function to switch to the previous tab
-    function switchToPreviousTab() {
-      // If the current tab is not the first one, allow switching
-      if (currentTab > 0) {
-        // Hide the current tab
-        tabPanes[currentTab].classList.remove('show', 'active');
-        // Decrement the current tab index
-        currentTab--;
-        // Show the previous tab
-        tabPanes[currentTab].classList.add('show', 'active');
-        // If we are no longer on the last tab, revert the button text to "Next Part"
-        if (currentTab !== tabPanes.length - 1) {
-          nextPartButton.textContent = "Next Part";
-        }
-      }
-    }
+     // Function to switch to the next tab
+     function switchToNextTab() {
+       if (currentTab < tabPanes.length - 1) {
+         tabPanes[currentTab].classList.remove('show', 'active');
+         currentTab++;
+         tabPanes[currentTab].classList.add('show', 'active');
+         if (currentTab === tabPanes.length - 1) {
+           nextPartButton.textContent = "Submit";
+         }
+         updateProgressBar();
+       }
+     }
 
-    // Add click event listener to the "Next Part" button
-    nextPartButton.addEventListener('click', function() {
-      // If the button text is "Submit", submit the form
-      if (nextPartButton.textContent === "Submit") {
-        nextPartButton.setAttribute('type', 'submit');
-      } else {
-        switchToNextTab();
-      }
-    });
+     // Function to switch to the previous tab
+     function switchToPreviousTab() {
+       if (currentTab > 0) {
+         tabPanes[currentTab].classList.remove('show', 'active');
+         currentTab--;
+         tabPanes[currentTab].classList.add('show', 'active');
+         if (currentTab !== tabPanes.length - 1) {
+           nextPartButton.textContent = "Next Part";
+         }
+         updateProgressBar();
+       }
+     }
 
-    // Add click event listener to the "Back" button
-    backButton.addEventListener('click', function() {
-      switchToPreviousTab();
-    });
-  });
+     // Add click event listener to the "Next Part" button
+     nextPartButton.addEventListener('click', function() {
+       if (nextPartButton.textContent === "Submit") {
+         nextPartButton.setAttribute('type', 'submit');
+       } else {
+         switchToNextTab();
+       }
+     });
+
+     // Add click event listener to the "Back" button
+     backButton.addEventListener('click', function() {
+       switchToPreviousTab();
+     });
+
+     // Initial update of progress bar
+     updateProgressBar();
+   });
 </script>
 
 {{-- Simple Jquery --}}

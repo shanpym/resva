@@ -63,10 +63,19 @@ class BookingController extends Controller
         $date_today = date('Y-m-d');
         $bookings = Booking::where('start_date', $date_today)
         ->whereIn('status', ['2', '5'])->get();
+        $transaction = Transaction::where('booking_id', $id)->first();
+        $transaction->create([
+            'booking_id' => $id,
+            'status' => '5', 
+            'amount_paid' => 0,
+            'confirmed_at'  => Carbon::now()
+        ]);
         $checkIn = Booking::find($id);
         $checkIn->update([
             'status' => '5'
         ]);
+
+        
         return redirect(route('admin.arrive', compact('bookings')))->with("success", "Guest has arrived");
     }
 
@@ -92,14 +101,18 @@ class BookingController extends Controller
         if($payable_amount > $request->amount_paid){
             return redirect()->back()->with("error_payment", " Payment was unsuccessful");
         }else{
+
+            $transaction = Transaction::where('booking_id', $id)->first();
+            $transaction->create([
+                'booking_id' => $id,
+                'status' => '4', 
+                'amount_paid' => $request->amount_paid,
+                'confirmed_at'  => Carbon::now()
+            ]);
+
             $checkIn = Booking::find($id);
             $checkIn->update([
                 'status' => '4'
-            ]);
-            $transactions = Transaction::create([
-                'booking_id' => $id,
-                'amount_paid' => $request->amount_paid,
-                'completed_at' => Carbon::now()
             ]);
         };
         
@@ -117,9 +130,14 @@ class BookingController extends Controller
             'surname' => 'required',
             'firstname' => 'required',
             'email' => 'required',
-            'address' => 'required',
             'phone_no' => 'required|min:11',
     
+            'region_text' => 'required',
+            'province_text' => 'required',
+            'city_text' => 'required',
+            'barangay_text' => 'required',
+            'street_text' => 'required',
+
             'no_adult' => 'required',
             'no_children' => 'required',
             'start_date' => 'required',
@@ -161,9 +179,14 @@ class BookingController extends Controller
             'firstname' => $request->firstname,
             'middlename' => $request->middlename,
             'email' => $request->email,
-            'address' => $request->address,
             'phone_no' => $request->phone_no,
     
+            'region_text'=> $request->region_text,
+            'province_text'=> $request->province_text,
+            'city_text'=> $request->city_text,
+            'barangay_text'=> $request->barangay_text,
+            'street_text'=> $request->street_text,
+
             'no_adult' => $request->no_adult,
             'no_children' => $request->no_children,
             'start_date' => $request->start_date,
@@ -192,7 +215,6 @@ class BookingController extends Controller
 
         $invoicesID = DB::table('invoice')->insertGetId([
             'booking_id' => $bookingID,
-            'status' => '1',
             
             'remaining_balance' => '0',
             'total_amount' => $request->total_amount,
@@ -205,7 +227,7 @@ class BookingController extends Controller
             'invoice_id' => $invoicesID,
             'amount_paid' => '0',
             'status' => '1',
-            'created_at'  => Carbon::now()
+            'confirmed_at'  => Carbon::now()
         ]);
 
         $email = $request->email;
@@ -220,9 +242,8 @@ class BookingController extends Controller
             'surname' => 'required',
             'firstname' => 'required',
             'email' => 'required',
-            'address' => 'required',
             'phone_no' => 'required|min:11',
-    
+
             'no_adult' => 'required',
             'no_children' => 'required',
             'start_date' => 'required',
@@ -259,9 +280,8 @@ class BookingController extends Controller
             'firstname' => $request->firstname,
             'middlename' => $request->middlename,
             'email' => $request->email,
-            'address' => $request->address,
             'phone_no' => $request->phone_no,
-    
+
             'no_adult' => $request->no_adult,
             'no_children' => $request->no_children,
             'start_date' => $request->start_date,
@@ -400,6 +420,9 @@ class BookingController extends Controller
             Mail::to($email)->send(new ResvaMail($bookingID, $invoicesID));
             return redirect()->back()->with("success", "Booking has been submitted");
         }
+
+
+
     
 
         

@@ -117,63 +117,124 @@
               <h1 style="font-size: 20px; line-height: 24px; font-family: 'Helvetica', Arial, sans-serif; font-weight: 600; text-decoration: none; color: #000000;">Your Booking</h1>
 
               <p style="font-size: 15px; line-height: 24px; font-family: 'Helvetica', Arial, sans-serif; font-weight: 400; text-decoration: none; color: #919293;">
-                <?php 
-                  $booking = DB::table('booking')->where('id', $bookingID)->first();
-                  $invoice =  DB::table('invoice')->where('booking_id', $bookingID)->first();
-                
-                    $payable_amount = $invoice->total_amount * .5;
-                ?>
               
+              
+                <?php
+                $totalAmountPaid = DB::table('transaction')
+                    ->where('booking_id', $bookings->id)
+                    ->sum('amount_paid');
+
+                
+                $transactions = DB::table('booking')
+                    ->join('transaction', 'booking.id', '=', 'transaction.booking_id')
+                    ->join('invoice', 'booking.id', '=', 'invoice.booking_id')
+                    ->select('transaction.*', 'invoice.*')
+                    ->where('booking.id', $bookings->id)
+                    ->orderBy('transaction.id', 'asc')
+                    ->get();
+
+                $transaction = DB::table('transaction')->where('booking_id', $bookings->id)->first();
+                $invoice = DB::table('invoice')->where('booking_id', $bookings->id)->first();
+              
+                $add_ons = DB::table('add_ons')->where('booking_id', $bookings->id)->get();
+                if($totalAmountPaid >=  $invoice->total_amount){
+                            $remaining_balance = 0;
+                          }else{
+                            $remaining_balance = $totalAmountPaid - $invoice->total_amount;
+                          }
+                $mealsAddOns = $add_ons->where('meals', '!=', null);
+                if ($mealsAddOns->isNotEmpty()) {
+                  $mealOptions = $mealsAddOns->toArray();
+                } else {
+                  $mealOptions = [];
+                }
+
+                $itemsAddOns = $add_ons->where('items', '!=', null);
+                if ($itemsAddOns->isNotEmpty()) {
+                  $itemsOptions = $itemsAddOns->toArray();
+                } else {
+                    $itemsOptions = [];
+                }
+                ?>
+               
                 <u>Guest Information</u>  <br>
-                Full Name: {{$booking->firstname}} {{$booking->surname}}<br>
-                Address: @if($booking->street_text)
-                {{$booking->street_text}},
+                Full Name: {{$bookings->firstname}} {{$bookings->surname}}<br>
+                Address: @if($bookings->street_text)
+                {{$bookings->street_text}},
                 @endif
-                @if($booking->barangay_text)
-                {{$booking->barangay_text}},
+                @if($bookings->barangay_text)
+                {{$bookings->barangay_text}},
                 @endif
-                @if($booking->city_text)
-                {{$booking->city_text}},
+                @if($bookings->city_text)
+                {{$bookings->city_text}},
                 @endif
-                @if($booking->province_text)
-                {{$booking->province_text}},
+                @if($bookings->province_text)
+                {{$bookings->province_text}},
                 @endif
-                @if($booking->region_text)
-                {{$booking->region_text}}
+                @if($bookings->region_text)
+                {{$bookings->region_text}}
                 @endif<br>
-                Email: {{$booking->email}}<br>
-                Phone No: {{$booking->phone_no}}<br>
+                Email: {{$bookings->email}}<br>
+                Phone No: {{$bookings->phone_no}}<br>
 
                 <hr>
 
                 <u>Reservation Details</u>  <br>
-                @if($booking->status == '2')
-                Your Room: {{$booking->room_name}}<br>
+                @if($bookings->status == '2')
+                Your Room: {{$bookings->room_name}}<br>
                 @else
-                Your Room: {{$booking->room_type}}<br>
+                Your Room: {{$bookings->room_type}}<br>
                 @endif
                
-                Date to Stay: {{ \Carbon\Carbon::parse($booking->start_date)->format('F j, Y') }} - {{ \Carbon\Carbon::parse($booking->end_date)->format('F j, Y') }}<br>
-                Total Sleep/s: {{$booking->no_adult}} Adult |  {{$booking->no_children}} Children<br><br><br>
-                Your Request/s: {{$booking->requests}}<br>
+                Date to Stay: {{ \Carbon\Carbon::parse($bookings->start_date)->format('F j, Y') }} - {{ \Carbon\Carbon::parse($bookings->end_date)->format('F j, Y') }}<br>
+                Total Sleep/s: {{$bookings->no_adult}} Adult |  {{$bookings->no_children}} Children<br><br><br>
+                Your Request/s: {{$bookings->requests}}<br>
                 <hr>
-                <strong>Total Amount PHP {{$invoice->total_amount}}</strong><br>
-                Kindly pay the 50% downpayment to secure your reservation (PHP {{$payable_amount}}) 
-              </p>   
-              <p style="font-size: 15px; line-height: 24px; font-family: 'Helvetica', Arial, sans-serif; font-weight: 400; text-decoration: none; color: #919293;">You can check the status of your booking here</p>
-            
-              <!-- Start button (You can change the background colour by the hex code below) -->
-              <a href="{{url('/admin/confirm_booking/guest_payment/' .$booking->id)}}" target="_blank" style="background-color: #000000; font-size: 15px; line-height: 22px; font-family: 'Helvetica', Arial, sans-serif; font-weight: normal; text-decoration: none; padding: 12px 15px; color: #ffffff; border-radius: 5px; display: inline-block; mso-padding-alt: 0;">
-                <!--[if mso]>
-                <i style="letter-spacing: 25px; mso-font-width: -100%; mso-text-raise: 30pt;">&nbsp;</i>
-              <![endif]-->
 
-                <span style="mso-text-raise: 15pt; color: #ffffff;">Pay Here</span>
-                <!--[if mso]>
-                <i style="letter-spacing: 25px; mso-font-width: -100%;">&nbsp;</i>
-              <![endif]-->
-              </a>
-              <!-- End button here -->
+                
+                <?php 
+                      $start_date = new DateTime($bookings->start_date);
+                      $end_date = new DateTime($bookings->end_date);
+                      $days_diff = $end_date->diff($start_date)->days;
+
+                      $room_type = DB::table('room_type')->where('name', $bookings->room_type)->first();
+
+                      // Ensure a room type is found
+                      if($room_type) {
+                          $subtotal = $room_type->price * $days_diff;
+                      }
+                ?>
+               
+                <table>
+                  <tr>
+                    <td style="padding-right:35px">Subtotal</td>
+                    <td style="color: #919293;">PHP{{$subtotal}}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding-right:35px">Addons</td>
+                    <td style="color: #919293;"> @foreach ($itemsOptions as $items)
+                      <?php 
+                      $price = $items->price * $items->qty ;
+                        ?>
+                      PHP{{$price}} - {{ $items->items }}({{ $items->qty }} ea)  
+                      @if($bookings->status == '4' || $bookings->status == '3')
+                      
+                      @else
+                      <a href="{{url('delete/addons/' . $items->id)}}" class="btn btn-sm btn-outline-danger" type="button"><i class="bi bi-trash"></i>
+                      </a>
+                      @endif
+                      <br>
+                      @endforeach</td>
+                  </tr>
+                </table>
+                <hr>
+                <table>
+                  <tr>
+                    <td style="padding-right:50px">Total</td>
+                    <td style="color: #919293;">PHP{{$invoice->total_amount}}</td>
+                  </tr>
+                </table>
+              </p>   
            
             </td>
           </tr>
@@ -185,3 +246,4 @@
   </body>
 
 </html>
+

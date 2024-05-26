@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => 'password',
             'level' => '1',
+            'status' => '1',
         ]);
         
         User::create([
@@ -28,6 +29,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'employee@gmail.com',
             'password' => 'password',
             'level' => '2',
+            'status' => '1',
         ]);
 
         User::create([
@@ -35,6 +37,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'user@gmail.com',
             'password' => 'password',
             'level' => '3',
+            'status' => '1',
         ]);
      
         

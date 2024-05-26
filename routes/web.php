@@ -38,6 +38,13 @@ Route::get('/login/login', function () {
 })->name('login');
 Route::post('/login/login', [AuthController::class, 'loginPost'])->name('login.post');
 
+//ADMIN LOGIN
+
+Route::get('admin', function () {
+    return view('admin');
+})->name('login.admin');
+Route::post('admin', [AuthController::class, 'adminPost'])->name('admin_login.post');
+
 //SIGNUP
 Route::get('/login/signup', function () {
     return view('login.signup');
@@ -127,6 +134,7 @@ Route::get('/admin/reports/list', function () {
 
 Route::get('/admin/reports/booking', [ReportController::class, ('view')])->name('reports.booking')->middleware(RoleMiddleware::class);
 
+Route::get('/filter/reports', [ReportController::class, ('filter')])->name('reports.filter')->middleware(RoleMiddleware::class);
 Route::post('/admin/reports/booking',[ReportController::class, ('reportQuery')])->name('reports.post')->middleware(RoleMiddleware::class);
 
 //ACCOUNTS ---------------------------------------------------------------------------
@@ -142,6 +150,7 @@ Route::get('/admin/accounts/admin_account/list', [AdminController::class, ('view
 Route::post('/admin/accounts/admin_account/post', [AdminController::class, ('accountPost')])->name('admin_account.post')->middleware(RoleMiddleware::class);
 Route::get('/admin/accounts/admin_account/{id}', [AdminController::class, ('editView')])->name('admin_account.edit')->middleware(RoleMiddleware::class);
 Route::put('update/{id}', [AdminController::class, ('update')])->name('admin_account.update');
+Route::put('profile/password/{id}', [AdminController::class, ('profilePassword')])->name('admin_account.password');
 Route::put('password/{id}', [AdminController::class, ('password')])->name('admin_account.password');
 
 Route::post('deactivate/{id}', [AdminController::class, ('deactivate')])->name('admin_account.deactivate');

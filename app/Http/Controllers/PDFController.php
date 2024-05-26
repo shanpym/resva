@@ -23,14 +23,14 @@ class PDFController extends Controller
 {
     // function bookingPDF(int $id)
     // {
-    //     $bookings = DB::table('booking')->where('id', $id)->get();
+    //     $bookings = DB::table('booking')->where('id', $id)->first();
 
     //     return view('admin.booking.pdf', compact('bookings'));
     // }
 
     function bookingPDF(int $id)
     {
-        $bookings = DB::table('booking')->where('id', $id)->get();
+        $bookings = DB::table('booking')->where('id', $id)->first();
 
         $pdf = new Dompdf();
         $pdf->setBasePath(public_path());

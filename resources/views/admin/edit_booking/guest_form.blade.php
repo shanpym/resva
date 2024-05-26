@@ -21,7 +21,21 @@
         </div>
         <div class="col-12">
           <label for="inputAddress5" class="form-label text-muted">Address</label>
-          <input type="text" name="address" class="form-control @error('address') is-invalid @enderror" id="address" placeholder="1234 Main St" value="{{$booking->address}}">
+          @if($booking->street_text)
+                          {{$booking->street_text}},
+                          @endif
+                          @if($booking->barangay_text)
+                          {{$booking->barangay_text}},
+                          @endif
+                          @if($booking->city_text)
+                          {{$booking->city_text}},
+                          @endif
+                          @if($booking->province_text)
+                          {{$booking->province_text}},
+                          @endif
+                          @if($booking->region_text)
+                          {{$booking->region_text}}
+                          @endif
         </div>
         <div class="col-md-4">
           <label for="inputState" class="form-label text-muted">Mode of Payment</label>

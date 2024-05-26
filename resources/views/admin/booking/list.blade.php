@@ -89,7 +89,43 @@
               </thead>
               <tbody>
                 @foreach ($bookings as $booking)
-                    
+                <?php
+                $totalAmountPaid = DB::table('transaction')
+                    ->where('booking_id', $booking->id)
+                    ->sum('amount_paid');
+
+                
+                $transactions = DB::table('booking')
+                    ->join('transaction', 'booking.id', '=', 'transaction.booking_id')
+                    ->join('invoice', 'booking.id', '=', 'invoice.booking_id')
+                    ->select('transaction.*', 'invoice.*')
+                    ->where('booking.id', $booking->id)
+                    ->orderBy('transaction.id', 'asc')
+                    ->get();
+
+                $transaction = DB::table('transaction')->where('booking_id', $booking->id)->first();
+                $invoice = DB::table('invoice')->where('booking_id', $booking->id)->first();
+              
+                $add_ons = DB::table('add_ons')->where('booking_id', $booking->id)->get();
+                if($totalAmountPaid >=  $invoice->total_amount){
+                            $remaining_balance = 0;
+                          }else{
+                            $remaining_balance = $totalAmountPaid - $invoice->total_amount;
+                          }
+                $mealsAddOns = $add_ons->where('meals', '!=', null);
+                if ($mealsAddOns->isNotEmpty()) {
+                  $mealOptions = $mealsAddOns->toArray();
+                } else {
+                  $mealOptions = [];
+                }
+
+                $itemsAddOns = $add_ons->where('items', '!=', null);
+                if ($itemsAddOns->isNotEmpty()) {
+                  $itemsOptions = $itemsAddOns->toArray();
+                } else {
+                    $itemsOptions = [];
+                }
+                ?>
                
                 <tr>
                   <th scope="row" style="padding-top: 15px !important; color: #0d6efd !important;">{{$booking->id}}</th>
@@ -130,7 +166,7 @@
                   </td>
                 </tr>
                 <!--MODAL -->
-                    <div class="modal fade" id="view{{$booking->id}}" tabindex="-1">
+                    <div class="modal fade view" id="view{{$booking->id}}" tabindex="-1">
                       <div class="modal-dialog modal-dialog-scrollable modal-xl">
                         <div class="modal-content">
                           <div class="modal-header">
@@ -138,9 +174,17 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                           </div>
                           <div class="modal-body">
-                            @include('admin.booking.listview')
+                            <div class="transaction-view" style="display: none">
+                              @include('admin.booking.transaction')
+                            </div>
+                            <div class="listview-view" >
+                              @include('admin.booking.listview')
+                            </div>
+                            
                           </div>
                           <div class="modal-footer">
+                            <button class="btn btn-outline-primary view-btn" type="button" id="view-btn">View Transaction</button>
+                            <button class="btn btn-outline-primary resv-btn" type="button" id="resv-btn" style="display: none">View Reservation</button>
                             <a href="{{url('pdf/' . $booking->id)}}" type="button" class="btn btn-secondary">PDF</a>
                             {{-- <button type="button" class="btn btn-primary">Pay Now</button> --}}
                           </div>
@@ -158,4 +202,28 @@
     </section>
 
   </main><!-- End #main -->
+  <script>
+    $('.view-btn').on('click', function(){
+      $('.listview-view').css("display", "none");
+      $('.transaction-view').css("display", "block")
+      $('.view-btn').css("display", "none");
+      $('.resv-btn').css("display", "block");
+    })
+
+    $('.resv-btn').on('click', function(){
+      $('.listview-view').css("display", "block");
+      $('.transaction-view').css("display", "none")
+      $('.view-btn').css("display", "block");
+      $('.resv-btn').css("display", "none");
+    })
+
+    $(document).ready(function() {
+    $('.view').on('hidden.bs.modal', function (e) {
+        $('.listview-view').css("display", "block");
+        $('.transaction-view').css("display", "none");
+        $('.view-btn').css("display", "block");
+        $('.resv-btn').css("display", "none");
+    });
+});
+  </script>
 @endsection

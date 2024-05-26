@@ -40,7 +40,7 @@
     <section class="section">
       <div class="row">
         <div class="col-lg-12">
-                @include('user.profile_view')
+                @include('admin.profile.profile_view')
          
 
         </div>
@@ -49,4 +49,16 @@
     </section>
 
   </main><!-- End #main -->
+
+  <script>
+    $('#edit-btn').on('click', function(){
+      $('#text-address').css("display", "none");
+      $('#edit-address').css("display", "block")
+    })
+
+    $('#edit-btn-2').on('click', function(){
+      $('#text-address').css("display", "block");
+      $('#edit-address').css("display", "none")
+    })
+  </script>
 @endsection

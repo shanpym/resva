@@ -35,27 +35,40 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             
-            if ($user->level == '1' && $user->status == '1') {
-                // Authentication passed...
-                return redirect(route('admin'));
-            } elseif ($user->level == '2' && $user->status == '1') {
-                // Authentication passed...
-                return redirect(route('employee'));
-            } elseif ($user->level == '3' && $user->status == '1') {
+            
+            if ($user->level == '3' && $user->status == '1') {
                 // Authentication passed...
                 return redirect(route('home'));
-            }
-
-
-            if ($user->status == '3') {
+            }else{
                 Auth::logout();
-                return redirect()->back()->with("error", "Your account is deactivated. We advise you to contact support for further assistance");
+                return redirect()->back()->with("error", "Login details are invalid.");
             }
         }else{
             return redirect()->back()->with("error", "Login details are invalid.");
         }
+    }
+
+    function adminPost(Request $request){
+        $credentials = $request->validate([
+            'email' => 'required',
+            'password' => 'required'
+        ],[
+            'required' => 'Fill out all the fields',
+        ]);
     
-       
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            
+            if ($user->level == '1' && $user->status == '1' || $user->level == '2' && $user->status == '1') {
+                // Authentication passed...
+                return redirect(route('admin'));
+            }else{
+                Auth::logout();
+                return redirect()->back()->with("error", "Login details are invalid.");
+            }
+        }else{
+            return redirect()->back()->with("error", "Login details are invalid.");
+        }
     }
 
     
@@ -72,6 +85,14 @@ class AuthController extends Controller
             'surname' => 'required',
             'firstname' => 'required',
             'phone_no' => 'required',
+
+            
+            'region_text' => 'required',
+            'province_text' => 'required',
+            'city_text' => 'required',
+            'barangay_text' => 'required',
+            'street_text' => 'required',
+
             'birthdate' => 'required',
             'password' => 'required | confirmed | min:3',
             'email' => 'required | email | unique:users',        
@@ -96,6 +117,15 @@ class AuthController extends Controller
             'firstname' => $firstname,
             'middlename' => $middlename,
             'email' => $request->email,
+
+            
+            'region_text'=> $request->region_text,
+            'province_text'=> $request->province_text,
+            'city_text'=> $request->city_text,
+            'barangay_text'=> $request->barangay_text,
+            'street_text'=> $request->street_text,
+
+            
             'birthdate' => $request->birthdate,
             'password' => Hash::make($request->password),
             'phone_no' => $request->phone_no,

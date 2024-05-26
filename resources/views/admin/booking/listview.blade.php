@@ -4,6 +4,44 @@
     
 @endif
 
+<?php
+                $totalAmountPaid = DB::table('transaction')
+                    ->where('booking_id', $booking->id)
+                    ->sum('amount_paid');
+
+                
+                $transactions = DB::table('booking')
+                    ->join('transaction', 'booking.id', '=', 'transaction.booking_id')
+                    ->join('invoice', 'booking.id', '=', 'invoice.booking_id')
+                    ->select('booking.*', 'transaction.*', 'invoice.*')
+                    ->where('booking.id', $booking->id)
+                    ->get();
+
+                $transaction = DB::table('transaction')->where('booking_id', $booking->id)->first();
+                $invoice = DB::table('invoice')->where('booking_id', $booking->id)->first();
+              
+                $add_ons = DB::table('add_ons')->where('booking_id', $booking->id)->get();
+                if($totalAmountPaid >=  $invoice->total_amount){
+                            $remaining_balance = 0;
+                          }else{
+                            $remaining_balance = $totalAmountPaid - $invoice->total_amount;
+                          }
+                $mealsAddOns = $add_ons->where('meals', '!=', null);
+                if ($mealsAddOns->isNotEmpty()) {
+                  $mealOptions = $mealsAddOns->toArray();
+                } else {
+                  $mealOptions = [];
+                }
+
+                $itemsAddOns = $add_ons->where('items', '!=', null);
+                if ($itemsAddOns->isNotEmpty()) {
+                  $itemsOptions = $itemsAddOns->toArray();
+                } else {
+                    $itemsOptions = [];
+                }
+                ?>
+               
+               
 <section class="section profile">
     <div class="row">
       <div class="col-xl-4">
@@ -17,7 +55,21 @@
                         <i class="bi bi-person-fill" style="color: rgba(1, 41, 112, 0.6)"></i> <span id="invoice-firstname" class="text-muted">{{$booking->firstname}}</span> <span id="invoice-surname" class="text-muted">{{$booking->surname}}</span>
                     </div>
                     <div class="col-9 p-2">
-                        <i class="bi bi-geo-fill" style="color: rgba(1, 41, 112, 0.6)"></i> <span id="invoice-address" class="text-muted">{{$booking->address}}</span>
+                        <i class="bi bi-geo-fill" style="color: rgba(1, 41, 112, 0.6)"></i> <span id="invoice-address" class="text-muted">@if($booking->street_text)
+                          {{$booking->street_text}},
+                          @endif
+                          @if($booking->barangay_text)
+                          {{$booking->barangay_text}},
+                          @endif
+                          @if($booking->city_text)
+                          {{$booking->city_text}},
+                          @endif
+                          @if($booking->province_text)
+                          {{$booking->province_text}},
+                          @endif
+                          @if($booking->region_text)
+                          {{$booking->region_text}}
+                          @endif</span>
                     </div>
                     <div class="col-9 p-2">
                         <i class="bi bi-envelope-fill" style="color: rgba(1, 41, 112, 0.6)"></i> <span id="invoice-email" class="text-muted">{{$booking->email}}</span>
@@ -104,34 +156,7 @@
                     </div>
                 </div>
 
-                <?php
-                $totalAmountPaid = DB::table('transaction')
-                    ->where('booking_id', $booking->id)
-                    ->sum('amount_paid');
-
-                    
-                $invoice = DB::table('invoice')->where('booking_id', $booking->id)->first();
-              
-                $add_ons = DB::table('add_ons')->where('booking_id', $booking->id)->get();
-                if($totalAmountPaid >=  $invoice->total_amount){
-                            $remaining_balance = 0;
-                          }else{
-                            $remaining_balance = $totalAmountPaid - $invoice->total_amount;
-                          }
-                $mealsAddOns = $add_ons->where('meals', '!=', null);
-                if ($mealsAddOns->isNotEmpty()) {
-                  $mealOptions = $mealsAddOns->toArray();
-                } else {
-                  $mealOptions = [];
-                }
-
-                $itemsAddOns = $add_ons->where('items', '!=', null);
-                if ($itemsAddOns->isNotEmpty()) {
-                  $itemsOptions = $itemsAddOns->toArray();
-                } else {
-                    $itemsOptions = [];
-                }
-                ?>
+                
                 <div class="row">
                   <div class="col-lg-3 col-md-4 label">Mode of Payment</div>
                   <div class="col-lg-9 col-md-8">
@@ -147,6 +172,7 @@
 
                 <div class="row" style="font-size: 14px">
                     <div class="col-lg-9 col-md-4 label" style="text-align: right">Subtotal</div>
+
                     <?php 
                       $start_date = new DateTime($booking->start_date);
                       $end_date = new DateTime($booking->end_date);
@@ -158,9 +184,6 @@
                       if($room_type) {
                           $subtotal = $room_type->price * $days_diff;
                       }
-
-                     
-                      
                       ?>
 
                     <div class="col-lg-3 col-md-8">

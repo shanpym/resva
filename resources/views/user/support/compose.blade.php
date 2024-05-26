@@ -37,93 +37,79 @@
       </div>
       @endif
     </div>
-    <section class="section">
-        <div class="row">
+    <section class="section contact">
+
+      <div class="row gy-4">
+
+        <div class="col-xl-6">
+
+          <div class="row">
             <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title"></h5>
-                        <div class="card-body">
-                            <div class="col-lg-12 align-self-center">
-                                <div class="card-body">
-                                  <style>
-                                    .home-title{
-                                      font-family: 'Poppins', sans-serif;
-                                      font-size: 24px;
-                                      font-weight: 700;
-                                      text-transform: uppercase;
-                                      color: #03a4ed;
-                                    }
-                                    .span-title{
-                                      font-family: 'Poppins', sans-serif !important;
-                                      color: #0275d8 !important;
-                                    }
-                                  </style>
-                                   CCST<h4 class="home-title">Res<span class="span-title">va</span></h4>
-                             
-                                  
-                                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doer ket eismod tempor incididunt ut labore et dolores</p>
-                                  <div class="phone-info">
-                                    <h4>For any inquiry, Call Us: <span><i class="fa fa-phone"></i> <a href="#">010-020-0340</a></span></h4>
-                                  </div>
-                                </div>
-                              </div>
-                        </div>
-                    </div>
-                </div>
+              <div class="info-box card">
+                <i class="bi bi-geo-alt"></i>
+                <h3>Address</h3>
+                <p>A108 Adam Street,<br>New York, NY 535022</p>
+              </div>
             </div>
             <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Write your Message</h5>
-                        <div class="card-body">
-                            <div id="contact" class="contact-us section">
-                                <div class="container">
-                                  <div class="row">
-                                   
-                                    <div class="row g-3">
-                                      <div class="col-md-6">
-                                        <label for="" class="form-label text-muted"><span style="color: #d9534f">*</span> Firstname</label>
-                                        <input type="text" name="firstname" class="form-control @error('firstname') is-invalid @enderror" id="firstname" value="{{old('firstname')}}">
-                                      </div>
-                                      <div class="col-md-6">
-                                        <label for="" class="form-label text-muted"><span style="color: #d9534f">*</span> Surname</label>
-                                        <input type="text" name="surname" class="form-control @error('surname') is-invalid @enderror" id="surname" value="{{old('surname')}}">
-                                      </div>
-                                      <div class="col-md-6">
-                                        <label for="" class="form-label text-muted"><span style="color: #d9534f">*</span> Email</label>
-                                        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" id="email" value="{{old('email')}}">
-                                      </div>
-                                      <div class="col-md-6">
-                                        <label for="" class="form-label text-muted"><span style="color: #d9534f">*</span> Phone No.</label>
-                                        <input type="number" name="phone_no" class="form-control @error('phone_no') is-invalid @enderror" id="phone_no" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==11) return false;" value="{{old('phone_no')}}">
-                                      </div>
-                                      <div class="col-12">
-                                        <label for="inputAddress5" class="form-label text-muted"><span style="color: #d9534f">*</span> Concern</label>
-                                        <textarea name="concern" class="form-control @error('concern') is-invalid @enderror" id="concern" placeholder="1234 Main St" value="{{old('concern')}}"></textarea>
-                                      </div>
-                                      <div class="col-12">
-                                        <div class="form-check">
-                                          <input class="form-check-input" type="checkbox" id="gridCheck">
-                                          <label class="form-check-label" for="gridCheck">
-                                            I agree to the Terms & Conditions
-                                          </label>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  
-                                  </div>
-                                </div>
-                              </div>
-                            
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-end">
-                      <button type="button" class="btn btn-primary">Send Message</button>
-                    </div>
-                </div>
+              <div class="info-box card">
+                <i class="bi bi-telephone"></i>
+                <h3>Call Us</h3>
+                <p>+1 5589 55488 55<br>+1 6678 254445 41</p>
+              </div>
             </div>
+            <div class="col-lg-6">
+              <div class="info-box card">
+                <i class="bi bi-envelope"></i>
+                <h3>Email Us</h3>
+                <p>info@example.com<br>contact@example.com</p>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="info-box card">
+                <i class="bi bi-clock"></i>
+                <h3>Open Hours</h3>
+                <p>Monday - Friday<br>9:00AM - 05:00PM</p>
+              </div>
+            </div>
+          </div>
+
         </div>
+
+        <div class="col-xl-6">
+          <div class="card p-4">
+            <form action="forms/contact.php" method="post" class="php-email-form">
+              <div class="row gy-4">
+
+                <div class="col-md-6">
+                  <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+                </div>
+
+                <div class="col-md-6 ">
+                  <input type="email" class="form-control" name="email" placeholder="Your Email" required>
+                </div>
+
+                <div class="col-md-12">
+                  <input type="text" class="form-control" name="subject" placeholder="Subject" required>
+                </div>
+
+                <div class="col-md-12">
+                  <textarea class="form-control" name="message" rows="6" placeholder="Message" required></textarea>
+                </div>
+
+                <div class="col-md-12 text-center">
+                  <button type="submit">Send Message</button>
+                </div>
+
+              </div>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+
     </section>
+
   </main><!-- End #main -->
 @endsection

@@ -141,6 +141,7 @@
                             @include('admin.booking.listview')
                           </div>
                           <div class="modal-footer">
+                            
                             <a href="{{url('pdf/' . $booking->id)}}" type="button" class="btn btn-secondary">PDF</a>
                             {{-- <button type="button" class="btn btn-primary">Pay Now</button> --}}
                           </div>

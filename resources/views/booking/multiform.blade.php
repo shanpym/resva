@@ -1,9 +1,10 @@
 <!-- Bordered Tabs Justified -->
-<div class="tab-content pt-2" id="borderedTabJustifiedContent">
-    <div class="tab-pane fade show active" id="bordered-justified-reservation" role="tabpanel" aria-labelledby="reservation-tab">
-      <h5 class="card-title"><small class="text-muted">Step 1:</small> Reservation Details</h5>
+<div class="tab-content pt-4" id="borderedTabJustifiedContent">
+    <div class="tab-pane fade show active" id="bordered-justified-reservation" role="tabpanel" aria-labelledby="reservation-tab" style="border: 1px solid #e9eeee">
+      <h5 class="card-title text-center"> Reservation Details</h5>
         <div class="card-body">
-          <div class="col-md-4 mb-5">
+          <input type="hidden" name="resv_type" value="1">
+          {{-- <div class="col-md-4 mb-5">
             <h5 class="card-title"><small class="text-muted"><span style="color: #d9534f">*</span> Type of Resevervation</small></h5>
             <select id="resv_type" class="form-select @error('resv_type') is-invalid @enderror" name="resv_type">
               <option disabled selected>Choose...</option>
@@ -11,7 +12,7 @@
               <option value="2">On-call</option>
               <option value="3">Walk-in</option>
             </select>
-          </div>
+          </div> --}}
           <hr>
           <div class="row g-3">
             <div class="col-md-4">
@@ -67,13 +68,12 @@
     </div>
   @include('booking.guest_form')
 
-    <div class="tab-pane fade" id="bordered-justified-summary" role="tabpanel" aria-labelledby="summary-tab">
-      <h5 class="card-title"><small class="text-muted">Step 3:</small> Invoice Details</h5>
+    <div class="tab-pane fade" id="bordered-justified-summary" role="tabpanel" aria-labelledby="summary-tab" >
+      <h5 class="card-title text-center">Invoice Details</h5>
       @include('booking.invoice')
     </div>
     
   </div><!-- End Bordered Tabs Justified -->
-  <hr>
   <div class="d-flex justify-content-end mt-3">
       <button class="btn btn-light" type="button" id="backButton"  style="margin-right: 8px;">Back</button>
       <button class="btn btn-primary" type="button" id="nextButton" >Next Part</button>
