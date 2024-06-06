@@ -57,13 +57,13 @@
 
                     <div class="col-12">
                       <label class="form-label">Password</label>
-                      <input type="password" name="password" class="form-control @error('password') is-invalid @enderror">
+                      <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror">
                     </div>
 
                     <div class="col-12">
                       <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe">
-                        <label class="form-check-label" for="rememberMe">Show Password</label>
+                        <input class="form-check-input" type="checkbox" name="remember" value="true" id="show-password">
+                        <label class="form-check-label" for="show-password">Show Password</label>
                       </div>
                     </div>
                     <div class="col-12">
@@ -85,4 +85,17 @@
 
     </div>
   </main><!-- End #main -->
+
+  <script>
+  $(document).ready(function() {
+    $('#show-password').on('change', function() {
+      if ($('#show-password').is(':checked')) {
+          $('#password').attr('type', 'text');
+      } else {
+          $('#password').attr('type', 'password');
+      }
+    });
+    });
+
+  </script>
 @endsection

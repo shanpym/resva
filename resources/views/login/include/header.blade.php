@@ -31,7 +31,7 @@
                   @if($user->level == '1')
                       <li class="scroll-to-section"><a href="{{route('admin')}}">Hi, <span>{{auth()->user()->firstname}} (ADMIN)</span></a></li>
                   @elseif($user->level == '2')
-                      <li class="scroll-to-section"><a href="{{route('employee')}}">Hi, <span>{{auth()->user()->firstname}} (STAFF)</span></a></li>
+                      <li class="scroll-to-section"><a href="{{route('admin')}}">Hi, <span>{{auth()->user()->firstname}} (STAFF)</span></a></li>
                   @elseif($user->level == '3')
                       <li class="scroll-to-section"><a href="{{route('user')}}">Hi, <span>{{auth()->user()->firstname}}</span></a></li>
                   @endif  
@@ -44,7 +44,7 @@
               @auth
                   @if ($user->level == '3')
                       <li class="scroll-to-section"><div class="main-red-button"><a href="{{route('user.add_book')}}">Book Now</a></div></li> 
-                  @elseif ($user->level == '1')
+                  @elseif ($user->level == '1' || $user->level == '2')
                       <li class="scroll-to-section"><div class="main-red-button"><a href="{{route('admin.add_book')}}">Book Now</a></div></li> 
                   @endif
               @else

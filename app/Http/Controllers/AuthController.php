@@ -58,16 +58,15 @@ class AuthController extends Controller
     
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            
             if ($user->level == '1' && $user->status == '1' || $user->level == '2' && $user->status == '1') {
                 // Authentication passed...
                 return redirect(route('admin'));
             }else{
                 Auth::logout();
-                return redirect()->back()->with("error", "Login details are invalid.");
+                return redirect()->back()->with("error", "Access denied.");
             }
         }else{
-            return redirect()->back()->with("error", "Login details are invalid.");
+            return redirect()->back()->with("error", "Access denied.");
         }
     }
 

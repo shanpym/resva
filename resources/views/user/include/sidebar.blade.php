@@ -20,7 +20,7 @@
       || Request::is('user/confirm_booking/*')
       ? 'active' : '' }}" >
         <a class="nav-link collapsed " data-bs-target="#bookings-nav" data-bs-toggle="collapse" href="#">
-            <i class="bi bi-menu-button-wide"></i><span>Bookings</span><i class="bi bi-chevron-down ms-auto"></i>
+            <i class="bi bi-menu-button-wide"></i><span>Your Booking</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="bookings-nav" class="nav-content collapse {{ Request::is('user/booking/*') || Request::is('admin/booking/*') || Request::is('user/confirm_booking/*')? 'show' : '' }}" data-bs-parent="#sidebar-nav">
             <li>
@@ -46,29 +46,29 @@
     </li><!-- End Booking Nav -->
 
       <li class="nav-item ">
-        <a class="nav-link collapsed {{ Request::is('admin/rooms/*') ? 'active' : '' }}" data-bs-target="#rooms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>Write A Review</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link collapsed {{ Request::is('user/review/*') ? 'active' : '' }}" data-bs-target="#rooms-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-layout-text-window-reverse"></i><span>Your Reviews</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="rooms-nav" class="nav-content collapse {{ Request::is('admin/rooms/*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+        <ul id="rooms-nav" class="nav-content collapse {{ Request::is('user/review/*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="{{route('rooms.add_room')}}" class=" {{ Request::routeIs('rooms.add_room') ? 'active' : '' }}">
-              <i class="bi bi-circle"></i><span>Compose</span>
+            <a href="{{route('user.write')}}" class=" {{ Request::routeIs('user.write') ? 'active' : '' }}">
+              <i class="bi bi-circle"></i><span>Write a Review</span>
             </a>
           </li>
           <li>
-            <a href="{{route('rooms.room_chart')}}" class="{{ Request::routeIs('rooms.room_chart') ? 'active' : '' }}">
-              <i class="bi bi-circle"></i><span>Your Reviews</span>
+            <a href="{{route('user.all_review')}}" class="{{ Request::routeIs('user.all_review') ? 'active' : '' }}">
+              <i class="bi bi-circle"></i><span>All Reviews</span>
             </a>
           </li>
         </ul>
       </li><!-- End Rooms Nav -->
 
-      <li class="nav-item">
+      {{-- <li class="nav-item">
         <a class="nav-link collapsed {{ Request::routeIs('user.compose') ? 'active' : '' }}" href="{{route('user.compose')}}">
           <i class="bi bi-bar-chart"></i><span>Support</span>
         </a>
       
-      </li><!-- End Reports Nav -->
+      </li><!-- End Reports Nav --> --}}
 
     </ul>
   </aside><!-- End Sidebar-->

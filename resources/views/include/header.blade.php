@@ -16,11 +16,11 @@
               <li class="scroll-to-section"><a href="#services">Services</a></li>
               <li class="scroll-to-section"><a href="#portfolio">Rooms</a></li>
               <li class="scroll-to-section"><a href="#blog">Reviews</a></li> 
-              <li class="scroll-to-section"><a href="#contact">Message Us</a></li> 
+              {{-- <li class="scroll-to-section"><a href="#contact">Message Us</a></li>  --}}
               @auth
                   @if (Auth::user()->level == '3')
                       <li class="scroll-to-section"><div class="main-red-button"><a href="{{route('user.add_book')}}">Book Now</a></div></li> 
-                  @elseif (Auth::user()->level == '1')
+                  @elseif (Auth::user()->level == '1' || Auth::user()->level == '2')
                       <li class="scroll-to-section"><div class="main-red-button"><a href="{{route('admin.add_book')}}">Book Now</a></div></li> 
                   @endif
               @else

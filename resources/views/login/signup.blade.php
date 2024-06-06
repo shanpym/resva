@@ -95,7 +95,7 @@
               </div>
               <div class="col-lg-12">
                 <fieldset>
-                  <input type="password" name="password" id="name" class="form-control @error('password') is-invalid @enderror" placeholder="Enter your password">
+                  <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" placeholder="Enter your password">
                 </fieldset>
                 @foreach ($errors->get('password') as $error)
                           <span class="text-danger"> * {{$error}}</span>
@@ -103,11 +103,24 @@
               </div>
               <div class="col-lg-12">
                 <fieldset>
-                  <input type="password" name="password_confirmation" id="name" class="form-control @error('password') is-invalid @enderror" placeholder="Confirm your password">
+                  <input type="password" name="password_confirmation" id="password_confirmation" class="form-control @error('password') is-invalid @enderror" placeholder="Confirm your password">
                 </fieldset>
                 @foreach ($errors->get('password') as $error)
                           <span class="text-danger"> * {{$error}}</span>
                         @endforeach
+              </div>
+              <div class="form-check">
+                <style>
+                  #show-password {
+                      /* Adjust the size as needed */
+                      width: 16px !important;
+                      height: 16px !important;
+                      /* Other styles */
+                  }
+                </style>
+                
+                <input class="" type="checkbox" id="show-password">
+                <label class="form-check-label" for="show-password">Show Password</label>
               </div>
               <div class="col-lg-12"  >
                 <fieldset style="float: right;">

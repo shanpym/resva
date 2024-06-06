@@ -221,7 +221,7 @@
     </div>
   </div>
 
-  <div id="contact" class="contact-us section">
+  {{-- <div id="contact" class="contact-us section">
     <div class="container">
       <div class="row">
         <div class="col-lg-6 align-self-center wow fadeInLeft" data-wow-duration="0.5s" data-wow-delay="0.25s">
@@ -269,6 +269,6 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> --}}
 
 @endsection

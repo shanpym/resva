@@ -21,7 +21,7 @@ class RoleMiddleware
         if (Auth::check()) {
             $user = Auth::user();
             
-            if ($user->level !== '1') { 
+            if ($user->level == '3') { 
                 return redirect(route('home'));
             }
         } else {

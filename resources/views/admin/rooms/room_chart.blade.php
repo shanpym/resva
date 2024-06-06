@@ -18,9 +18,13 @@
       <div class="col-sm-2" style="font-size: 16px; margin-right:20px !important" >
         <input type="text" name="" id="search_date" class="form-control" placeholder="Filter by date">
       </div>
+      @if(Auth::user()->level == '2')
+      @else
       <div class="col-sm-0">
         <a href="{{route('rooms.add_room')}}" class="btn btn-primary" type="button">Add Room</a>
       </div>
+      @endif
+     
     </div>
     <div class="mt-2">
       @if ($errors->any())

@@ -32,7 +32,7 @@
       @endif
       @if(session()->has('success'))
       <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <img src="{{asset('dashboard/assets/img/success-3.gif')}}"alt="" srcset="" width="25px" style="margin-right: 10px">{{session('success')}}. <a href="{{route('admin_account.list')}}" type="button"> View</a>
+        <img src="{{asset('dashboard/assets/img/success-3.gif')}}"alt="" srcset="" width="25px" style="margin-right: 10px">{{session('success')}}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
       @endif

@@ -13,12 +13,26 @@ use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
 
+use Mail;
+use App\Mail\AccountPost;
+
 class AdminController extends Controller
 {
     public function view(): View{
         $users = User::orderBy('id', 'desc')->where('level', '1')->get();
         return view('admin.accounts.admin_account.list', compact('users'));
     }
+
+    public function employeeView(): View{
+        $users = User::orderBy('id', 'desc')->where('level', '2')->get();
+        return view('admin.accounts.employee_account.list', compact('users'));
+    }
+
+    public function userView(): View{
+        $users = User::orderBy('id', 'desc')->where('level', '3')->get();
+        return view('admin.accounts.user_account.list', compact('users'));
+    }
+
 
     public function editView(Request $request, int $id){
         $users = User::where('id', $id)->orderBy('id', 'desc')->get();
@@ -71,9 +85,13 @@ class AdminController extends Controller
 
         $password = $firstname . $surname . $birthdate;
 
+        $initial_firstname = Str::substr($request->firstname, 0, 1);
+        $lower_surname = $request->surname;
+        $username = $initial_firstname . $lower_surname . $birthdate;
+
         $accounts = User::create([
-            
-            'surname' =>$surname ,
+            'username' => $username, 
+            'surname' => $surname ,
             'firstname'=> $firstname ,
             'email'=> $request->email ,
             
@@ -93,7 +111,12 @@ class AdminController extends Controller
             'password' => $password
         ]);
 
-        return redirect(route('admin_account.list'))->with("success", "Account has been added successfully");
+        $id = $accounts->id;
+
+        $email = $accounts->email;
+        Mail::to($email)->send(new AccountPost($id));
+
+        return redirect()->back()->with("success", "Account added successfully");
     }
 
     public function update(Request $request, int $id){
@@ -138,6 +161,7 @@ class AdminController extends Controller
 
         $accounts = User::find($id);
         $accounts->update([
+            'username' => $request->username, 
             'surname' =>$surname ,
             'firstname'=> $firstname ,
             'email'=> $email ,
@@ -152,7 +176,6 @@ class AdminController extends Controller
             'phone_no' => $request->phone_no,
             'birthdate' => $request->birthdate,
             'gender' => $request->gender,
-            'status' => '1',
         ]);
 
         return redirect()->back()->with("success", "Account has been updated successfully");
@@ -188,7 +211,10 @@ class AdminController extends Controller
 
     public function password(Request $request, int $id){
         $validator = Validator::make($request->all(), [       
-            'newpassword' => 'required | confirmed',
+            
+            'auth_password' => 'required'
+        ],[
+            'required' => 'Admin Password is required',
         ]
         );
     
@@ -198,31 +224,44 @@ class AdminController extends Controller
             ->withErrors($validator)
             ->withInput();
         };
-        $accounts = User::find($id);
-        $accounts->update([
-            'password' => Hash::make($request->newpassword),
-        ]);
-        return redirect()->back()->with("success", "Password has been updated successfully");
+
+        $admin = Auth::user();
+        $checkPassword = Hash::check($request->auth_password, $admin->password);
+        if($checkPassword){
+            $accounts = User::find($id);
+            $accounts->update([
+                'password' => Hash::make($request->newpassword),
+            ]);
+            return redirect()->back()->with("success", "Password updated successfully");
+        }else{
+            return redirect()->back()->with("error", "Access denied");
+        }
+        
     }
 
     public function deactivate(Request $request, int $id){
-        $users = User::where('id', $id)->first();
-        if (Auth::user()) {
+        
+
+        $admin = Auth::user();
+        $checkPassword = Hash::check($request->auth_password, $admin->password);
+        if($checkPassword){
+            $users = User::where('id', $id)->first();
             $users->update([
-                'status'=> '3',
-                'remarks'=> $request->remarks
+                    'status'=> '3',
+                    'remarks'=> $request->remarks
             ]);
-            Auth::logout();
-            return redirect(route('home'));
-        }else{
-            $users->update([
-                'status'=> '3',
-                'remarks'=> $request->remarks
-    
-            ]);
+            if (Auth::user()->id == $users->id) {
+                Auth::logout();
+                return redirect(route('home'));
+            }
             return redirect(route('admin_account.list'))->with("error", "Account has been deactivated");
+        }else{
+            return redirect()->back()->with("error", "Access denied");
         }
+        
+      
     }
+    
 
     public function activate(Request $request, int $id){
         $users = User::where('id', $id)

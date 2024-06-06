@@ -32,7 +32,7 @@
       @endif
       @if(session()->has('success'))
       <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <img src="{{asset('dashboard/assets/img/success-3.gif')}}"alt="" srcset="" width="25px" style="margin-right: 10px">{{session('success')}}. <a href="{{route('admin.list')}}" type="button"> View</a>
+        <img src="{{asset('dashboard/assets/img/success-3.gif')}}"alt="" srcset="" width="25px" style="margin-right: 10px">{{session('success')}}.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
       @endif
@@ -143,7 +143,7 @@
                       </div>
                     </div>
 
-                    <div class="row mb-3 pt-3">
+                    {{-- <div class="row mb-3 pt-3">
                       <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label"><span style="color: #d9534f">*</span> New Password</label>
                       <div class="col-md-8 col-lg-9">
                         <input name="password" type="password" class="form-control @error('password') is-invalid @enderror" id="currentPassword" value="{{old('password')}}">
@@ -155,7 +155,7 @@
                       <div class="col-md-8 col-lg-9">
                         <input name="password_confirmation" type="password" class="form-control  @error('password_confirmation') is-invalid @enderror" id="newPassword">
                       </div>
-                    </div>
+                    </div> --}}
 
                     <div class="text-end">
                       <button type="submit" class="btn btn-primary">Add Account</button>

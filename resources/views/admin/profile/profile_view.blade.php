@@ -47,6 +47,11 @@
                 <h5 class="card-title">Profile Details</h5>
 
                 <div class="row">
+                  <div class="col-lg-3 col-md-4 label ">Username</div>
+                  <div class="col-lg-9 col-md-8 mb-5">{{$users->username}}</div>
+                </div>
+
+                <div class="row">
                   <div class="col-lg-3 col-md-4 label ">Full Name</div>
                   <div class="col-lg-9 col-md-8">{{$users->firstname}} {{$users->surname}}</div>
                 </div>
@@ -111,6 +116,13 @@
                 <form action="{{url('update/' .$users->id)}}" method="POST">
                   @csrf
                   @method('PUT')
+                  <div class="row mb-3">
+                    <label for="" class="col-md-4 col-lg-3 col-form-label">Username</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="username" type="text" class="form-control" value="{{$users->username}}">
+                    </div>
+                  </div>
+
                   <div class="row mb-3">
                     <label for="" class="col-md-4 col-lg-3 col-form-label">Firstname</label>
                     <div class="col-md-8 col-lg-9">

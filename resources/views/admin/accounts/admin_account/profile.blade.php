@@ -50,6 +50,11 @@
                 <h5 class="card-title">Profile Details</h5>
 
                 <div class="row">
+                  <div class="col-lg-3 col-md-4 label ">Username</div>
+                  <div class="col-lg-9 col-md-8 mb-5">{{$user->username}}</div>
+                </div>
+
+                <div class="row">
                   <div class="col-lg-3 col-md-4 label ">Full Name</div>
                   <div class="col-lg-9 col-md-8">{{$user->firstname}}</div>
                 </div>
@@ -269,6 +274,12 @@
                                 <p>Input the reason of the cancellation</p>
                                 <textarea class="form-control" name="remarks" rows="3" placeholder="Enter ..." style="width: 100%"></textarea>
                             </div>  
+                            <div class="row mb-3 mt-5">
+                              <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label"><span style="color: #d9534f">*</span> Admin Password</label>
+                                <div class="col-md-8 col-lg-9">
+                                  <input name="auth_password" type="password" class="form-control" id="renewPassword">
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer d-flex justify-content-end">
                           <button type="submit" class="btn btn-danger">Deactivate</button>
@@ -300,13 +311,36 @@
 
                   <div class="row mb-3">
                     <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
-                    <div class="col-md-8 col-lg-9">
-                      <input name="newpassword_confirmation" type="password" class="form-control" id="renewPassword">
-                    </div>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="newpassword_confirmation" type="password" class="form-control" id="renewPassword">
+                      </div>
                   </div>
 
                   <div class="text-end">
-                    <button type="submit" class="btn btn-primary">Change Password</button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#auth{{$user->id}}"> Change Password</button>
+                    <div class="modal fade" id="auth{{$user->id}}" tabindex="-1">
+                      <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" style="color: #dc3545">Remarks</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                            <div class="modal-body">
+                                <div class="form-group mt-3">
+                                  <div class="row mb-3">
+                                    <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label"><span style="color: #d9534f">*</span> Admin Password</label>
+                                      <div class="col-md-8 col-lg-9">
+                                        <input name="auth_password" type="password" class="form-control" id="renewPassword">
+                                      </div>
+                                  </div>
+                                </div>  
+                            </div>
+                            <div class="modal-footer d-flex justify-content-end">
+                              <button type="submit" class="btn btn-primary">Confirm</button>
+                            </div>
+                        </div>
+                      </div>
+                    </div><!-- End Vertically centered Modal-->
                   </div>
                 </form><!-- End Change Password Form -->
 

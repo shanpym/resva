@@ -214,5 +214,17 @@
     
     });
   </script>
+    <script>
+        $(document).ready(function() {
+          $('#show-password').on('change', function() {
+            if ($('#show-password').is(':checked')) {
+                $('#password, #password_confirmation').attr('type', 'text');
+            } else {
+                $('#password, #password_confirmation').attr('type', 'password');
+            }
+          });
+          });
+      
+    </script>
 </body>
 </html>

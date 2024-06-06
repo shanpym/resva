@@ -46,7 +46,6 @@ class ReportController extends Controller
         }
     
         $bookings = $bookings->get();
-    
         $totalSubtotal = 0;
         $totalAddons = 0;
         foreach ($bookings as $booking) {

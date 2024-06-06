@@ -30,7 +30,7 @@
         <form action="{{route('reports.post')}}" method="POST">
           @csrf
           <div class="row d-flex">
-          <div class="col-sm-3 ">
+          <div class="col-sm-3" style="font-size: 16px;" >
             <small for="">Date</small>
               <div class="input-group mb-3">
                 <input type="text" name="start_date" class="form-control" id="from-date">
@@ -51,7 +51,7 @@
               </select>
             </div>
           </div>
-          <div class="col-md-2 pt-4" style="font-size: 16px;" >
+          <div class="col-md-2 mt-4" style="font-size: 16px;" >
             <button type="button" id="clear-btn" class="btn btn-secondary">Clear</button>
             <button type="button" id="clear-btn" class="btn btn-outline-primary">PDF</button>
           </div>
@@ -75,6 +75,7 @@
                         <th class="col">#</th>
                         <th class="col">Date Created</th>
                         <th class="col">Booking ID</th>
+                        <th class="col">Status</th>
                         <th class="col">Booking Fee</th>
                         <th class="col">Add Ons</th>
                         <th class="col">Amount Paid</th>
@@ -88,6 +89,7 @@
                       <tr>
                         <th class="items" scope="row" style="padding-top: 15px !important; color: #0d6efd !important;"></th>
                         {{-- <td class="items"><span id="filter-date"></span></td> --}}
+                        <td class="items"></td>
                         <td class="items"></td>
                         <td class="items"></td>
                         <td class="items" ><span id="total-price"></span></td>
@@ -192,17 +194,32 @@
         
         // Clear any previous results
         $('#result-data').empty();
-        
+        $('#total-price').text('PHP0');
+        $('#total-addons').text('PHP0');
+
+
         $.each(response.bookings, function(index, booking) {
           $('#total-price').text('PHP' + booking.totalSubtotal);
           $('#total-addons').text('PHP' + booking.totalAddons);
 
           var createdDate = new Date(booking.created_at);
           var formattedDate = createdDate.toISOString().split('T')[0];
+          if(booking.status == 1){
+            var status = 'Pending'
+          }if(booking.status == 2){
+            var status = 'Confirmed'
+          }if(booking.status == 3){
+            var status = 'Cancelled'
+          }if(booking.status == 4){
+            var status = 'Completed'
+          }if(booking.status == 5){
+            var status = 'Arrived'
+          };
           var row = $('<tr>');
           row.append($('<th scope="row">').text(index + 1));
           row.append($('<td class="result">').text(formattedDate));
           row.append($('<td class="result">').text(booking.id));
+          row.append($('<td class="result">').text(status));
           row.append($('<td class="result">').text('PHP' + booking.subtotal));
           row.append($('<td class="result">').text('PHP' + booking.addonsPrice));
           row.append($('<td class="result">').text('PHP' + booking.amountPaid));
@@ -214,7 +231,6 @@
 
         $('#total-booking').text(totalBooking);
         $('#amount-paid').text('PHP' + totalAmountPaid);
-        
         $('#earnings').text('PHP' + response.newtotalPrice);
         
         console.log("response:",totalBooking, totalAmountPaid, totalPrice, earnings);

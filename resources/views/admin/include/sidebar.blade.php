@@ -5,7 +5,8 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-heading">Home</li>
-
+      @if(Auth::user()->level == '2')
+      
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('admin') }}">
           <i class="bi bi-grid"></i>
@@ -43,7 +44,51 @@
             </li>
         </ul>
     </li><!-- End Booking Nav -->
+       
+    <li class="nav-item">
+      <a href="{{route('rooms.room_chart')}}" class="nav-link collapsed {{ Request::routeIs('rooms.room_chart') ? 'active' : '' }}">
+        <i class="bi bi-circle"></i><span>Room Chart</span>
+      </a>
+    </li>
+     
+    @else
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ route('admin') }}">
+        <i class="bi bi-grid"></i>
+        <span>Dashboard</span>
+      </a>
+    </li><!-- End Dashboard Nav -->
 
+    <li class="nav-heading">Management</li>
+   
+    <li class="nav-item {{ Request::is('admin/booking/*') 
+    || Request::is('admin/confirm_booking/*')
+    ? 'active' : '' }}" >
+      <a class="nav-link collapsed " data-bs-target="#bookings-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i><span>Bookings</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="bookings-nav" class="nav-content collapse {{ Request::is('admin/booking/*') || Request::is('admin/confirm_booking/*')? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+          <li>
+              <a href="{{ route('admin.add_book') }}" class=" {{ Request::routeIs('admin.add_book') ? 'active' : '' }}">
+                  <i class="bi bi-circle"></i><span>Add Booking</span>
+              </a>
+          </li>
+          <li>
+              <a href="{{ route('admin.list') }}" class=" {{ Request::routeIs('admin.list') ? 'active' : '' }}">
+                  <i class="bi bi-circle"></i><span>All Booking</span>
+              </a>
+          </li>
+          <li>
+              <a href="{{ route('admin.pending') }}" class=" {{ Request::routeIs('admin.pending') ? 'active' : '' }}">
+                  <i class="bi bi-circle"></i><span>Pending</span>
+                  @if ($notifications)
+                  <span class="badge bg-primary" style="margin-left:auto !important">  {{ $notifications->count() }}</span>
+                  @endif
+                  
+              </a>
+          </li>
+      </ul>
+  </li><!-- End Booking Nav -->
       <li class="nav-item ">
         <a class="nav-link collapsed {{ Request::is('admin/rooms/*') ? 'active' : '' }}" data-bs-target="#rooms-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-layout-text-window-reverse"></i><span>Rooms</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -108,6 +153,6 @@
             </a>
           </li>
         </ul>
-
+        @endif
     </ul>
   </aside><!-- End Sidebar-->

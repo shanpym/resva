@@ -156,14 +156,21 @@ Route::put('password/{id}', [AdminController::class, ('password')])->name('admin
 Route::post('deactivate/{id}', [AdminController::class, ('deactivate')])->name('admin_account.deactivate');
 Route::post('activate/{id}', [AdminController::class, ('activate')])->name('admin_account.activate');
 
+
+//EMPLOYEE - ACCOUNTS ---------------------------------------------------------------------------
+Route::get('/admin/accounts/employee_account/add_account', function () {
+    return view('admin.accounts.employee_account.add_account');
+})->name('employee_account.add_account');
+
+Route::get('/admin/accounts/employee_account/list',  [AdminController::class, ('employeeView')])->name('employee_account.list');
+
+
 //USER - ACCOUNTS ---------------------------------------------------------------------------
 Route::get('/admin/accounts/user_account/add_account', function () {
     return view('admin.accounts.user_account.add_account');
 })->name('user_account.add_account');
 
-Route::get('/admin/accounts/user_account/list', function () {
-    return view('admin.accounts.user_account.list');
-})->name('user_account.list');
+Route::get('/admin/accounts/user_account/list',  [AdminController::class, ('userView')])->name('user_account.list');
 
 //USER - BOOKING 
 Route::get('/user/profile', [UserController::class, 'editView'])->name('user');
@@ -178,16 +185,12 @@ Route::post('/user/booking/add_book', [BookingController::class, 'addBooking'])-
 //PENDING BOOKING
 Route::get('/user/confirm_booking/pending', [PendingController::class, 'view'])->name('user.pending');
 
-//SUPPORT
-Route::get('/user/support/compose', function () {
-    return view('user.support.compose');
-})->name('user.compose');
+//REVIEW
+Route::get('/user/review/all_review', function () {
+    return view('user.review.all_review');
+})->name('user.all_review');
 
-//EMPLOYEE - ACCOUNTS ---------------------------------------------------------------------------
-Route::get('/admin/accounts/employee_account/add_account', function () {
-    return view('admin.accounts.employee_account.add_account');
-})->name('employee_account.add_account');
-
-Route::get('/admin/accounts/employee_account/list', function () {
-    return view('admin.accounts.employee_account.list');
-})->name('employee_account.list');
+//WRITE REVIEW
+Route::get('/user/review/write', function () {
+    return view('user.review.write');
+})->name('user.write');
