@@ -44,7 +44,7 @@
             </li>
         </ul>
     </li><!-- End Booking Nav -->
-
+{{-- 
       <li class="nav-item ">
         <a class="nav-link collapsed {{ Request::is('user/review/*') ? 'active' : '' }}" data-bs-target="#rooms-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-layout-text-window-reverse"></i><span>Your Reviews</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -61,7 +61,7 @@
             </a>
           </li>
         </ul>
-      </li><!-- End Rooms Nav -->
+      </li><!-- End Rooms Nav --> --}}
 
       {{-- <li class="nav-item">
         <a class="nav-link collapsed {{ Request::routeIs('user.compose') ? 'active' : '' }}" href="{{route('user.compose')}}">

@@ -350,17 +350,19 @@
         $('#invoice-requests').text(requests);
       })
 
-      $('#firstname, #surname, #email, #phone_no, #address').change(function(){
+      $('#firstname, #surname, #email, #phone_no, #street-text').change(function(){
         var firstname = $('#firstname').val();
         var surname = $('#surname').val();
         var email = $('#email').val();
         var phone_no = $('#phone_no').val();
-        var address = $('#address').val();
+        var street = $('#street-text').val();
         $('#invoice-firstname').text(firstname);
         $('#invoice-surname').text(surname);
-        $('#invoice-address').text(address);
+
+        $('#invoice-street').text(street);
+
         $('#invoice-email').text(email);
-        $('#invoice-phone_no').text(phone_no);
+        $('#invoice-phone-no').text(phone_no);
       })
 
         

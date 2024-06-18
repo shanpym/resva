@@ -13,16 +13,20 @@
                         }
                     </style>
                     <div class="col-9 p-2">
-                        <i class="bi bi-person-fill"></i> <span id="invoice-firstname" class="text-muted">Nisha</span> <span id="invoice-surname" class="text-muted">Pym</span>
+                        <i class="bi bi-person-fill"></i> <span id="invoice-firstname" class="text-muted"></span> <span id="invoice-surname" class="text-muted"></span>
                     </div>
                     <div class="col-9 p-2">
-                        <i class="bi bi-geo-fill"></i> <span id="invoice-address" class="text-muted">Blk 21, MRC, Mabalacat City</span>
+                        <i class="bi bi-geo-fill"></i> <span id="invoice-street" class="text-muted"></span>,
+                        <span id="invoice-barangay" class="text-muted"></span>,
+                        <span id="invoice-city" class="text-muted"></span>,
+                        <span id="invoice-province" class="text-muted"></span>,
+                        <span id="invoice-region" class="text-muted"></span>
                     </div>
                     <div class="col-9 p-2">
-                        <i class="bi bi-envelope-fill"></i> <span id="invoice-email" class="text-muted">email@gmail.com</span>
+                        <i class="bi bi-envelope-fill"></i> <span id="invoice-email" class="text-muted"></span>
                     </div>
                     <div class="col-9 p-2">
-                        <i class="bi bi-telephone-fill"></i> <span id="invoice-phone-no" class="text-muted">09XX XXX XXXX</span>
+                        <i class="bi bi-telephone-fill"></i> <span id="invoice-phone-no" class="text-muted"></span>
                     </div>
                 </div>
             </div>

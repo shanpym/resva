@@ -85,10 +85,14 @@
             var region_text = $(this).find("option:selected").text();
             let region_input = $('#region-text');
             region_input.val(region_text);
+            $('#invoice-region').text(region_text);
             //clear province & city & barangay input
             $('#province-text').val('');
             $('#city-text').val('');
             $('#barangay-text').val('');
+            $('#invoice-province').text('');
+            $('#invoice-city').text('');
+            $('#invoice-barangay').text('');
             
             //province
   
@@ -136,9 +140,12 @@
             var province_text = $(this).find("option:selected").text();
             let province_input = $('#province-text');
             province_input.val(province_text);
+            $('#invoice-province').text(province_text);
             //clear city & barangay input
             $('#city-text').val('');
             $('#barangay-text').val('');
+            $('#invoice-city').text('');
+            $('#invoice-barangay').text('');
     
             //city
             $('#city').prop("disabled", false);
@@ -179,9 +186,11 @@
             var city_text = $(this).find("option:selected").text();
             let city_input = $('#city-text');
             city_input.val(city_text);
+            $('#invoice-city').text(city_text);
             //clear barangay input
             $('#barangay-text').val('');
-    
+            $('#invoice-barangay').text('');
+
             // barangay
             $('#barangay').prop("disabled", false);
             let dropdown = $('#barangay');
