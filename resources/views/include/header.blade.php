@@ -15,7 +15,7 @@
               <li class="scroll-to-section"><a href="#about">About Us</a></li>
               <li class="scroll-to-section"><a href="#services">Services</a></li>
               <li class="scroll-to-section"><a href="#portfolio">Rooms</a></li>
-              <li class="scroll-to-section"><a href="#blog">Reviews</a></li> 
+              {{-- <li class="scroll-to-section"><a href="#blog">Reviews</a></li>  --}}
               {{-- <li class="scroll-to-section"><a href="#contact">Message Us</a></li>  --}}
               @auth
                   @if (Auth::user()->level == '3')

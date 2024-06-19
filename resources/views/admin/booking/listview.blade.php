@@ -236,7 +236,12 @@
                   <div class="col-lg-9 col-md-4 label" style="text-align: right">Remaining Balance</div>
                   <div class="col-lg-3 col-md-8"><span id="invoice-total-amount">PHP{{$remaining_balance}}</span></div>
                 </div>
-
+                @if(Auth::user()->level == '3')
+                <div class="row">
+                  <div class="col-lg-7 col-md-4 label" style="text-align: right"></div>
+                  <div class="col-lg-5 col-md-8"><span id="invoice-total-amount"><i>Cancellation Note: Contact us for your booking cancellation. No refunds</i></span></div>
+                </div>
+                @endif
               </div>
 
             </div><!-- End Bordered Tabs -->

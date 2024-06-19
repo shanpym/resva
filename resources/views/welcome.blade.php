@@ -99,7 +99,7 @@
         <div class="col-lg-6 wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.2s">
           <div class="section-heading">
             <h2>Learn more About the <em>services</em> that we <span>Provide</span></h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi ipsa illum repellendus neque quas! Aliquid sint qui quisquam labore maxime cupiditate temporibus eum nihil quos? Explicabo ipsa sapiente magnam quibusdam.</p>
+            <p>Discover the services we offer for seamless online reservations and proper management, boosting your booking experience</p>
           </div>
           <div class="main-red-button"><a href="{{route('add_book')}}">Book Now</a></div>
         </div>
@@ -118,59 +118,59 @@
       </div>
       <div class="row">
         <div class="col-lg-3 col-sm-6">
-          <a href="#">
+          
             <div class="item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.3s">
               <div class="hidden-content">
                 <h4>Single Bed</h4>
-                <p>Lorem ipsum dolor sit ameti ctetur aoi adipiscing eto.</p>
+                <p>A compact room designed for one person, featuring a single bed and essential amenities.</p>
               </div>
               
-                <img src="home/assets/images/portfolio-image.png" alt="">
+                <img src="home/assets/images/single.jpg" alt="">
               
             </div>
-          </a>
+          
         </div>
         <div class="col-lg-3 col-sm-6">
-          <a href="#">
+          
             <div class="item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.4s">
               <div class="hidden-content">
                 <h4>Deluxe Room</h4>
-                <p>Lorem ipsum dolor sit ameti ctetur aoi adipiscing eto.</p>
+                <p>A spacious and well-appointed room offering enhanced comfort and amenities, often including a king or queen-sized bed.</p>
               </div>
-                <img src="home/assets/images/portfolio-image.png" alt="">
+                <img src="home/assets/images/deluxe.jpg" alt="">
               
             </div>
-          </a>
+          
         </div>
         <div class="col-lg-3 col-sm-6">
-          <a href="#">
+          
             <div class="item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.5s">
               <div class="hidden-content">
                 <h4>Family Room</h4>
-                <p>Lorem ipsum dolor sit ameti ctetur aoi adipiscing eto.</p>
+                <p> A large room accommodating multiple occupants, typically equipped with multiple beds or a combination of beds and sofa beds, suitable for families.</p>
               </div>
-                <img src="home/assets/images/portfolio-image.png" alt="">
+                <img src="home/assets/images/family.jpg" alt="">
               
             </div>
-          </a>
+          
         </div>
         <div class="col-lg-3 col-sm-6">
-          <a href="#">
+          
             <div class="item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.6s">
               <div class="hidden-content">
                 <h4>Executive Room</h4>
-                <p>Lorem ipsum dolor sit ameti ctetur aoi adipiscing eto.</p>
+                <p>A premium room offering luxury features, additional space, and high-end amenities, often with a dedicated work area.</p>
               </div>
-                <img src="home/assets/images/portfolio-image.png" alt="">
+                <img src="home/assets/images/exec.jpg" alt="">
               
             </div>
-          </a>
+          
         </div>
       </div>
     </div>
   </div>
 
-  <div id="blog" class="our-blog section">
+  {{-- <div id="blog" class="our-blog section">
     <div class="container">
       <div class="row">
         <div class="col-lg-6 wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.25s">
@@ -219,7 +219,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> --}}
 
   {{-- <div id="contact" class="contact-us section">
     <div class="container">

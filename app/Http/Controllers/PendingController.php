@@ -111,10 +111,17 @@ class PendingController extends Controller
     public function reject(Request $request, int $id){
         $booking = Booking::where('id', $id)->first();
         $transactions = Transaction::where('booking_id', $booking->id)->first();
+        $invoice = Invoice::where('booking_id', $booking->id)->first();
+        // $transactions->update([
+        //     'status' => '3', 
+        //     'cancelled_at'  => Carbon::now()
+        // ]);
 
-        $transactions->update([
+        $transactions->create([
+            'booking_id' => $booking->id,
+            'invoice' => $invoice->id,
             'status' => '3', 
-            'cancelled_at'  => Carbon::now()
+            'confirmed_at'  => Carbon::now()
         ]);
 
         $booking->update([
@@ -122,7 +129,7 @@ class PendingController extends Controller
             'status' => '3', 
         ]);
 
-        return redirect(route('admin.pending'))->with("error", "Booking has been cancelled");
+        return redirect()->back()->with("error", "Booking has been cancelled");
     }
 
     //GUEST PAYMENT 
