@@ -65,7 +65,7 @@
     || Request::is('admin/confirm_booking/*')
     ? 'active' : '' }}" >
       <a class="nav-link collapsed " data-bs-target="#bookings-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>Bookings</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-card-checklist"></i><span>Bookings</span><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul id="bookings-nav" class="nav-content collapse {{ Request::is('admin/booking/*') || Request::is('admin/confirm_booking/*')? 'show' : '' }}" data-bs-parent="#sidebar-nav">
           <li>
@@ -91,7 +91,7 @@
   </li><!-- End Booking Nav -->
       <li class="nav-item ">
         <a class="nav-link collapsed {{ Request::is('admin/rooms/*') ? 'active' : '' }}" data-bs-target="#rooms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>Rooms</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-building"></i><span>Rooms</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="rooms-nav" class="nav-content collapse {{ Request::is('admin/rooms/*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
           <li>
@@ -153,6 +153,12 @@
             </a>
           </li>
         </ul>
+
+        <li class="nav-item">
+          <a href="{{route('admin.edit')}}" class="nav-link collapsed {{ Request::routeIs('admin.edit') ? 'active' : '' }}">
+            <i class="bi bi-pencil-square"></i><span>Appearance</span>
+          </a>
+        </li>
         @endif
     </ul>
   </aside><!-- End Sidebar-->

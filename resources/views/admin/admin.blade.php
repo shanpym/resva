@@ -75,7 +75,7 @@
                       <i class="bi bi-people"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>1244</h6>
+                      <h6>{{$users->count()}}</h6>
                     </div>
                   </div>
 
@@ -104,6 +104,11 @@
                       </tr>
                     </thead>
                     <tbody>
+                      <input type="text" id="pending" value="{{$all_bookings->where('status', 1)->count()}}" style="display: none">
+                      <input type="text" id="confirmed" value="{{$all_bookings->where('status', 2)->count()}}" style="display: none">
+                      <input type="text" id="cancelled" value="{{$all_bookings->where('status', 3)->count()}}" style="display: none">
+                      <input type="text" id="completed" value="{{$all_bookings->where('status', 4)->count()}}" style="display: none">
+                      <input type="text" id="arrived" value="{{$all_bookings->where('status', 5)->count()}}" style="display: none">
                       @foreach ($bookings as $booking)
                         <tr>
                           <th scope="row"><a href="#">{{$booking->id}}</a></th>
@@ -167,6 +172,12 @@
 
               <script>
                 document.addEventListener("DOMContentLoaded", () => {
+                  var pending = parseInt($('#pending').val());
+                  var confirmed = parseInt($('#confirmed').val());
+                  var cancelled = parseInt($('#cancelled').val());
+                  var completed = parseInt($('#completed').val());
+                  var arrived = parseInt($('#arrived').val());
+
                   echarts.init(document.querySelector("#trafficChart")).setOption({
                     tooltip: {
                       trigger: 'item'
@@ -195,23 +206,23 @@
                         show: false
                       },
                       data: [{
-                          value: 1048,
+                          value: confirmed,
                           name: 'Confirmed'
                         },
                         {
-                          value: 735,
+                          value: completed,
                           name: 'Completed'
                         },
                         {
-                          value: 580,
+                          value: pending,
                           name: 'Pending'
                         },
                         {
-                          value: 484,
+                          value: cancelled,
                           name: 'Cancelled'
                         },
                         {
-                          value: 300,
+                          value: arrived,
                           name: 'Arrived'
                         }
                       ]

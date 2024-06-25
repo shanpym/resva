@@ -120,26 +120,6 @@ class AdminController extends Controller
     }
 
     public function update(Request $request, int $id){
-        // $validator = Validator::make($request->all(), [       
-        //     'surname' => 'required',
-        //     'firstname' => 'required',
-        //     'email' => 'required',
-        //     'about' => 'required',
-        //     'address' => 'required',
-        //     'phone_no' => 'required|min:11',
-        // ]
-        // ,[
-        //     'required' => 'Please fill out each field',
-        // ]
-        // );
-    
-        // if($validator->fails()){
-        //     return redirect()
-        //     ->back()
-        //     ->withErrors($validator)
-        //     ->withInput();
-        // };
-
         $matchName = User::where('id', $id)->first();
 
         if ($matchName) {

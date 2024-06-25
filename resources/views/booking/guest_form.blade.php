@@ -52,22 +52,60 @@
             <input type="text" class="form-control form-control-md @error('street_text') is-invalid @enderror" name="street_text" id="street-text">
           </div>
         </div>
-        <div class="col-md-4">
+        {{-- <div class="col-md-4">
           <label for="inputState" class="form-label text-muted"><span style="color: #d9534f">*</span> Mode of Payment</label>
           <select name="payment_type" id="payment_type" class="form-select @error('payment_type') is-invalid @enderror">
             <option disabled selected>Choose...</option>
             <option value="1">Online Banking</option>
             <option value="2">Cash</option>
           </select>
-        </div>
-        <div class="col-12">
+        </div> --}}
+        <input type="hidden" name="payment_type" value="1">
+        {{-- <div class="col-12">
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="gridCheck">
             <label class="form-check-label" for="gridCheck">
               I agree to the Terms & Conditions
             </label>
           </div>
+        </div> --}}
+        
+      <section class="section profile mt-5">
+        <div class="row">
+          <div class="col-xl-12">
+
+            <div class="card">
+              <div class="card-body profile-card pt-4 d-flex flex-column">
+                <h5 class="card-title">Policies</h5>
+                <div class="card-body">
+                    <div class="row">
+                        <style>
+                            .bi{
+                                color: ;
+                            }
+                        </style>
+                        <div class="col-9 p-2">
+                            <span class="text-muted">Booking Requirements</span><br>
+                            <p>* A downpayment via online banking is required to secure all bookings.</p>
+                            <hr>
+                            <span class="text-muted">Cancellation Policy</span><br>
+                            <p>* There will be no refunds for cancellation.</p>
+                            <hr>
+                            <span class="text-muted">Rates and Charges</span><br>
+                            <p>* Additional charges may apply for extra services requested during the stay.</p>
+                            <hr>
+                            <span class="text-muted">Terms and Conditions</span><br>
+                            <p>* Guests are responsible for any damages caused to the property during their stay.</p>
+                            <p>* For further inquiries or assistance, please contactus.</p>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </section>
       </div>
     </div>
+    
   </div>

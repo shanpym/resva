@@ -21,13 +21,14 @@ class DashboardController extends Controller
 {
     public function view(): View{
         $date_today = date('Y-m-d');
-        
+        $users = DB::table('users')->get();
         $all_bookings = Booking::orderBy('id', 'desc')->get();
         $bookings = Booking::whereDate('created_at', $date_today)->orderBy('id', 'desc')->get();
         
         $to_arrive = Booking::where('start_date', $date_today)
+        ->where('status', '2')
         ->orderBy('id', 'desc')->get();
         
-        return view('admin.admin', compact('bookings', 'to_arrive', 'all_bookings'));
+        return view('admin.admin', compact('bookings', 'to_arrive', 'all_bookings', 'users'));
     }
 }

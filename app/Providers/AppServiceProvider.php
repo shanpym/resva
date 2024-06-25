@@ -37,6 +37,7 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrap();
         View::composer(['admin.include.sidebar'], function ($view) {
             $notifications = DB::table('booking')->where('status', '1')->get();
+            $users = DB::table('users')->get();
             $dateToday = date('Y-m-d'); 
             $toarrive = DB::table('booking')
             ->where('start_date', $dateToday)
@@ -49,7 +50,8 @@ class AppServiceProvider extends ServiceProvider
             $view->with([
                 'notifications' => $notifications,
                 'toarrive' => $toarrive,
-                'todepart' => $todepart
+                'todepart' => $todepart,
+                'users' => $users,
             ]);
         });
 

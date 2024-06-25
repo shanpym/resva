@@ -948,10 +948,11 @@ About Us Style
 }
 
 .about-us {
-  background-image: url(../images/about-bg.png);
+  position: relative; 
+  /* background-image: url(../images/about-bg.png);
   background-repeat: no-repeat;
   background-position: center center;
-  background-size: cover;
+  background-size: cover; */
   padding: 140px 0px 120px 0px;
 }
 

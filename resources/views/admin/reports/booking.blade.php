@@ -27,8 +27,6 @@
                   
     <div class="row">
       <div class="col-md-12">
-        <form action="{{route('reports.post')}}" method="POST">
-          @csrf
           <div class="row d-flex">
           <div class="col-sm-3" style="font-size: 16px;" >
             <small for="">Date</small>
@@ -40,7 +38,7 @@
           </div>
           <div class="col-sm-2 ">
             <div class="col-sm-0" style="font-size: 16px;" >
-              <small for="">Sort by Status</small>
+              <small for="">Status</small>
               <select class="form-select" name="status" id="status">
                 <option value="9" selected>All</option>
                 <option value="1">Pending</option>
@@ -51,13 +49,33 @@
               </select>
             </div>
           </div>
+          <div class="col-sm-2 ">
+            <div class="col-sm-0" style="font-size: 16px;" >
+              <small for="">Room</small>
+              <select class="form-select" name="roomType" id="roomType">
+                <option value="9" selected>All</option>
+                @foreach ($room_types as $room_type)
+                  <option value="{{$room_type->name}}">{{$room_type->name}}</option>
+                @endforeach
+              </select>
+            </div>
+          </div>
           <div class="col-md-2 mt-4" style="font-size: 16px;" >
+            <form action="{{route('reports.pdf')}}" method="POST">
+              @csrf
             <button type="button" id="clear-btn" class="btn btn-secondary">Clear</button>
-            <button type="button" id="clear-btn" class="btn btn-outline-primary">PDF</button>
+              <input type="hidden" class="fetch_date " name="start_date" id="pdf_start" value="">
+              <input type="hidden" class="fetch_date " name="end_date" id="pdf_end" value="">
+              <input type="hidden" class="fetch_date " name="status" id="pdf_status" value="">
+              <input type="hidden" class="fetch_date " name="room_type" id="pdf_room" value="">
+                <button type="submit" class="btn btn-outline-primary">
+                    PDF
+                </button>
+            </form>
           </div>
         </div>
           
-        </form>
+        
       </div>
     </div>
                   <table class="table table-bordered">
@@ -73,13 +91,14 @@
                     <thead>
                       <tr >
                         <th class="col">#</th>
-                        <th class="col">Date Created</th>
-                        <th class="col">Booking ID</th>
+                        <th class="col">Transaction Date</th>
+                        <th class="col"># Booking</th>
+                        <th class="col">Room</th>
                         <th class="col">Status</th>
                         <th class="col">Booking Fee</th>
-                        <th class="col">Add Ons</th>
-                        <th class="col">Amount Paid</th>
-                        <th class="col">Total</th>
+                        {{-- <th class="col">Add Ons</th> --}}
+                        <th class="col">Payment Amount</th>
+                        {{-- <th class="col">Total</th> --}}
                         {{-- <th scope="col" style="width: 10%;">Actions</th> --}}
                       </tr>
                     </thead>
@@ -91,11 +110,12 @@
                         {{-- <td class="items"><span id="filter-date"></span></td> --}}
                         <td class="items"></td>
                         <td class="items"></td>
-                        <td class="items"></td>
-                        <td class="items" ><span id="total-price"></span></td>
-                        <td class="items"><span id="total-addons"></span></td>
-                        <td class="items" ><span id="amount-paid"></span></td>
+                        <td class="items"><span id="room-type"></span></td>
+                        <td class="items" ><span>Total</span></td>
                         <td class="items"><span id="earnings"></td>
+                        {{-- <td class="items"><span id="total-addons"></span></td> --}}
+                        <td class="items" ><span id="amount-paid"></span></td>
+                        
                         {{-- <td class="items" style="padding-top: 10px !important;">
                           <button class="btn btn-sm btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#view">
                             See Details
@@ -150,8 +170,14 @@
     onSelect: function(selectedDate) {
       $(this).trigger('change'); 
       filter();
+      
     },
   });
+  
+  $('#pdf_start').val('');
+  $('#pdf_end').val('');
+  $('#pdf_status').val('');
+  $('#pdf_work').val('');
 
   $("#clear-btn").on('click', function(){
     $('#result-data').empty();
@@ -165,12 +191,25 @@
     $('#to-date').val('');
   });
 
-  $("#status").change(filter);
+  $("#status, #roomType, #from-date, #to-date").change(function(){
+    status = $('#status').val();
+    room = $('#roomType').val();
+    start = $('#from-date').val();
+    end = $('#to-date').val();
+
+    $('#pdf_status').val(status);
+    $('#pdf_room').val(room);
+    $('#pdf_start').val(start);
+    $('#pdf_end').val(end);
+  });
+  $("#status, #roomType").change(filter);
 
   function filter() {
     var from_date = $('#from-date').val();
     var to_date = $('#to-date').val();
     var status = $('#status').val();
+    var room = $('#roomType').val();
+    console.log(room);
 
     var start_dateFormat = new Date(from_date).toLocaleString('en-us', { month: 'short', day: 'numeric', year: 'numeric' });
     var end_dateFormat = new Date(to_date).toLocaleString('en-us', { month: 'short', day: 'numeric', year: 'numeric' });
@@ -183,7 +222,8 @@
       data: { 
         start_date: from_date,
         end_date: to_date,
-        status: status
+        status: status,
+        room_type: room
       },
       dataType: 'json',
       success: function(response) {
@@ -219,12 +259,13 @@
           row.append($('<th scope="row">').text(index + 1));
           row.append($('<td class="result">').text(formattedDate));
           row.append($('<td class="result">').text(booking.id));
+          row.append($('<td class="result">').text(booking.findRoom));
           row.append($('<td class="result">').text(status));
-          row.append($('<td class="result">').text('PHP' + booking.subtotal));
-          row.append($('<td class="result">').text('PHP' + booking.addonsPrice));
+          row.append($('<td class="result">').text('PHP' + booking.invoice));
+          // row.append($('<td class="result">').text('PHP' + booking.addonsPrice));
           row.append($('<td class="result">').text('PHP' + booking.amountPaid));
-          row.append($('<td class="result">').text('PHP' + booking.totalAmount));
-            console.log("response:",booking.totalAddons);
+          // row.append($('<td class="result">').text('PHP' + booking.totalAmount));
+          // console.log("response:",booking.findRoom);
           // row.append($('<td>').html('<button class="btn btn-sm btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#view">See Details</button>'));
           $('#result-data').append(row);
         });
@@ -233,7 +274,7 @@
         $('#amount-paid').text('PHP' + totalAmountPaid);
         $('#earnings').text('PHP' + response.newtotalPrice);
         
-        console.log("response:",totalBooking, totalAmountPaid, totalPrice, earnings);
+        console.log("response:", response.totalAmountPaid);
       },
       error: function(xhr, status, error) {
         console.error(xhr.response);

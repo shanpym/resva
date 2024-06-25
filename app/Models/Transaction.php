@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
+    use HasFactory, HasApiTokens;
     public $timestamps = true;
     protected $table = 'transaction';
     protected $fillable = [

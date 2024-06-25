@@ -14,6 +14,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="{{asset('home/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+    
 
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="{{asset('home/assets/css/fontawesome.css')}}">

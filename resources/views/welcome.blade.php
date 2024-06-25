@@ -9,75 +9,185 @@
           <div class="row">
             <div class="col-lg-6 align-self-center">
               <div class="left-content header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
-                <h6>Welcome to CCST Resva Hotel</h6>
-                <h2>Where  <em>Luxury </em><span>Meets </span> Hospitality</h2>
-                <p>CCST Resva is a system made by a group of ACT students from CCST.</p>
+               
+                @php
+                    // Extract the motto and highlights from your PHP variables
+                    $heroMotto = $appearance->hero_motto;
+                    $highlight1 = $appearance->hero_motto_highlight_1;
+                    $highlight2 = $appearance->hero_motto_highlight_2;
+
+                    // Create regular expressions to find whole words
+                    $regex1 = '/\b' . preg_quote($highlight1, '/') . '\b/i';
+                    $regex2 = '/\b' . preg_quote($highlight2, '/') . '\b/i';
+
+                    // Replace matching words with styled spans
+                    $heroMottoHighlighted = preg_replace($regex1, '<em class="highlight">$0</em>', $heroMotto);
+                    $heroMottoHighlighted = preg_replace($regex2, '<span class="highlight">$0</span>', $heroMottoHighlighted);
+                @endphp
+
+                <h6>{{$appearance->hero_welcome}}</h6>
+
+                <h2>{!! $heroMottoHighlighted !!}</h2>
+
+                <p>{{$appearance->hero_description}}</p>
+            
                 <div class="main-red-button"><a href="{{route('add_book')}}">Book Now</a></div>
               </div>
             </div>
+            <style>
+              .right-image{
+                  position: relative;
+                }
+
+                .image-mask {
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  width: 100%;
+                  height: 100%;
+                  mask-image: url('{{ asset('home/assets/images/banner-right-image.png') }}');
+                  mask-size: cover;
+                  -webkit-mask-image: url('{{ asset('home/assets/images/banner-right-image.png') }}');
+                  -webkit-mask-size: cover;
+                }
+
+                .about-mask {
+                    position: absolute; /* Ensure the position is relative if needed */
+                    left: 0;
+                    width: 100%;
+                    height: 80%;
+                    mask-image: url('{{ asset('home/assets/images/about-bg.png') }}');
+                    mask-size: cover;
+                    -webkit-mask-image: url('{{ asset('home/assets/images/about-bg.png') }}');
+                    -webkit-mask-size: cover;
+                }
+                .icon-mask {
+                    position: relative; /* Ensure the position is relative if needed */
+                    width: 100%;
+                    height: 100%;
+                    mask-image: url('{{ asset('home/assets/images/service-icon-01.png') }}');
+                    mask-size: cover;
+                    -webkit-mask-image: url('{{ asset('home/assets/images/service-icon-01.png') }}');
+                    -webkit-mask-size: cover;
+                }
+             
+                .room-mask {
+                  position: relative;
+                  top: 0;
+                  left: 0;
+                  width: 306px; 
+                  height: 345.77px;
+                  mask-image: url('{{ asset('home/assets/images/family.jpg') }}');
+                  mask-size: contain;
+                  -webkit-mask-image: url('{{ asset('home/assets/images/family.jpg') }}');
+                  -webkit-mask-size: contain;
+                }
+
+                .room-mask img {
+                  width: 306px; 
+                  height: 345.77px;
+                  object-fit: cover; /* Ensures the image covers the container */
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                }
+            </style>
+             <?php
+                $hero = DB::table('appearance')->where('id', '1')->first();
+              ?>
             <div class="col-lg-6">
               <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
-                <img src="{{asset('home/assets/images/banner-right-image.png')}}" alt="team meeting">
+                <div class="image-mask">
+                  <img src="{{ asset('storage/img/'.$hero->hero_image) }}" alt="mask image" style="width:636px; height: 604.3px;">
+                </div>
+                <img src="{{ asset('home/assets/images/banner-right-image.png') }}" alt="team meeting">
               </div>
             </div>
+            
           </div>
         </div>
       </div>
     </div>
   </div>
 
+  
+  <?php
+  $findImages = DB::table('appearance')->where('id', '2')->first();
+  ?>
+  <div class="about-mask">
+    <img src="{{ asset('storage/img/'.$findImages->about_background) }}" alt="mask image" style="filter: brightness(0.5);">
+  </div>
+
   <div id="about" class="about-us section">
+    
     <div class="container">
       <div class="row">
+        
         <div class="col-lg-4">
           <div class="left-image wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s">
-            <img src="{{asset('home/assets/images/about-left-image.png')}}" alt="person graphic">
+            <img src="{{ asset('storage/img/'.$findImages->about_character) }}" alt="person graphic" style="width: 371px; height: 371px;">
           </div>
         </div>
         <div class="col-lg-8 align-self-center">
           <div class="services">
             <div class="row">
+              <?php
+                $about1 = $appearance->where('id', '2')->first();
+                $about2 = $appearance->where('id', '3')->first();
+                $about3 = $appearance->where('id', '4')->first();
+                $about4 = $appearance->where('id', '5')->first();
+              ?>
               <div class="col-lg-6">
                 <div class="item wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
                   <div class="icon">
-                    <img src="home/assets/images/service-icon-01.png" alt="reporting">
+                    <div class="icon-mask">
+                      <img src="{{ asset('storage/img/'.$about1->about_icon) }}" alt="reporting" style="width: 70px; height:70px;">
+                    </div>
                   </div>
                   <div class="right-text">
-                    <h4>Accommodation</h4>
-                    <p>Guests can reserve rooms based on their preferences</p>
+                  
+                    <h4>{{$about1->about_name}}</h4>
+                    <p>{{$about1->about_description}}</p>
+                    
                   </div>
                 </div>
               </div>
               <div class="col-lg-6">
                 <div class="item wow fadeIn" data-wow-duration="1s" data-wow-delay="0.7s">
                   <div class="icon">
-                    <img src="home/assets/images/service-icon-02.png" alt="">
+                    <div class="icon-mask">
+                      <img src="{{ asset('storage/img/'.$about2->about_icon) }}" alt="reporting" style="width: 70px; height:70px;">
+                    </div>
                   </div>
                   <div class="right-text">
-                    <h4>Flexible Booking Options</h4>
-                    <p>Allowing guests to modify or cancel their reservations</p>
+                    <h4>{{$about2->about_name}}</h4>
+                    <p>{{$about2->about_description}}</p>
                   </div>
                 </div>
               </div>
               <div class="col-lg-6">
                 <div class="item wow fadeIn" data-wow-duration="1s" data-wow-delay="0.9s">
                   <div class="icon">
-                    <img src="home/assets/images/service-icon-03.png" alt="">
+                    <div class="icon-mask">
+                      <img src="{{ asset('storage/img/'.$about3->about_icon) }}" alt="reporting" style="width: 70px; height:70px;">
+                    </div>
                   </div>
                   <div class="right-text">
-                    <h4>Best Rate Guarantees</h4>
-                    <p>Clearly displaying all fees, taxes, and additional charges upfront</p>
+                    <h4>{{$about3->about_name}}</h4>
+                    <p>{{$about3->about_description}}</p>
                   </div>
                 </div>
               </div>
               <div class="col-lg-6">
                 <div class="item wow fadeIn" data-wow-duration="1s" data-wow-delay="1.1s">
                   <div class="icon">
-                    <img src="home/assets/images/service-icon-04.png" alt="">
+                    <div class="icon-mask">
+                      <img src="{{ asset('storage/img/'.$about4->about_icon) }}" alt="reporting" style="width: 70px; height:70px;">
+                    </div>
                   </div>
                   <div class="right-text">
-                    <h4>Additional Services</h4>
-                    <p>Lorem ipsum dolor sit amet, ctetur aoi adipiscing eliter</p>
+                    <h4>{{$about4->about_name}}</h4>
+                    <p>{{$about4->about_description}}</p>
                   </div>
                 </div>
               </div>
@@ -88,18 +198,35 @@
     </div>
   </div>
 
+
   <div id="services" class="our-services section">
     <div class="container">
       <div class="row">
+        @php
+          $s_desc = DB::table('appearance')->where('id', 6)->first();
+
+          $highlight1 = $s_desc->service_description_highlight_1;
+          $highlight2 = $s_desc->service_description_highlight_2;
+          $serviceDescription = $s_desc->service_name; // Assuming 'service_description' is the column name
+
+          // Create regular expressions to find whole words
+          $regex1 = '/\b' . preg_quote($highlight1, '/') . '\b/i';
+          $regex2 = '/\b' . preg_quote($highlight2, '/') . '\b/i';
+
+          // Replace matching words with styled spans
+          $s_descHighlighted = preg_replace($regex1, '<em class="highlight">$0</em>', $serviceDescription);
+          $s_descHighlighted = preg_replace($regex2, '<span class="highlight">$0</span>', $s_descHighlighted);
+        @endphp
         <div class="col-lg-6 align-self-center  wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.2s">
           <div class="left-image">
-            <img src="home/assets/images/services-left-image.png" alt="">
+            <img src="{{ asset('storage/img/'.$s_desc->service_image) }}" alt="" style="width: 591px; height: 413.69px">
           </div>
         </div>
+      
         <div class="col-lg-6 wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.2s">
           <div class="section-heading">
-            <h2>Learn more About the <em>services</em> that we <span>Provide</span></h2>
-            <p>Discover the services we offer for seamless online reservations and proper management, boosting your booking experience</p>
+            <h2>{!! $s_descHighlighted !!}</h2>
+            <p>{{$s_desc->service_description}}</p>
           </div>
           <div class="main-red-button"><a href="{{route('add_book')}}">Book Now</a></div>
         </div>
@@ -116,55 +243,66 @@
           </div>
         </div>
       </div>
+      <?php
+      $findRoom = DB::table('appearance')->where('id', '7')->first();
+      $room1 = DB::table('room_type')->where('id', $findRoom->room_id)->first();
+
+      $findRoom2 = DB::table('appearance')->where('id', '8')->first();
+      $room2 = DB::table('room_type')->where('id', $findRoom2->room_id)->first();
+
+      $findRoom3 = DB::table('appearance')->where('id', '9')->first();
+      $room3 = DB::table('room_type')->where('id', $findRoom3->room_id)->first();
+
+      $findRoom4 = DB::table('appearance')->where('id', '10')->first();
+      $room4 = DB::table('room_type')->where('id', $findRoom4->room_id)->first();
+
+
+
+      ?>
       <div class="row">
         <div class="col-lg-3 col-sm-6">
-          
             <div class="item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.3s">
               <div class="hidden-content">
-                <h4>Single Bed</h4>
-                <p>A compact room designed for one person, featuring a single bed and essential amenities.</p>
+                <h4>{{$room1->name}}</h4>
+                <p>{{$room1->description}}</p>
               </div>
-              
-                <img src="home/assets/images/single.jpg" alt="">
-              
+              <div class="room-mask">
+                <img src="{{ asset('storage/img/'.$room1->image) }}" alt="mask image">
+              </div>
             </div>
-          
         </div>
         <div class="col-lg-3 col-sm-6">
-          
-            <div class="item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.4s">
+            <div class="item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.3s">
               <div class="hidden-content">
-                <h4>Deluxe Room</h4>
-                <p>A spacious and well-appointed room offering enhanced comfort and amenities, often including a king or queen-sized bed.</p>
+                <h4>{{$room2->name}}</h4>
+                <p>{{$room2->description}}</p>
               </div>
-                <img src="home/assets/images/deluxe.jpg" alt="">
-              
+              <div class="room-mask">
+                <img src="{{ asset('storage/img/'.$room2->image) }}" alt="mask image">
+              </div>
             </div>
-          
         </div>
         <div class="col-lg-3 col-sm-6">
-          
-            <div class="item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.5s">
+            <div class="item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.3s">
               <div class="hidden-content">
-                <h4>Family Room</h4>
-                <p> A large room accommodating multiple occupants, typically equipped with multiple beds or a combination of beds and sofa beds, suitable for families.</p>
+                <h4>{{$room3->name}}</h4>
+                <p>{{$room3->description}}</p>
               </div>
-                <img src="home/assets/images/family.jpg" alt="">
-              
+              <div class="room-mask">
+                <img src="{{ asset('storage/img/'.$room3->image) }}" alt="mask image">
+              </div>
             </div>
-          
         </div>
         <div class="col-lg-3 col-sm-6">
-          
-            <div class="item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.6s">
+            <div class="item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.3s">
               <div class="hidden-content">
-                <h4>Executive Room</h4>
-                <p>A premium room offering luxury features, additional space, and high-end amenities, often with a dedicated work area.</p>
+                <h4>{{$room4->name}}</h4>
+                <p>{{$room4->description}}</p>
               </div>
-                <img src="home/assets/images/exec.jpg" alt="">
-              
+              <div class="room-mask">
+                <img src="{{ asset('storage/img/'.$room4->image) }}" alt="mask image">
+              </div>
             </div>
-          
         </div>
       </div>
     </div>

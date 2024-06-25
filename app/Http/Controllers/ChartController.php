@@ -52,6 +52,7 @@ class ChartController extends Controller
         $bookings = DB::table('booking')
             ->where('start_date', '<=', $search_date)
             ->where('end_date', '>=', $search_date)
+            ->where('status', ['2', '4'])
             ->pluck('room_name');
     
         $bookingsArray = $bookings->toArray();
@@ -85,7 +86,6 @@ class ChartController extends Controller
                 ->select('booking.*')
                 ->where('booking.start_date', '<=', $search_date_formatted)
                 ->where('booking.end_date', '>=', $search_date_formatted)
-                ->whereIn('booking.status', ['2', '5'])
                 ->orderBy('booking.start_date', 'asc')
                 ->get();
         } else {
@@ -93,7 +93,6 @@ class ChartController extends Controller
             $bookings = Rooms::join('booking', 'rooms.name', '=', 'booking.room_name')
                 ->where('booking.room_name', $findRoom)
                 ->select('booking.*')
-                ->whereIn('booking.status', ['2', '5'])
                 ->orderBy('booking.start_date', 'asc')
                 ->get();
         }

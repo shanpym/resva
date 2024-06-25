@@ -30,10 +30,8 @@
                     </div>
                 </div>
             </div>
-            
           </div>
         </div>
-
       </div>
 
       <div class="col-xl-8">
@@ -58,7 +56,7 @@
 
                 <div class="row">
                   <div class="col-lg-3 col-md-4 label ">Preferred Room</div>
-                  <div class="col-lg-9 col-md-8"><span id="invoice-room-type">Single Bed</span></div>
+                  <div class="col-lg-9 col-md-8"><span id="invoice-room-type"></span></div>
                 </div>
 
                 <div class="row">
@@ -78,7 +76,7 @@
 
                 <div class="row">
                   <div class="col-lg-3 col-md-4 label">Mode of Payment</div>
-                  <div class="col-lg-9 col-md-8"><span id="invoice-payment-type"></span></div>
+                  <div class="col-lg-9 col-md-8"><span id="invoice-payment-type">Online Payment</span></div>
                 </div>
 
                 <hr>
@@ -113,3 +111,4 @@
       </div>
     </div>
   </section>
+  

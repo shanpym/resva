@@ -88,7 +88,15 @@
               </thead>
               <tbody>
                 @foreach ($bookings as $booking)
-                    
+                <?php
+                $transactions = DB::table('transaction')->where('booking_id', $booking->id)->first();
+                $invoice = DB::table('invoice')->where('booking_id', $booking->id)->first();
+                $add_ons = DB::table('add_ons')->where('booking_id', $booking->id)->get();
+
+                $payable_amount = $invoice->total_amount * .5;
+                $remaining_balance = $transactions->amount_paid - $invoice->total_amount;
+
+                ?>
                
                 <tr>
                   <th scope="row" style="padding-top: 15px !important; color: #0d6efd !important;">{{$booking->id}}</th>
@@ -97,9 +105,16 @@
                  
                   <td>{{ \Carbon\Carbon::parse($booking->start_date)->format('F j, Y') }}</td>
                   <td> 
-                    @if($booking->status == '5')
+                    @if($remaining_balance >= 0)
                         <button class="btn btn-outline-danger btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#checkout{{$booking->id}}">
                         CHECK OUT</button>
+                    @else
+                    <form action="{{url('/admin/booking/checkout/' . $booking->id)}}" method="POST">
+                      @csrf
+                      <input type="hidden" name="amount_paid" value="0">
+                        <button class="btn btn-outline-danger btn-sm" type="submit">
+                        CHECK OUT</button>
+                    </form>
                     @endif
                   </td>
                   <td style="padding-top: 10px !important;">
@@ -148,15 +163,7 @@
                     </div>
                   </div>
                 </div><!-- End Vertically centered Modal-->
-                <?php
-                $transactions = DB::table('transaction')->where('booking_id', $booking->id)->first();
-                $invoice = DB::table('invoice')->where('booking_id', $booking->id)->first();
-                $add_ons = DB::table('add_ons')->where('booking_id', $booking->id)->get();
-
-                $payable_amount = $invoice->total_amount * .5;
-                $remaining_balance = $transactions->amount_paid - $invoice->total_amount;
-
-                ?>
+                
                 <div class="modal fade payment-modal" id="payment{{$booking->id}}" tabindex="-1">
                   <div class="modal-dialog modal-dialog-scrollable modal-lg">
                     <div class="modal-content">

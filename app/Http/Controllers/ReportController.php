@@ -27,8 +27,9 @@ class ReportController extends Controller
         $bookings = Booking::where('start_date', '<', $end_date)
         ->where('end_date', '>', $start_date)
         ->get();
+        $room_types = Room_Type::get();
 
-        return view('admin.reports.booking', compact('bookings', 'start_date', 'end_date', 'status'));
+        return view('admin.reports.booking', compact('bookings', 'start_date', 'end_date', 'status', 'room_types'));
     }
 
 
@@ -37,10 +38,16 @@ class ReportController extends Controller
         $start_date = Carbon::parse($request->input('start_date'))->format('Y-m-d');
         $end_date = Carbon::parse($request->input('end_date'));
         $status = $request->input('status');
-    
+        
+        $room_type_fetch = $request->input('room_type');
         $bookings = Booking::where('start_date', '<=', $end_date)
             ->where('end_date', '>=', $start_date);
     
+        // Apply room type filter if provided
+        if ($room_type_fetch != '9') {
+            $bookings->where('room_type', $room_type_fetch);
+        }
+
         if ($status != '9') {
             $bookings->where('status', $status);
         }
@@ -54,7 +61,10 @@ class ReportController extends Controller
             $days_diff = $end_date_booking->diffInDays($start_date_booking);
 
             $room_type = DB::table('room_type')->where('name', $booking->room_type)->first();
-         
+            $findRoom = DB::table('room_type')->where('name', $booking->room_type)->pluck('name');
+
+            $invoice = DB::table('invoice')->where('booking_id', $booking->id)->pluck('total_amount');
+
             $subtotal = $room_type->price * abs($days_diff);
             $totalSubtotal += $subtotal;
 
@@ -73,6 +83,8 @@ class ReportController extends Controller
             
             $totalAmount = $addonsPrice + $subtotal + $amountPaid;
             $booking->subtotal = $subtotal;
+            $booking->invoice = $invoice;
+            $booking->findRoom = $findRoom;
             $booking->amountPaid = $amountPaid;
             $booking->addonsPrice = $addonsPrice;
             $booking->totalAmount = $totalAmount;
@@ -91,6 +103,10 @@ class ReportController extends Controller
         if ($status != '9') {
             $totalAmountPaid->where('booking.status', $status);
         }
+        
+        if ($room_type_fetch != '9') {
+            $totalAmountPaid->where('booking.room_type', $room_type_fetch);
+        }
     
         $totalAmountPaid = $totalAmountPaid->sum('transaction.amount_paid');
     
@@ -102,7 +118,10 @@ class ReportController extends Controller
         if ($status != '9') {
             $totalPrice->where('booking.status', $status);
         }
-    
+        if ($room_type_fetch != '9') {
+            $totalPrice->where('booking.room_type', $room_type_fetch);
+        }
+
         $totalPrice = $totalPrice->sum('invoice.total_amount');
         $newtotalPrice = 1 * abs($totalPrice);
         $earnings = $totalAmountPaid - $totalPrice;

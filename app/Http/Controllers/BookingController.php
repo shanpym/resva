@@ -100,6 +100,7 @@ class BookingController extends Controller
         $payable_amount = $invoice->total_amount - $totalAmountPaid;
         if($payable_amount > $request->amount_paid){
             return redirect()->back()->with("error_payment", " Payment was unsuccessful");
+        
         }else{
 
             $transaction = Transaction::where('booking_id', $id)->first();

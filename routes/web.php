@@ -14,6 +14,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\AppearanceController;
 
 
 
@@ -22,6 +23,10 @@ use App\Http\Middleware\RoleMiddleware;
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
+
+Route::get('/', [AppearanceController::class, 'welcomeView'])->name('home');
+
+
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 //HOME BOOKING ---------------------------------------------------------------------------
@@ -135,7 +140,13 @@ Route::get('/admin/reports/list', function () {
 Route::get('/admin/reports/booking', [ReportController::class, ('view')])->name('reports.booking')->middleware(RoleMiddleware::class);
 
 Route::get('/filter/reports', [ReportController::class, ('filter')])->name('reports.filter')->middleware(RoleMiddleware::class);
-Route::post('/admin/reports/booking',[ReportController::class, ('reportQuery')])->name('reports.post')->middleware(RoleMiddleware::class);
+// Route::post('/admin/reports/booking',[ReportController::class, ('reportQuery')])->name('reports.post')->middleware(RoleMiddleware::class);
+
+// Route::get('/reports/pdf', [PDFController::class, ('reportPDF')])->name('reports.pdf');
+Route::post('admin/reports/booking', [PDFController::class, ('reportPDF')])->name('reports.pdf');
+// Route::get('/reports/pdf', function () {
+//     return view('admin.reports.pdf');
+// })->name('reports.pdf')->middleware(RoleMiddleware::class);
 
 //ACCOUNTS ---------------------------------------------------------------------------
 
@@ -194,3 +205,12 @@ Route::get('/user/review/all_review', function () {
 Route::get('/user/review/write', function () {
     return view('user.review.write');
 })->name('user.write');
+
+
+//APPEARANCE
+// Route::get('/admin/appearance/edit', function () {
+//     return view('admin.appearance.edit');
+// })->name('admin.edit');
+
+Route::get('/admin/appearance/edit', [AppearanceController::class, 'view'])->name('admin.edit');
+Route::post('/admin/appearance/edit', [AppearanceController::class, 'update'])->name('appearance.post');
