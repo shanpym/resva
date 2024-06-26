@@ -6,7 +6,6 @@
           <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
             <h2>{{$users->firstname}} {{$users->surname}}</h2>
-            <h3>Admin</h3>
             <div class="social-links mt-2">
               <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
               <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>

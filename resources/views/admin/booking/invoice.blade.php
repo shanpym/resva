@@ -12,22 +12,42 @@
                             color: ;
                         }
                     </style>
+                    @if(Auth::user()->level == '3')
                     <div class="col-9 p-2">
+                      <i class="bi bi-person-fill"></i> <span id="invoice-firstname" class="text-muted">{{Auth::user()->firstname}}</span> <span id="invoice-surname" class="text-muted">{{Auth::user()->surname}}</span>
+                    </div>
+                    <div class="col-9 p-2">
+                      <i class="bi bi-geo-fill"></i> <span id="invoice-street" class="text-muted">{{Auth::user()->street_text}}</span>,
+                      <span id="invoice-barangay" class="text-muted">{{Auth::user()->barangay_text}}</span>,
+                      <span id="invoice-city" class="text-muted">{{Auth::user()->city_text}}</span>,
+                      <span id="invoice-province" class="text-muted">{{Auth::user()->province_text}}</span>,
+                      <span id="invoice-region" class="text-muted">{{Auth::user()->region_text}}</span>
+                    </div>
+                    <div class="col-9 p-2">
+                      <i class="bi bi-envelope-fill"></i> <span id="invoice-email" class="text-muted">{{Auth::user()->email}}</span>
+                    </div>
+                    <div class="col-9 p-2">
+                        <i class="bi bi-telephone-fill"></i> <span id="invoice-phone-no" class="text-muted">{{Auth::user()->phone_no}}</span>
+                    </div>
+                    @else
+                      <div class="col-9 p-2">
                         <i class="bi bi-person-fill"></i> <span id="invoice-firstname" class="text-muted"></span> <span id="invoice-surname" class="text-muted"></span>
-                    </div>
-                    <div class="col-9 p-2">
-                      <i class="bi bi-geo-fill"></i> <span id="invoice-street" class="text-muted"></span>,
-                      <span id="invoice-barangay" class="text-muted"></span>,
-                      <span id="invoice-city" class="text-muted"></span>,
-                      <span id="invoice-province" class="text-muted"></span>,
-                      <span id="invoice-region" class="text-muted"></span>
-                  </div>
-                    <div class="col-9 p-2">
+                      </div>
+                      <div class="col-9 p-2">
+                        <i class="bi bi-geo-fill"></i> <span id="invoice-street" class="text-muted"></span>,
+                        <span id="invoice-barangay" class="text-muted"></span>,
+                        <span id="invoice-city" class="text-muted"></span>,
+                        <span id="invoice-province" class="text-muted"></span>,
+                        <span id="invoice-region" class="text-muted"></span>
+                      </div>
+                      <div class="col-9 p-2">
                         <i class="bi bi-envelope-fill"></i> <span id="invoice-email" class="text-muted"></span>
-                    </div>
-                    <div class="col-9 p-2">
-                        <i class="bi bi-telephone-fill"></i> <span id="invoice-phone-no" class="text-muted">09XX XXX XXXX</span>
-                    </div>
+                      </div>
+                      <div class="col-9 p-2">
+                          <i class="bi bi-telephone-fill"></i> <span id="invoice-phone-no" class="text-muted">09XX XXX XXXX</span>
+                      </div>
+                    @endif
+                    
                 </div>
             </div>
             

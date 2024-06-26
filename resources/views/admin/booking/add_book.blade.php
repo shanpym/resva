@@ -506,9 +506,9 @@
                                   var col_md4 = $('<div class="col-md-4">'); 
                                     var img = $('<img class="img-fluid rounded-start">')
                                   .attr("src", "{{ asset('storage/img/') }}" + "/" + room_type.image)
-                                  .css({ 'height': '230px', 'width': '1000px' });
+                                  .css({ 'height': '234px', 'width': '1000px' });
                                   var col_md8 = $('<div class="col-md-8">');     
-                                  var card_body = $('<div class="card-body">');
+                                  var card_body = $('<div class="">').css({ 'padding-left': '20px', 'padding-right': '20px' });
                                   var title = $('<h5 class="card-title">').text(room_type.name);
                                   var hasWifi = room_type.wifi === '1' ? 'YES' : 'NO';
                                   var hasAC = room_type.ac === '1' ? 'YES' : 'NO';

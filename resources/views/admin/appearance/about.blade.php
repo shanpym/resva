@@ -30,7 +30,7 @@
         </div>
         <div class="row mb-3">
           <label for="inputText" class="col-sm-2 col-form-label" style=" color: #03a4ed; font-weight: 700;
-                text-transform: uppercase;">Highlight Word</label>
+                text-transform: uppercase;">Highlight Word</label> 
           <div class="col-sm-10">
             <input type="text" class="form-control" name="service_description_highlight_1" value="{{$service->service_description_highlight_1}}">
           </div>

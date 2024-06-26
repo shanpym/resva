@@ -6,7 +6,6 @@
           <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
             <h2>{{$users->firstname}} {{$users->surname}}</h2>
-            <h3>Admin</h3>
             <div class="social-links mt-2">
               <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
               <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
@@ -286,7 +285,7 @@
 
               <div class="tab-pane fade pt-3" id="profile-change-password">
                 <!-- Change Password Form -->
-                <form action="{{url('password/' .$users->id)}}" method="POST">
+                <form action="{{url('profile/password/' .$users->id)}}" method="POST">
                   @csrf
                   @method('PUT')
                   <div class="row mb-3">

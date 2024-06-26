@@ -162,6 +162,17 @@
 </section>
 </main>
 
+<script>
+  $('#edit-btn').on('click', function(){
+    $('#text-address').css("display", "none");
+    $('#edit-address').css("display", "block")
+  })
+
+  $('#edit-btn-2').on('click', function(){
+    $('#text-address').css("display", "block");
+    $('#edit-address').css("display", "none")
+  })
+</script>
 {{-- Multiform JS --}}
 <script>
    document.addEventListener("DOMContentLoaded", function() {
@@ -345,15 +356,15 @@
         $('#invoice-requests').text(requests);
       })
 
-      $('#firstname, #surname, #email, #phone_no, #address').change(function(){
+      $('#firstname, #surname, #email, #phone_no, #address, #street-text').change(function(){
         var firstname = $('#firstname').val();
         var surname = $('#surname').val();
         var email = $('#email').val();
         var phone_no = $('#phone_no').val();
-        var address = $('#address').val();
+        var street = $('#street-text').val();
+        $('#invoice-street').text(street);
         $('#invoice-firstname').text(firstname);
         $('#invoice-surname').text(surname);
-        $('#invoice-address').text(address);
         $('#invoice-email').text(email);
         $('#invoice-phone_no').text(phone_no);
       })
@@ -492,9 +503,9 @@
                                   var col_md4 = $('<div class="col-md-4">'); 
                                     var img = $('<img class="img-fluid rounded-start">')
                                   .attr("src", "{{ asset('storage/img/') }}" + "/" + room_type.image)
-                                  .css({ 'height': '230px', 'width': '1000px' });
+                                  .css({ 'height': '234px', 'width': '1000px' });
                                   var col_md8 = $('<div class="col-md-8">');     
-                                  var card_body = $('<div class="card-body">');
+                                  var card_body = $('<div class="">').css({ 'padding-left': '20px', 'padding-right': '20px' });
                                   var title = $('<h5 class="card-title">').text(room_type.name);
                                   var hasWifi = room_type.wifi === '1' ? 'YES' : 'NO';
                                   var hasAC = room_type.ac === '1' ? 'YES' : 'NO';

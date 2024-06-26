@@ -122,11 +122,20 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                           </div>
                           <div class="modal-body">
-                            @include('admin.booking.listview')
+                            <div class="listview-view" >
+                              @include('admin.booking.listview')
+                            </div>
+                            <div class="reject-view" style="display: none">
+                              @include('admin.booking.cancellation')
+                            </div>
                           </div>
+                         
                           <div class="modal-footer">
                             <a href="{{url('pdf/' . $booking->id)}}" type="button" class="btn btn-secondary">PDF</a>
-                            {{-- <button type="button" class="btn btn-primary">Pay Now</button> --}}
+                            @if($booking->status == '1' || $booking->status == '2')
+                            <button class="btn btn-outline-danger reject-btn" type="button" id="view-btn">Cancel</button>
+                            @else
+                            @endif
                           </div>
                         </div>
                       </div>
@@ -142,4 +151,15 @@
     </section>
 
   </main><!-- End #main -->
+  <script>
+     $('.reject-btn').on('click', function(){
+      $('.reject-view').css("display", "block");
+      $('.listview-view').css("display", "none")
+
+      $('.view-btn').css("display", "none");
+      $('.resv-btn').css("display", "none");
+      $('.reject-btn').css("display", "none");
+    })
+    
+  </script>
 @endsection

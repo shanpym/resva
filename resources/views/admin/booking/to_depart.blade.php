@@ -95,7 +95,7 @@
 
                 $payable_amount = $invoice->total_amount * .5;
                 $remaining_balance = $transactions->amount_paid - $invoice->total_amount;
-
+               
                 ?>
                
                 <tr>
@@ -106,15 +106,16 @@
                   <td>{{ \Carbon\Carbon::parse($booking->start_date)->format('F j, Y') }}</td>
                   <td> 
                     @if($remaining_balance >= 0)
-                        <button class="btn btn-outline-danger btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#checkout{{$booking->id}}">
-                        CHECK OUT</button>
+                      <form action="{{url('/admin/booking/checkout/' . $booking->id)}}" method="POST">
+                        @csrf
+                        <input type="hidden" name="amount_paid" value="0">
+                          <button class="btn btn-outline-danger btn-sm" type="submit">
+                          CHECK OUT</button>
+                      </form>
                     @else
-                    <form action="{{url('/admin/booking/checkout/' . $booking->id)}}" method="POST">
-                      @csrf
-                      <input type="hidden" name="amount_paid" value="0">
-                        <button class="btn btn-outline-danger btn-sm" type="submit">
-                        CHECK OUT</button>
-                    </form>
+                      <button class="btn btn-outline-danger btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#checkout{{$booking->id}}">
+                        CHECK OUT
+                      </button>
                     @endif
                   </td>
                   <td style="padding-top: 10px !important;">

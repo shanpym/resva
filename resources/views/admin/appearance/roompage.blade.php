@@ -44,7 +44,7 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Select</label>
                 <div class="col-sm-10">
-                  <select class="form-select" aria-label="Default select example" name="room_id_1">
+                  <select class="form-select" aria-label="Default select example" name="room_id_2">
                     <option value="{{$room2->id}}" selected>{{$room2->name}}</option>
                     <option  disabled>Select a Room to display</option>
                     @foreach ($rooms as $room)
@@ -65,7 +65,7 @@
             <div class="row mb-3">
               <label class="col-sm-2 col-form-label">Select</label>
               <div class="col-sm-10">
-                <select class="form-select" aria-label="Default select example" name="room_id_1">
+                <select class="form-select" aria-label="Default select example" name="room_id_3">
                   <option value="{{$room3->id}}" selected>{{$room3->name}}</option>
                   <option  disabled>Select a Room to display</option>
                   @foreach ($rooms as $room)
@@ -84,7 +84,7 @@
             <div class="row mb-3">
               <label class="col-sm-2 col-form-label">Select</label>
               <div class="col-sm-10">
-                <select class="form-select" aria-label="Default select example" name="room_id_1">
+                <select class="form-select" aria-label="Default select example" name="room_id_4">
                   <option value="{{$room4->id}}" selected>{{$room4->name}}</option>
                   <option  disabled>Select a Room to display</option>
                   @foreach ($rooms as $room)

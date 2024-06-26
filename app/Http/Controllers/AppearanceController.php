@@ -185,7 +185,30 @@ class AppearanceController extends Controller
         ]);
         }
 
-
+        $findRoom = Appearance::where('id', '7')->first();
+        $room1 = Room_Type::where('id', $findRoom->room_id)->first();
+  
+        $findRoom2 = Appearance::where('id', '8')->first();
+        $room2 = Room_Type::where('id', $findRoom2->room_id)->first();
+  
+        $findRoom3 = Appearance::where('id', '9')->first();
+        $room3 = Room_Type::where('id', $findRoom3->room_id)->first();
+  
+        $findRoom4 = Appearance::where('id', '10')->first();
+        $room4 = Room_Type::where('id', $findRoom4->room_id)->first();
+        
+        $findRoom->update([
+            'room_id' => $request->room_id_1, 
+        ]);
+        $findRoom2->update([
+            'room_id' => $request->room_id_2, 
+        ]);
+        $findRoom3->update([
+            'room_id' => $request->room_id_3, 
+        ]);
+        $findRoom4->update([
+            'room_id' => $request->room_id_4, 
+        ]);
         return redirect()->back()->with("success", "Page has been updated successfully");
     }
 }

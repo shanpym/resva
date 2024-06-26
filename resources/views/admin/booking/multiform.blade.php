@@ -24,7 +24,7 @@
               <label for="" class="form-label text-muted"><span style="color: #d9534f">*</span> Guest</label>
               <div class="dropdown">
                 <button class="btn btn-outline-primary" id="dropdown_btn" type="button" style="width: 100%">
-                  Adult - <span id="adult">2</span> Children - <span id="adult">0</span>
+                  Adult - <span id="adult">2</span> Children - <span id="children">0</span>
                 </button>
                 <ul class="dropdown-menu" id="dropdown_menu" style="display: none; width: 100%">
                   <li>

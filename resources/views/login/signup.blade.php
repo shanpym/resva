@@ -25,7 +25,7 @@
               @endif
     
               @if(session()->has('success'))
-                <div class="alert alert-success"><i class="far fa-check-circle" ></i> {{session('success')}}</div>
+                <div class="alert alert-success">{{session('success')}}</div>
               @endif
             </div>
             <div class="row">

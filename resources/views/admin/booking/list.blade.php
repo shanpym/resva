@@ -261,15 +261,15 @@
     })
 
     $(document).ready(function() {
-    $('.view').on('hidden.bs.modal', function (e) {
-        $('.listview-view').css("display", "block");
-        $('.transaction-view').css("display", "none");
-        $('.reject-view').css("display", "none");
-        $('.view-btn').css("display", "block");
-        $('.resv-btn').css("display", "none");
-        $('.reject-btn').css("display", "block");
-        ('.confirm-btn').css("display", "none");
+      $('.view').on('hidden.bs.modal', function (e) {
+          $('.listview-view').css("display", "block");
+          $('.transaction-view').css("display", "none");
+          $('.reject-view').css("display", "none");
+          $('.view-btn').css("display", "block");
+          $('.resv-btn').css("display", "none");
+          $('.reject-btn').css("display", "block");
+          ('.confirm-btn').css("display", "none");
+      });
     });
-});
   </script>
 @endsection

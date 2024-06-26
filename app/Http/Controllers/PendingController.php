@@ -45,7 +45,7 @@ class PendingController extends Controller
         $bookedRooms = DB::table('booking')
             ->where('start_date', '<', $end_date)
             ->where('end_date', '>', $start_date)
-            ->whereIn('status', ['2', '3', '5'])
+            ->whereIn('status', ['2', '5'])
             ->pluck('room_name')
             ->toArray();
             

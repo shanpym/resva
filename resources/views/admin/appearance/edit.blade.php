@@ -55,13 +55,14 @@
               @include('admin.appearance.about')
               @include('admin.appearance.roompage')
           </div>
-          <div class="row mb-3 text-end">
-            <div class="col-sm-12">
-              <button type="submit" class="btn btn-primary">Save Changes</button>
-            </div>
-          </div>
-        </form>
+     
       </div>
+      <div class="row mb-3 text-end">
+        <div class="col-sm-12">
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </div>
+    </form>
     </section>
 
   </main><!-- End #main -->

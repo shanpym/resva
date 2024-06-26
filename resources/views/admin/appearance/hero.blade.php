@@ -11,6 +11,14 @@
           </div>
         </div>
         <div class="row mb-3">
+          <label for="inputText" class="col-sm-2 col-form-label" style=" color: #03a4ed; font-weight: 700;
+            text-transform: uppercase;"></label>
+          <div class="col-sm-10">
+            <span class="text-muted"> <span class="text-danger">*</span><i>Note: Must be in JPEG, JPG, PNG format. Max KB is 2048.</i></span>
+          </div>
+        </div>
+        
+        <div class="row mb-3">
           <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>
             <div class="col-sm-10">
               <div class="col-md-1" id="image">
@@ -28,12 +36,21 @@
             </div>
           </div>
         </div>
+        
         <div class="row mb-3">
           <label for="inputPassword" class="col-sm-2 col-form-label">Motto</label>
           <div class="col-sm-10">
             <textarea class="form-control" style="height: 100px" name="hero_motto" maxlength="30">{{$hero->hero_motto}}</textarea>
           </div> 
         </div>
+        <div class="row mb-3">
+          <label for="inputText" class="col-sm-2 col-form-label" style=" color: #03a4ed; font-weight: 700;
+            text-transform: uppercase;"></label>
+          <div class="col-sm-10">
+            <span class="text-muted"> <span class="text-danger">*</span><i>Note: Hightlighted words must match words from Motto</i></span>
+          </div>
+        </div>
+       
         <div class="row mb-3">
           <label for="inputText" class="col-sm-2 col-form-label" style=" color: #03a4ed; font-weight: 700;
                 text-transform: uppercase;">Highlight Word</label>
