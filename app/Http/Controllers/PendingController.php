@@ -112,10 +112,6 @@ class PendingController extends Controller
         $booking = Booking::where('id', $id)->first();
         $transactions = Transaction::where('booking_id', $booking->id)->first();
         $invoice = Invoice::where('booking_id', $booking->id)->first();
-        // $transactions->update([
-        //     'status' => '3', 
-        //     'cancelled_at'  => Carbon::now()
-        // ]);
 
         $transactions->create([
             'booking_id' => $booking->id,
@@ -128,7 +124,8 @@ class PendingController extends Controller
             'remarks' => $request->remarks,
             'status' => '3', 
         ]);
-
+        $email = $booking->email;
+        Mail::to($email)->send(new UpdateMail($id));
         return redirect()->back()->with("error", "Booking has been cancelled");
     }
 
@@ -171,7 +168,7 @@ class PendingController extends Controller
              // Get booked room for the given period
             $bookedRooms = Booking::where('start_date', '<', $end_date)
                     ->where('end_date', '>', $start_date)
-                    ->whereIn('status', ['2', '3', '5'])
+                    ->whereIn('status', ['2','5'])
                     ->pluck('room_name')
                     ->toArray();
                     
@@ -191,10 +188,12 @@ class PendingController extends Controller
                             'status' => '3', 
                         ]);
 
-                        $transactions->update([
+                        $transactions->create([
+                            'booking_id' => $booking->id,
                             'status' => '3', 
-                            'cancelled_at'  => Carbon::now()
+                            'confirmed_at'  => Carbon::now()
                         ]);
+
                         $email = $booking->email;
                         Mail::to($email)->send(new UpdateMail($id));
                         return redirect()->back()->with("error", "Apologies, no rooms are available for the selected dates. 
@@ -207,7 +206,8 @@ class PendingController extends Controller
                 'room_name' => $availableRooms,
             ]);
 
-            $transactions->update([
+            $transactions->create([
+                'booking_id' => $booking->id,
                 'amount_paid' => $request->amount_paid,
                 'status' => '2', 
                 'confirmed_at'  => Carbon::now()

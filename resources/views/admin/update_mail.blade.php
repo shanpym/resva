@@ -166,18 +166,20 @@
                 Total Sleep/s: {{$booking->no_adult}} Adult |  {{$booking->no_children}} Children<br><br><br>
                 Your Request/s: {{$booking->requests}}<br>
                 <hr>
-                <strong>Remaining Balance: PHP {{$remaining_balance}}</strong><br>
+               
+              </p>              
+              @if($booking->status == '2' )
+              <strong>Remaining Balance: PHP {{$remaining_balance}}</strong><br>
 
                 @if($remaining_balance == 0)
                 @else
                 * Kindly pay the remaining balance on our counter<br>
                 @endif
                 Thank you for booking with us!
-              </p>              
-              @if($booking->status == '2' )
-             
               @elseif($booking->status == '3')
               <p style="font-size: 15px; line-height: 24px; font-family: 'Helvetica', Arial, sans-serif; font-weight: 400; text-decoration: none; color: #919293;">Cancelled due to: {{$booking->remarks}}</p>
+              <br>
+              <p style="font-size: 15px; line-height: 24px; font-family: 'Helvetica', Arial, sans-serif; font-weight: 400; text-decoration: none; color: #919293;"><i>Notes: There will be no refunds as stated on the our policy</i></p>
               @endif
              
            

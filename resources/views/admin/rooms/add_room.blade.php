@@ -22,6 +22,24 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Room Details</h5>
+              <div class="mt-2">
+                @if ($errors->any())
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <img src="{{asset('dashboard/assets/img/error.png')}}"alt="" srcset="" width="25px" style="margin-right: 10px">{{ $errors->all()[0] }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                @endif
+                </style>
+                @if(session()->has('error'))
+                  <div id="alert-success" class="alert alert-danger alert-dismissible fade show"><i class="fas fa-exclamation-circle"></i> {{session('error')}}</div>
+                @endif
+                @if(session()->has('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  <img src="{{asset('dashboard/assets/img/success-3.gif')}}"alt="" srcset="" width="25px" style="margin-right: 10px">{{session('success')}}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                @endif
+              </div>
               <form action="{{route('add_chart.post')}}" method="POST">
                 @csrf 
                 <div class="card-body">   
@@ -47,7 +65,7 @@
                     <th>Action</th>
                   </tr>
                   <tr>
-                    <td><input type="text" class="form-control" id="" name="inputs[0][name]" value="{{ old('name') }}">  </td>
+                    <td><input type="number" class="form-control" id="" name="inputs[0][name]" value="{{ old('name') }}" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==3) return false;">  </td>
                     <td> <select class="form-select" name="inputs[0][status]" id="">
                       <option value="">Select Status</option>
                       <option value="1" selected>Available</option>

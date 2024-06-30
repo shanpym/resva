@@ -35,6 +35,7 @@ return new class extends Migration
             $table->string('requests')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
+            $table->date('cancellation_date')->nullable();
             $table->string('no_adult')->nullable();
             $table->string('no_children')->nullable();
             

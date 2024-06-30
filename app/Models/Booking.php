@@ -30,8 +30,11 @@ class Booking extends Model
 
         'no_adult',
         'no_children',
+
         'start_date',
         'end_date',
+        'cancellation_date',
+
         'room_type',
         'room_name',
         'requests',

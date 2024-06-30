@@ -14,7 +14,9 @@
         </ol>
       </nav>
     </div><!-- End Page Title -->
+    
     <div class="col-md-12 d-flex justify-content-end">
+     
       <div class="col-sm-2" style="font-size: 16px; margin-right:20px !important" >
         <input type="text" name="" id="search_date" class="form-control" placeholder="Filter by date">
       </div>
@@ -22,6 +24,9 @@
       @else
       <div class="col-sm-0">
         <a href="{{route('rooms.add_room')}}" class="btn btn-primary" type="button">Add Room</a>
+      </div>
+      <div class="col-sm-0">
+        <a href="{{route('view.rooms')}}" class="btn btn-outline-info" type="button" style="margin-left:15px !important" >Edit</a>
       </div>
       @endif
      

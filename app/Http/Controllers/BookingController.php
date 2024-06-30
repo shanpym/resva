@@ -170,7 +170,8 @@ class BookingController extends Controller
             ->withInput();
         };
 
-    
+        $start_date = Carbon::parse($request->start_date);
+        $date_cancellation = $start_date->addDay();
         $bookingID = DB::table('booking')->insertGetId([
             'user_id' => $request->user_id,
             'employee_id' => $request->employee_id,
@@ -190,8 +191,11 @@ class BookingController extends Controller
 
             'no_adult' => $request->no_adult,
             'no_children' => $request->no_children,
+
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
+            'cancellation_date' => $date_cancellation,
+
             'room_type' => $request->room_type,
             'room_name' => $request->room_name,
             'requests' => $request->requests,

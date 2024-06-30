@@ -109,9 +109,9 @@
                   </div>
                   <div class="col-md-0">
                       @if ($booking->status == 1)
-                      <span class="badge bg-warning">Pending</span>
+                      <span class="badge bg-warning">Not Guaranteed</span>
                       @elseif($booking->status == 2) 
-                      <span class="badge bg-primary">Confirmed</span>
+                      <span class="badge bg-primary">Guaranteed</span>
                       @elseif($booking->status == 3) 
                       <span class="badge bg-danger">Cancelled</span>
                       @elseif($booking->status == 4) 
@@ -119,9 +119,9 @@
                       @elseif($booking->status == 5) 
                       <span class="badge bg-info">Arrived</span>
                       @elseif($booking->status == 6) 
-                      <span class="badge bg-warning">Pending</span>
+                      <span class="badge bg-warning">Not Guaranteed</span>
                       @elseif($booking->status == 7) 
-                      <span class="badge bg-primary">Confirmed</span>
+                      <span class="badge bg-primary">Guaranteed</span>
                       @endif
                   </div>
               </div>

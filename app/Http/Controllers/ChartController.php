@@ -24,10 +24,43 @@ class ChartController extends Controller
         return view('admin.rooms.room_chart', compact ('rooms', 'room_types'));
     }
 
+    function viewRooms(): View{
+        $room_types = Room_Type::get();
+        $rooms = Rooms::get();
+        return view('admin.rooms.list', compact ('rooms', 'room_types'));
+    }
+
     function addView(): View{
         $room_types = Room_Type::get();
         $rooms = Rooms::get();
         return view('admin.rooms.add_room', compact ('rooms', 'room_types'));
+    }
+
+    function delete(int $id){
+        $rooms = Rooms::where('id', $id)->first();
+        $rooms->delete();
+        return redirect()->back()->with("error", "Room has been deleted");
+    }
+
+    function update(Request $request, int $id){
+        $rooms = Rooms::find($id);
+        $check_rooms = Rooms::where('name' , $request->room_name)->first();
+        if(is_null($check_rooms)){
+            $rooms->update([
+                'name' =>  $request->room_name,
+                'room_type' => $request->room_type,
+            ]);
+            return redirect()->back()->with("success", "Room has been updated");
+        }elseif($check_rooms->name == $rooms->name){
+            $rooms->update([
+                'name' =>  $rooms->name,
+                'room_type' => $request->room_type,
+            ]);
+            return redirect()->back()->with("success", "Room has been updated");
+        }elseif($check_rooms){
+            return redirect()->back()->with("error", "Room already exists");
+        }
+       
     }
 
     function addChart(Request $request):RedirectResponse{
@@ -36,6 +69,8 @@ class ChartController extends Controller
             'inputs.*.status' => 'required',    
             'inputs.*.room_type' => 'required',   
             // 'inputs.*.floor_no' => 'required',
+        ],[
+            'unique' => "Room already exists"
         ]);
         foreach ($request->inputs as $key => $value){
             Rooms::create($value);  
@@ -52,7 +87,7 @@ class ChartController extends Controller
         $bookings = DB::table('booking')
             ->where('start_date', '<=', $search_date)
             ->where('end_date', '>=', $search_date)
-            ->where('status', ['2', '4'])
+            ->whereIn('status', ['2', '5'])
             ->pluck('room_name');
     
         $bookingsArray = $bookings->toArray();

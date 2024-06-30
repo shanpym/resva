@@ -121,6 +121,9 @@ Route::post('/admin/rooms/add_room', [ChartController::class, ('addChart')])->na
 Route::get('/admin/rooms/room_chart', [ChartController::class, ('view')])->name('rooms.room_chart')->middleware(RoleMiddleware::class);
 Route::get('/search/date', [ChartController::class, ('dateQuery')])->name('chart.date');
 Route::put('/rooms/list/{id}', [ChartController::class, ('fetchBookings')])->name('view.booking')->middleware(RoleMiddleware::class);
+Route::get('/admin/rooms/list/', [ChartController::class, ('viewRooms')])->name('view.rooms')->middleware(RoleMiddleware::class);
+Route::put('/delete/room/{id}', [ChartController::class, ('delete')])->name('delete.rooms')->middleware(RoleMiddleware::class);
+Route::put('/update/room/{id}', [ChartController::class, ('update')])->name('update.rooms')->middleware(RoleMiddleware::class);
 
 Route::get('/admin/rooms/room_type', [RoomController::class, ('view')])->name('rooms.room_type')->middleware(RoleMiddleware::class);
 Route::get('/rooms/update/{id}', [RoomController::class, ('editView')])->name('room_type.edit')->middleware(RoleMiddleware::class);
