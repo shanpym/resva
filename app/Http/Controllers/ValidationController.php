@@ -30,7 +30,6 @@ class ValidationController extends Controller
         
         $total_sleeps = $adults + $children;
      
-        //find rooms that are booked on the selected dates
        
         $bookedRooms = DB::table('booking')
                         ->where('start_date', '<', $checkOut)
@@ -39,12 +38,10 @@ class ValidationController extends Controller
                         ->pluck('room_name')
                         ->toArray();     
                                      
-        //exclude rooms from bookedRooms
         $findRoom = DB::table('rooms')
                     ->whereNotIn('name', $bookedRooms)
                     ->pluck('room_type'); 
 
-        //display available roomtype based on findRoom
         $room_type = Room_Type::whereIn('name', $findRoom)
                     ->where('total_sleeps', '>=', $total_sleeps)
                         ->get();
