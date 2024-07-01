@@ -47,7 +47,7 @@
        
     <li class="nav-item">
       <a href="{{route('rooms.room_chart')}}" class="nav-link collapsed {{ Request::routeIs('rooms.room_chart') ? 'active' : '' }}">
-        <i class="bi bi-circle"></i><span>Room Chart</span>
+        <i class="bi bi-calendar-week"></i><span>Room Chart</span>
       </a>
     </li>
      

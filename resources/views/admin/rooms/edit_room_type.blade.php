@@ -143,7 +143,7 @@
 
         
         @include('admin.rooms.add_room_type')
-        @include('admin.rooms.meals')
+        {{-- @include('admin.rooms.meals') --}}
       </div>
     </section>
 

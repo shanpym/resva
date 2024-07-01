@@ -16,7 +16,11 @@
                         <i class="bi bi-person-fill"></i> <span id="invoice-firstname" class="text-muted">{{$booking->firstname}}</span> <span id="invoice-surname" class="text-muted">{{$booking->surname}}</span>
                     </div>
                     <div class="col-9 p-2">
-                        <i class="bi bi-geo-fill"></i> <span id="invoice-address" class="text-muted">{{$booking->address}}</span>
+                      <i class="bi bi-geo-fill"></i> <span id="invoice-street" class="text-muted">{{Auth::user()->street_text}}</span>,
+                      <span id="invoice-barangay" class="text-muted">{{Auth::user()->barangay_text}}</span>,
+                      <span id="invoice-city" class="text-muted">{{Auth::user()->city_text}}</span>,
+                      <span id="invoice-province" class="text-muted">{{Auth::user()->province_text}}</span>,
+                      <span id="invoice-region" class="text-muted">{{Auth::user()->region_text}}</span>
                     </div>
                     <div class="col-9 p-2">
                         <i class="bi bi-envelope-fill"></i> <span id="invoice-email" class="text-muted">{{$booking->email}}</span>
@@ -69,19 +73,27 @@
 
                 <div class="row">
                     <div class="col-lg-3 col-md-4 label">Reservation Type</div>
-                    <div class="col-lg-9 col-md-8"><span id="invoice-resv-type">Online</span></div>
+                    <div class="col-lg-9 col-md-8"><span id="invoice-resv-type">
+                      @if($booking->resv_type == 1)
+                      Online
+                      @elseif($booking->resv_type == 2)
+                      On-Call
+                      @else
+                      Walk-in
+                      @endif
+                      </span></div>
                 </div>
 
                 <div class="row">
                   <div class="col-lg-3 col-md-4 label">Mode of Payment</div>
-                  <div class="col-lg-9 col-md-8"><span id="invoice-payment-type"></span></div>
+                  <div class="col-lg-9 col-md-8"><span id="invoice-payment-type">Online Banking</span></div>
                 </div>
 
                 <hr>
 
                 <div class="row" style="font-size: 14px">
                     <div class="col-lg-9 col-md-4 label" style="text-align: right">Subtotal</div>
-                    <div class="col-lg-3 col-md-8"><span id="invoice-subtotal" class="text-muted"></span></div>
+                    <div class="col-lg-3 col-md-8"><span id="invoice-subtotal" class="text-muted">PHP{{$subtotal}}</span></div>
                 </div>
                 {{-- <div class="row" style="font-size: 14px">
                   <div class="col-lg-9 col-md-4 label" style="text-align: right">Meal Options</div>
@@ -89,14 +101,14 @@
                 </div> --}}
                 <div class="row" style="font-size: 14px">
                     <div class="col-lg-9 col-md-4 label" style="text-align: right">Add ons</div>
-                    <div class="col-lg-3 col-md-8"><span id="invoice-addons" class="text-muted"></span></div>
+                    <div class="col-lg-3 col-md-8"><span id="invoice-addons" class="text-muted">PHP{{$allItemsPrice}}</span></div>
                 </div>
                 
                 <hr>
 
                 <div class="row">
                   <div class="col-lg-9 col-md-4 label" style="text-align: right">Total Amount</div>
-                  <div class="col-lg-3 col-md-8"><span id="invoice-total-amount"></span></div>
+                  <div class="col-lg-3 col-md-8"><span id="invoice-total-amount">PHP{{$invoice->total_amount}}</span></div>
                 </div>
 
               </div>

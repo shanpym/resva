@@ -188,39 +188,14 @@
                           </div>
                           <div class="modal-footer">
                             {{-- <button type="submit" class="btn btn-danger confirm-btn" style="display: none">Confirm</button> --}}
-                            <button class="btn btn-outline-primary view-btn" type="button" id="view-btn">View Transaction</button>
-                            <button class="btn btn-outline-primary resv-btn" type="button" id="resv-btn" style="display: none">View Reservation</button>
-                            <a href="{{url('pdf/' . $booking->id)}}" type="button" class="btn btn-secondary">PDF</a>
                             @if($booking->status == '1' || $booking->status == '2')
                             <button class="btn btn-outline-danger reject-btn" type="button" id="view-btn">Cancel</button>
                             @else
                             @endif
-                   
-                            {{-- <button type="submit" class="btn btn-danger reject-btn" style="margin-right: 10px !important" data-bs-toggle="modal" data-bs-target="#reject{{$booking->id}}">Cancel</button>
-                            <div class="modal fade " id="reject{{$booking->id}}" tabindex="-1">
-                              <div class="modal-dialog modal-dialog-scrollable modal-lg">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h5 class="modal-title" style="color: #dc3545">Remarks</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                  </div>
-                                    <div class="modal-body">
-                                      <form action="{{ url('reject/'. $booking->id) }}" method="POST">
-                                        @csrf
-                                        <div class="form-group mt-3">
-                                            <p>Input the reason of the cancellation</p>
-                                            <textarea class="form-control" name="remarks" rows="3" placeholder="Enter ..." style="width: 100%"></textarea>
-                                        </div>  
-                                        <input type="hidden" name="status" value="3">
-                                      </div>
-                                      <div class="modal-footer d-flex justify-content-end">
-                                        <button type="submit" class="btn btn-danger">Confirm</button>
-                                      </div>
-                                      </form>
-                                </div>
-                              </div>
-                            </div><!-- End Vertically centered Modal--> --}}
-                            {{-- <button type="button" class="btn btn-primary">Pay Now</button> --}}
+                            <button class="btn btn-outline-primary view-btn" type="button" id="view-btn">View Transaction</button>
+                            <button class="btn btn-outline-primary resv-btn" type="button" id="resv-btn" style="display: none">View Reservation</button>
+                            <a href="{{url('pdf/' . $booking->id)}}" type="button" class="btn btn-secondary">PDF</a>
+                           
                           </div>
                         </div>
                       </div>
@@ -242,6 +217,7 @@
       $('.transaction-view').css("display", "block")
       $('.view-btn').css("display", "none");
       $('.resv-btn').css("display", "block");
+      $('.reject-btn').css("display", "none");
     })
 
     $('.resv-btn').on('click', function(){
@@ -249,6 +225,8 @@
       $('.transaction-view').css("display", "none")
       $('.view-btn').css("display", "block");
       $('.resv-btn').css("display", "none");
+      $('.reject-view').css("display", "none");
+      $('.reject-btn').css("display", "block");
     })
 
     $('.reject-btn').on('click', function(){
@@ -256,7 +234,7 @@
       $('.listview-view').css("display", "none")
 
       $('.view-btn').css("display", "none");
-      $('.resv-btn').css("display", "none");
+      $('.resv-btn').css("display", "block");
       $('.reject-btn').css("display", "none");
     })
 

@@ -50,17 +50,16 @@
       @endif
     </div>
     <div class="alert alert-warning mt-3">
-      <h5><i class="fas fa-info"></i> Notes: </h5>
-      <p>Here are important indication if a room is booked or available: </p>
-      <button class="btn btn-primary" type="button">Room is booked</button> 
-      <button class="btn btn-outline-secondary" type="button">Room is available</button> 
+      <h5><i class="bi bi-info-circle-fill" style="font-size: 34px"></i><p>Indication for the room availability: </p></h5>
+      <button class="btn btn-primary" type="button">Booked</button> 
+      <button class="btn btn-outline-secondary" type="button">Available</button> 
     </div>
     <section class="section mt-3">
       <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-9">
 
           <div class="card">
-            <div class="card-body">
+            {{-- <div class="card-body">
               @foreach ($room_types as $room_type)
                   <div class="row">
                       <h5 class="card-title p-3   mt-3">{{$room_type->name}}</h5>
@@ -86,6 +85,31 @@
               </div>
                   <hr>
                    @endforeach
+            </div> --}}
+            <div class="card-body">
+              <div class="col-6 go left">
+                <h5 class="card-title col-12">All Rooms <span class="text-muted"> Check In: after 3:00PM | Check Out: before 3:00PM</span></h5> 
+              </div>
+              <div class="row g-1">
+                @foreach ($room_types as $room_type)
+                      @forelse ($rooms as $room)
+                        @if ($room->room_type == $room_type->name)
+                          <div class="col-md-2 text-center">
+                            <form action="{{url('/rooms/list/' . $room->id)}}" method="POST">
+                              @csrf
+                              @method('PUT')
+                              <input type="hidden" class="fetch_date " name="fetch_date" value="">
+                                <button type="submit" class="btn btn-outline-secondary rounded-0 m-1 " type="button" style="width: 170px; height:170px ">
+                                    {{$room->name}} <br> <small>({{$room->room_type}})</small>
+                                </button>
+                                <input type="hidden" class="roomname" value="{{$room->name}}">
+                            </form>
+                          </div>
+                        @endif
+                      @endforeach
+                @endforeach
+              </div>
+          
             </div>
           </div>
 

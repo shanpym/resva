@@ -116,7 +116,7 @@
                               @if($user->status == '3')
                                 <button type="submit" class="btn btn-outline-primary">Activate Account</button>
                               @endif
-                              <a href="{{url('pdf/' . $user->id)}}" type="button" class="btn btn-secondary">PDF</a>
+                              {{-- <a href="{{url('pdf/' . $user->id)}}" type="button" class="btn btn-secondary">PDF</a> --}}
                               {{-- <button type="button" class="btn btn-primary">Pay Now</button> --}}
                             </div>
                             </form>

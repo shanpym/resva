@@ -55,7 +55,7 @@
                   <i class="fa fa-check mr-2 " ></i> <strong class="text-success text-center">{{session('success')}}</strong>
               </div>
                 <div class="row">
-                    <i class="fa fa-check mr-2 " ></i> <small class="text-secondary text-center">View your booking <a href="{{route('admin.pending')}}" type="button"> here</a>.</small>
+                    <i class="fa fa-check mr-2 " ></i> <small class="text-secondary text-center">View your booking <a href="{{route('admin.list')}}" type="button"> here</a>.</small>
                 </div>
             </div>
         </div>

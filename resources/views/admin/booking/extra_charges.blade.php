@@ -1,4 +1,4 @@
-<h5 class="card-title"><small class="text-muted">Apply Extra Chargs</small></h5> 
+<h5 class="card-title"><small class="text-muted">Apply Extra Charges</small></h5> 
  <table class="table table table-bordered" id="table">
           <tr>
             <th>Item</th>

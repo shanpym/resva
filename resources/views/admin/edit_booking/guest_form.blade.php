@@ -37,9 +37,9 @@
                           {{$booking->region_text}}
                           @endif
         </div>
-        <div class="col-md-4">
+        {{-- <div class="col-md-4">
           <label for="inputState" class="form-label text-muted">Mode of Payment</label>
-          <?php $invoice = DB::table('invoice')->where('booking_id', $booking->id)->first();?>
+          
           <select name="payment_type" id="payment_type" class="form-select @error('payment_type') is-invalid @enderror">
             @if($invoice->payment_type == '1')
             <option value="1" selected>Online Banking</option>
@@ -50,15 +50,17 @@
             <option value="1">Online Banking</option>
             <option value="2">Cash</option>
           </select>
-        </div>
-        <div class="col-12">
+        </div> --}}
+        <?php $invoice = DB::table('invoice')->where('booking_id', $booking->id)->first();?>
+        <input type="hidden" name="payment_type" id="" value="{{$invoice->payment_type}}">
+        {{-- <div class="col-12">
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="gridCheck">
             <label class="form-check-label" for="gridCheck">
               I agree to the Terms & Conditions
             </label>
           </div>
-        </div>
+        </div> --}}
       </div>
     </div>
   </div>

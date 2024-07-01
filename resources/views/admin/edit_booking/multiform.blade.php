@@ -112,7 +112,7 @@
 
   <div class="tab-pane fade" id="bordered-justified-summary" role="tabpanel" aria-labelledby="summary-tab">
     <h5 class="card-title"><small class="text-muted">Step 3:</small> Invoice Details</h5>
-    @include('admin.booking.invoice')
+    @include('admin.edit_booking.invoice')
   </div>
   
 </div><!-- End Bordered Tabs Justified -->
